@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/jpeg" href="/public/logo-vinoteca.jpg" />
+  <title>Panel de Administración | Vinoteca La Recta</title>
+
+  <!-- Google Fonts: Cormorant Garamond, Montserrat, Cinzel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- ================= ADMIN AUTH LOCK SCREEN OVERLAY ================= -->
+  <div id="adminLoginLock" class="admin-login-lock" style="display: none;">
+    <div class="admin-lock-card">
+      <img src="/public/logo-vinoteca.jpg" alt="Vinoteca La Recta" class="admin-lock-logo" />
+      <h2 class="admin-lock-title">Panel Administrativo</h2>
+      <p class="admin-lock-sub">Acceso Restringido a Superadministradores</p>
+
+      <form id="adminLockLoginForm">
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label">Email Administrador</label>
+          <input type="email" id="adminLockEmail" required class="form-input" placeholder="admin@vinotecalarecta.com" />
+        </div>
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label">Contraseña</label>
+          <input type="password" id="adminLockPassword" required class="form-input" placeholder="••••••••" />
+        </div>
+        <button type="submit" class="auth-submit-btn">Ingresar al Sistema</button>
+        <div id="adminLockError" class="auth-error-msg"></div>
+      </form>
+
+      <!-- Quick Superadmin Selectors for Testing / Access -->
+      <div class="quick-admin-chips-list">
+        <span style="font-size: 0.72rem; color: var(--gold-light); font-weight: 700; text-transform: uppercase;">
+          Superadministradores Autorizados (Acceso Demo):
+        </span>
+        <button type="button" class="quick-admin-chip-btn" data-email="vinotecalarecta7@gmail.com" data-pass="AdminRecta2024!">
+          <span>vinotecalarecta7@gmail.com</span>
+          <strong style="color: var(--gold-light);">Principal</strong>
+        </button>
+        <button type="button" class="quick-admin-chip-btn" data-email="floralmada07@gmail.com" data-pass="AdminRecta2024!">
+          <span>floralmada07@gmail.com</span>
+          <strong style="color: var(--gold-light);">Flor Almada</strong>
+        </button>
+        <button type="button" class="quick-admin-chip-btn" data-email="martinballistreri07@gmail.com" data-pass="AdminRecta2024!">
+          <span>martinballistreri07@gmail.com</span>
+          <strong style="color: var(--gold-light);">Martín B.</strong>
+        </button>
+      </div>
+
+      <div style="margin-top: 1.5rem;">
+        <a href="/" style="font-size: 0.78rem; color: #888;">&larr; Volver a la Tienda</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SIDEBAR NAVIGATION ================= -->
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-header">
+      <img src="/public/logo-vinoteca.jpg" alt="Logo" class="admin-sidebar-logo" />
+      <div class="admin-sidebar-title">
+        <h2>VINOTECA LA RECTA</h2>
+        <span>Panel de Control</span>
+      </div>
+    </div>
+
+    <!-- Navigation items for the 5 requested sections -->
+    <ul class="admin-nav-menu">
+      <li class="admin-nav-item">
+        <button class="active" data-tab="dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>Dashboard General</span>
+        </button>
+      </li>
+
+      <li class="admin-nav-item">
+        <button data-tab="stock">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+          <span>Control de Stock</span>
+        </button>
+      </li>
+
+      <li class="admin-nav-item">
+        <button data-tab="orders">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span>Ventas y Pedidos</span>
+        </button>
+      </li>
+
+      <li class="admin-nav-item">
+        <button data-tab="users">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>Clientes y Accesos</span>
+        </button>
+      </li>
+
+      <li class="admin-nav-item">
+        <button data-tab="activity">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          <span>Registro de Actividad</span>
+        </button>
+      </li>
+    </ul>
+
+    <div class="admin-sidebar-footer">
+      <div class="admin-user-profile">
+        <div id="adminAvatarInitial" class="admin-avatar">A</div>
+        <div class="admin-meta">
+          <h4 id="adminCurrentUserName">Administrador</h4>
+          <span id="adminCurrentUserRole">Superadministrador</span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.5rem;">
+        <a href="/" class="admin-back-store-btn" style="flex: 1;" title="Volver a la tienda">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          </svg>
+          <span>Ir a la Tienda</span>
+        </a>
+
+        <button id="adminLogoutBtn" class="admin-back-store-btn" style="color: #ff6b6b;" title="Cerrar Sesión">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ADMIN CONTENT ================= -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-page-title">
+        <h1 id="adminPageTitle">Dashboard General</h1>
+        <p id="adminPageSub">Métricas clave, ventas y alertas en tiempo real</p>
+      </div>
+
+      <div class="admin-topbar-actions">
+        <span style="font-size: 0.8rem; color: var(--gold-light); display: inline-flex; align-items: center; gap: 0.4rem;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #4caf50;"></span>
+          Sistema Conectado (API Online)
+        </span>
+      </div>
+    </header>
+
+    <div id="adminContentArea" class="admin-content-body"></div>
+  </main>
+
+  <!-- ================= MODAL: ADD / EDIT PRODUCT ================= -->
+  <div id="adminProductModal" class="modal-overlay">
+    <div class="modal-card modal-large">
+      <button class="modal-close-btn" title="Cerrar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div style="margin-bottom: 1.5rem;">
+        <h3 id="adminProductModalTitle" style="font-family: 'Cinzel', serif; font-size: 1.6rem; color: #fff;">Crear Nuevo Producto</h3>
+        <span style="font-size: 0.78rem; color: var(--gold-light);">Actualice los datos que verán los clientes en la tienda</span>
+      </div>
+
+      <form id="adminProductForm">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label class="form-label">Nombre del Producto *</label>
+            <input type="text" id="pFormName" required class="form-input" placeholder="Ej: Catena Zapata Malbec Argentino 750ml" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Categoría *</label>
+            <select id="pFormCategory" required class="form-select">
+              <option value="vinos">Vinos</option>
+              <option value="espumantes">Espumantes</option>
+              <option value="whiskys">Whiskys</option>
+              <option value="aperitivos">Aperitivos</option>
+              <option value="delicatessen">Delicatessen</option>
+              <option value="promos">Promos</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Subcategoría</label>
+            <input type="text" id="pFormSubcategory" class="form-input" placeholder="Ej: Tinto, Single Malt, Gin, Chacinados" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Bodega o Marca Productora</label>
+            <input type="text" id="pFormBodega" class="form-input" placeholder="Ej: Bodegas Salentein, Rutini Wines" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Precio Regular (ARS) *</label>
+            <input type="number" id="pFormPrice" required min="0" class="form-input" placeholder="28500" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Precio Original / Tachado (Opcional)</label>
+            <input type="number" id="pFormOriginalPrice" min="0" class="form-input" placeholder="32000" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Porcentaje Descuento (%)</label>
+            <input type="number" id="pFormDiscount" min="0" max="100" class="form-input" placeholder="15" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Stock Actual (Unidades) *</label>
+            <input type="number" id="pFormStock" required min="0" class="form-input" placeholder="12" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Stock Mínimo para Alerta</label>
+            <input type="number" id="pFormMinStock" min="1" class="form-input" placeholder="3" />
+          </div>
+
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label class="form-label">Etiqueta Destacada (Badge)</label>
+            <input type="text" id="pFormBadge" class="form-input" placeholder="Ej: PROMO 20% OFF, ÍCONO, 94 PTS PARKER" />
+          </div>
+
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label class="form-label">URL de Imagen del Producto</label>
+            <input type="url" id="pFormImage" required class="form-input" placeholder="https://..." />
+          </div>
+
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label class="form-label">Descripción & Notas de Cata</label>
+            <textarea id="pFormDesc" rows="3" class="form-textarea" placeholder="Notas de roble, temperatura de servicio, maridaje sugerido..."></textarea>
+          </div>
+
+          <div class="form-group" style="grid-column: 1 / -1; display: flex; align-items: center; gap: 0.65rem;">
+            <input type="checkbox" id="pFormFeatured" style="accent-color: var(--gold-primary); width: 18px; height: 18px;" />
+            <label for="pFormFeatured" style="font-size: 0.85rem; color: #fff; cursor: pointer;">Mostrar como Producto Destacado en Inicio</label>
+          </div>
+        </div>
+
+        <button type="submit" class="auth-submit-btn" style="margin-top: 1rem;">Guardar Producto en el Catálogo</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ORDER DETAILS ================= -->
+  <div id="adminOrderDetailModal" class="modal-overlay">
+    <div class="modal-card modal-large">
+      <button class="modal-close-btn" title="Cerrar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div id="adminOrderModalBody"></div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: NEW ADMIN ================= -->
+  <div id="adminNewAdminModal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close-btn" title="Cerrar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div style="margin-bottom: 1.5rem;">
+        <h3 style="font-family: 'Cinzel', serif; font-size: 1.5rem; color: #fff;">Nuevo Administrador</h3>
+        <span style="font-size: 0.78rem; color: var(--gold-light);">Crear credenciales de acceso para el equipo</span>
+      </div>
+
+      <form id="adminNewAdminForm">
+        <div class="form-group">
+          <label class="form-label">Nombre y Apellido *</label>
+          <input type="text" id="newAdminName" required class="form-input" placeholder="Ej: Laura Sommelier" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo Electrónico *</label>
+          <input type="email" id="newAdminEmail" required class="form-input" placeholder="correo@vinotecalarecta.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contraseña Universal Temporal</label>
+          <input type="text" id="newAdminPassword" class="form-input" value="AdminRecta2024!" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Rol y Permisos</label>
+          <select id="newAdminRole" class="form-select">
+            <option value="administrador">Administrador (Stock y Pedidos)</option>
+            <option value="superadministrador">Superadministrador (Acceso Total)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="auth-submit-btn">Dar de Alta Administrador</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

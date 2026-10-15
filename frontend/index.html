@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/jpeg" href="/public/logo-vinoteca.jpg" />
+  <title>Vinoteca La Recta | Cava Privada, Vinos de Autor & Destilados Finos</title>
+  <meta name="description" content="Vinoteca La Recta: Cava de guarda, añadas históricas, espumantes y destilados finos en Córdoba. Atención personalizada por sommeliers y envíos a domicilio." />
+
+  <!-- Google Fonts: Cinzel, Cormorant Garamond, Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+  <!-- ================= BARRA SUPERIOR DE ANUNCIOS ================= -->
+  <aside class="top-announcement-bar">
+    <div class="container top-bar-content">
+      <div class="top-bar-perks">
+        <span class="perk-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+            <line x1="2" y1="10" x2="22" y2="10"></line>
+          </svg>
+          3 Pagos sin interés con todas las tarjetas
+        </span>
+        <span class="separator">•</span>
+        <span class="perk-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          10% de bonificación por Transferencia Bancaria
+        </span>
+        <span class="separator">•</span>
+        <span class="perk-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="3" width="15" height="13"></rect>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+          </svg>
+          Envíos directos a domicilio en Córdoba (Gratis +$ 60.000)
+        </span>
+      </div>
+      <div class="top-bar-links">
+        <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          @vinoteca.larecta
+        </a>
+        <a href="https://wa.me/5493512460017" target="_blank" rel="noopener noreferrer">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+          WhatsApp: 3512460017
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= ENCABEZADO Y NAVBAR ================= -->
+  <header class="main-header">
+    <div class="container navbar">
+      <!-- Marca Oficial y Escudo -->
+      <a href="#inicio" class="nav-brand">
+        <img src="/public/logo-vinoteca.jpg" alt="Escudo Oficial Vinoteca La Recta" class="brand-logo-img" />
+        <div class="brand-text-block">
+          <span class="brand-title">VINOTECA LA RECTA</span>
+          <span class="brand-subtitle">Cava de Selección & Vinos de Autor</span>
+        </div>
+      </a>
+
+      <!-- Menú de Navegación Formal -->
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="#inicio" class="nav-link active">INICIO</a></li>
+          <li><a href="#catalogo" class="nav-link">PRODUCTOS</a></li>
+          <li>
+            <a href="#promos" class="nav-link" id="navPromosLink">
+              PROMOS
+              <span class="nav-badge-off">RESERVA</span>
+            </a>
+          </li>
+          <li><a href="#comunidad" class="nav-link">COMUNIDAD</a></li>
+          <li><a href="#contacto" class="nav-link">CONTACTO</a></li>
+        </ul>
+      </nav>
+
+      <!-- Acciones de Cabecera -->
+      <div class="nav-actions">
+        <!-- Enlace a Instagram -->
+        <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="nav-btn" title="Instagram Oficial">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+
+        <!-- Acceso Administrativo -->
+        <a href="/admin.html" class="nav-btn admin-link-btn" title="Panel de Administración (Sólo Personal Autorizado)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <span class="btn-text">Admin</span>
+        </a>
+
+        <!-- Sesión de Cliente / Ingresar -->
+        <div id="navUserContainer"></div>
+
+        <!-- Carrito de Compras de Cava -->
+        <button id="navCartBtn" class="nav-btn nav-cart-btn" title="Ver Cava / Pedido">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span id="navCartCount" class="cart-badge-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= SECCIÓN HERO PRINCIPAL ================= -->
+  <section id="inicio" class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+          </svg>
+          Cava de Selección & Guarda Controlada
+        </span>
+
+        <h1 class="hero-title">
+          Tradición, Linaje &amp; <br />
+          <span class="gold-text">Vinos de Colección</span>
+        </h1>
+
+        <p class="hero-description">
+          Una cuidadosa curaduría de cosechas históricas, partidas limitadas de bodegas boutique y destilados nobles. Brindamos asesoramiento personalizado para paladares experimentados y ocasiones memorables en Córdoba.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#catalogo" class="btn-primary">
+            Explorar Catálogo de Cava
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="#promos" class="btn-secondary">
+            Selecciones Destacadas
+          </a>
+        </div>
+
+        <div class="hero-features-bar">
+          <div class="hero-feat-item">
+            <div class="hero-feat-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <div class="hero-feat-text">
+              <h4>Garantía de Guarda</h4>
+              <p>Temperatura y humedad óptimas</p>
+            </div>
+          </div>
+          <div class="hero-feat-item">
+            <div class="hero-feat-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                <line x1="2" y1="10" x2="22" y2="10"></line>
+              </svg>
+            </div>
+            <div class="hero-feat-text">
+              <h4>Financiación en 3 Cuotas</h4>
+              <p>Sin interés con todas las tarjetas</p>
+            </div>
+          </div>
+          <div class="hero-feat-item">
+            <div class="hero-feat-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 21h8m-4-4v4m-5-8a5 5 0 0 1 10 0v1a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-1z"></path>
+              </svg>
+            </div>
+            <div class="hero-feat-text">
+              <h4>Atención Sommelier</h4>
+              <p>Consultas y maridajes a medida</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CATEGORÍAS (CUADRÍCULA EDITORIAL) ================= -->
+  <section class="categories-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Colecciones de Nuestra Casa</span>
+        <h2 class="section-title">Grandes Familias de la Cava</h2>
+        <div class="section-ornament">❖</div>
+        <p class="section-subtitle">
+          Recorra las seis divisiones fundamentales de nuestra bodega, cada una seleccionada bajo rigurosos criterios de enología y denominación de origen.
+        </p>
+      </div>
+
+      <!-- Categories Grid: Promos, Vinos, Espumantes, Whiskys, Aperitivos, Delicatessen -->
+      <div id="categoriesGrid" class="categories-grid"></div>
+    </div>
+  </section>
+
+  <!-- ================= CATÁLOGO DE PRODUCTOS ================= -->
+  <section id="catalogo" class="products-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Cava Online &amp; Stock en Tiempo Real</span>
+        <h2 class="section-title">Etiquetas Seleccionadas</h2>
+        <div class="section-ornament">❖</div>
+        <p class="section-subtitle">
+          Exclusiva colección de botellas con procedencia garantizada, ideales para su cava personal, eventos de gala o agasajos corporativos.
+        </p>
+      </div>
+
+      <!-- Barra de herramientas: Filtros sobrios + Búsqueda -->
+      <div class="catalog-toolbar">
+        <div class="category-pills">
+          <button class="filter-pill active" data-filter="todos">Ver Todo el Catálogo</button>
+          <button class="filter-pill promo-pill" data-filter="promos">Selección &amp; Promociones</button>
+          <button class="filter-pill" data-filter="vinos">Vinos de Colección</button>
+          <button class="filter-pill" data-filter="espumantes">Espumantes &amp; Champagnes</button>
+          <button class="filter-pill" data-filter="whiskys">Whiskies &amp; Destilados Finos</button>
+          <button class="filter-pill" data-filter="aperitivos">Aperitivos &amp; Licores</button>
+          <button class="filter-pill" data-filter="delicatessen">Delicatessen &amp; Maridajes</button>
+        </div>
+
+        <div class="catalog-search-wrap">
+          <svg class="catalog-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="catalogSearchInput" class="catalog-search-input" placeholder="Buscar por bodega, etiqueta, varietal o región..." />
+        </div>
+      </div>
+
+      <!-- Grilla de Productos -->
+      <div id="productsGrid" class="products-grid"></div>
+    </div>
+  </section>
+
+  <!-- ================= SÚMATE A NUESTRA COMUNIDAD (ESTILO CLUB PRIVADO) ================= -->
+  <section id="comunidad" class="community-section">
+    <div class="container">
+      <div class="community-box">
+        <div class="community-content">
+          <div class="community-text">
+            <span class="brand-watermark">Club Privado &amp; Comunidad Enológica</span>
+            <h2>Súmate a Nuestra Comunidad</h2>
+            <p>
+              Forme parte de un selecto círculo de conocedores y amigos de Vinoteca La Recta. Acceda a invitaciones a catas privadas de añadas históricas, asignación preferencial de partidas limitadas y asesoramiento directo con nuestros sommeliers.
+            </p>
+
+            <div class="community-perks-list">
+              <div class="comm-perk-item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <span><strong>Catas a Puertas Cerradas:</strong> Encuentros exclusivos guiados por enólogos y sommeliers de renombre internacional.</span>
+              </div>
+              <div class="comm-perk-item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+                <span><strong>Preventas Privadas de Cava:</strong> Adquiera cosechas de guarda numeradas antes de su distribución comercial masiva.</span>
+              </div>
+              <div class="comm-perk-item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                <span><strong>Línea Directa Sommelier:</strong> Asesoramiento personalizado vía WhatsApp para maridajes y confección de cavas privadas.</span>
+              </div>
+            </div>
+
+            <!-- Botones formales de acción comunitaria -->
+            <div class="community-actions">
+              <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="btn-instagram-formal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                Instagram: @vinoteca.larecta
+              </a>
+
+              <a href="https://wa.me/5493512460017?text=Estimados%20Vinoteca%20La%20Recta,%20deseo%20sumarme%20a%20su%20comunidad%20y%20recibir%20novedades%20de%20cava." target="_blank" rel="noopener noreferrer" class="btn-whatsapp-formal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                WhatsApp Oficial: 3512460017
+              </a>
+            </div>
+          </div>
+
+          <!-- Tarjeta VIP Newsletter del Club -->
+          <div class="community-newsletter-card">
+            <div class="comm-logo-circle">
+              <img src="/public/logo-vinoteca.jpg" alt="Escudo Vinoteca La Recta" />
+            </div>
+            <h3>Boletín del Sommelier</h3>
+            <p>Suscríbase para recibir mensualmente nuestras fichas de cata, maridajes recomendados y convocatorias a degustaciones privadas.</p>
+
+            <form id="communityNewsletterForm" class="newsletter-form">
+              <input type="email" id="newsletterEmailInput" required placeholder="Su correo electrónico personal..." class="newsletter-input" />
+              <button type="submit" class="newsletter-submit-btn">Suscribirme al Club Privado</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACTO Y ATENCIÓN FORMAL ================= -->
+  <section id="contacto" class="contact-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Atención Personalizada</span>
+        <h2 class="section-title">Nuestra Casa &amp; Contacto Directo</h2>
+        <div class="section-ornament">❖</div>
+        <p class="section-subtitle">
+          Comuníquese con nuestros especialistas para organizar pedidos especiales, regalos empresariales con estuches de madera o asesoramiento de guarda.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info-card">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <div class="contact-details">
+              <h4>Ubicación en Córdoba</h4>
+              <p>Av. Recta Martinolli, Argüello, Ciudad de Córdoba, República Argentina</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+            <div class="contact-details">
+              <h4>Línea de WhatsApp &amp; Pedidos</h4>
+              <p><a href="https://wa.me/5493512460017" target="_blank" rel="noopener noreferrer">+54 9 351 246-0017</a></p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="contact-details">
+              <h4>Horarios de Guarda &amp; Despacho</h4>
+              <p>Lunes a Sábados: 10:00 a 14:00 hs y de 17:30 a 21:30 hs</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Caja de Comunicación Sommelier -->
+        <div style="background: var(--bg-surface); border: 1px solid var(--gold-border); border-radius: 8px; padding: 3rem; text-align: center;">
+          <div style="width: 58px; height: 58px; border-radius: 50%; background: rgba(197, 160, 89, 0.12); border: 1.5px solid var(--gold-primary); display: inline-flex; align-items: center; justify-content: center; color: var(--gold-champagne); margin-bottom: 1.5rem;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+          </div>
+          <h3 style="font-family: var(--font-serif); font-size: 2rem; color: #fff; margin-bottom: 0.65rem;">¿Desea asesoramiento para su compra?</h3>
+          <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 2rem; line-height: 1.7;">
+            Nuestro equipo de sommeliers está a su disposición para coordinar catas, aconsejar maridajes o formalizar su pedido de manera personalizada.
+          </p>
+          <a href="https://wa.me/5493512460017?text=Estimado%20Sommelier%20de%20Vinoteca%20La%20Recta,%20deseo%20realizar%20una%20consulta." target="_blank" rel="noopener noreferrer" class="btn-primary" style="display: inline-flex; justify-content: center;">
+            Contactar al Sommelier por WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PIE DE PÁGINA (FOOTER) ================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand-col">
+          <div class="brand-block">
+            <img src="/public/logo-vinoteca.jpg" alt="Vinoteca La Recta" style="width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid var(--gold-primary);" />
+            <div>
+              <h3 style="font-family: var(--font-brand); font-size: 1.25rem; color: #fff; letter-spacing: 0.12em;">VINOTECA LA RECTA</h3>
+              <span style="font-size: 0.7rem; color: var(--gold-primary); letter-spacing: 0.22em; text-transform: uppercase;">Cava de Autor • Córdoba</span>
+            </div>
+          </div>
+          <p class="footer-brand-desc">
+            Casa especializada en vinos de autor, espumantes de método tradicional y destilados nobles. Preservación estricta de temperatura y atención exclusiva.
+          </p>
+          <div class="footer-social-links">
+            <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="https://wa.me/5493512460017" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="WhatsApp">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Colecciones</h4>
+          <ul class="footer-nav-list">
+            <li><a href="#catalogo" onclick="window.setFilterCategory?.('promos')">Selecciones &amp; Promociones</a></li>
+            <li><a href="#catalogo" onclick="window.setFilterCategory?.('vinos')">Vinos de Alta Gama</a></li>
+            <li><a href="#catalogo" onclick="window.setFilterCategory?.('espumantes')">Espumantes &amp; Champagnes</a></li>
+            <li><a href="#catalogo" onclick="window.setFilterCategory?.('whiskys')">Whiskies &amp; Destilados Finos</a></li>
+            <li><a href="#catalogo" onclick="window.setFilterCategory?.('aperitivos')">Aperitivos &amp; Licores</a></li>
+            <li><a href="#catalogo" onclick="window.setFilterCategory?.('delicatessen')">Delicatessen &amp; Maridajes</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navegación</h4>
+          <ul class="footer-nav-list">
+            <li><a href="#inicio">Portada Principal</a></li>
+            <li><a href="#catalogo">Catálogo Completo</a></li>
+            <li><a href="#comunidad">Club Privado &amp; Catas</a></li>
+            <li><a href="#contacto">Ubicación &amp; Sommelier</a></li>
+            <li><a href="/admin.html">Acceso Administrativo</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Medios de Pago</h4>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.7;">
+            Operamos con todas las tarjetas en <strong>3 cuotas sin interés</strong> y <strong>10% de bonificación</strong> por Transferencia Bancaria.
+          </p>
+          <div style="font-size: 0.82rem; color: var(--gold-light);">
+            Facturación A/B y envíos con embalaje de protección térmica.
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2024 Vinoteca La Recta. Todos los derechos reservados.</div>
+        <div>Av. Recta Martinolli • Córdoba, Argentina</div>
+        <p class="footer-legal-notice">
+          Beber con moderación. Prohibida su venta a menores de 18 años. Ley Nacional de Lucha contra el Alcoholismo N° 24.788.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= BOTONES FLOTANTES FORMALES ================= -->
+  <div class="floating-actions-container">
+    <!-- Botón Sommelier WhatsApp Formal -->
+    <a href="https://wa.me/5493512460017?text=Estimado%20Sommelier%20de%20Vinoteca%20La%20Recta,%20deseo%20hacer%20una%20consulta%20sobre%20su%20cava." target="_blank" rel="noopener noreferrer" class="floating-sommelier-btn" title="Contactar Sommelier vía WhatsApp">
+      <div class="sommelier-icon-badge">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+      </div>
+      <span>Atención Sommelier • WhatsApp</span>
+    </a>
+
+    <!-- Botón Flotante de Carrito / Cava -->
+    <button id="floatingCartBtn" class="floating-cart-btn" title="Abrir Selección / Carrito de Compras">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <path d="M16 10a4 4 0 0 1-8 0"></path>
+      </svg>
+      <span id="floatingCartCount" class="floating-cart-badge">0</span>
+    </button>
+  </div>
+
+  <!-- ================= DRAWER LATERAL DE CARRITO ================= -->
+  <div id="cartDrawerOverlay" class="cart-drawer-overlay">
+    <aside class="cart-drawer">
+      <div class="cart-drawer-header">
+        <h3 class="cart-drawer-title">Su Selección de Cava</h3>
+        <button id="cartCloseBtn" class="cart-close-btn" title="Cerrar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Barra de progreso formal de Envío -->
+      <div class="cart-shipping-notice">
+        <div id="shippingNoticeText" class="shipping-text">
+          🚚 Envíos a domicilio en Córdoba
+        </div>
+        <div class="shipping-progress-bar">
+          <div id="shippingProgressFill" class="shipping-progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- Lista de botellas seleccionadas -->
+      <div id="cartDrawerItems" class="cart-items-body"></div>
+
+      <!-- Totales y Formalización de Pedido -->
+      <div id="cartDrawerFooter" class="cart-drawer-footer">
+        <div class="cart-summary-line">
+          <span>Subtotal:</span>
+          <strong id="cartDrawerSubtotal">$0</strong>
+        </div>
+        <div class="cart-summary-line transfer-highlight">
+          <span>Bonificación por Transferencia (10%):</span>
+          <strong id="cartDrawerTransfer">$0</strong>
+        </div>
+        <div class="cart-summary-line total-line">
+          <span>Total:</span>
+          <strong id="cartDrawerTotal" style="color: var(--gold-champagne);">$0</strong>
+        </div>
+        <div id="cartDrawerCuotas" class="cart-cuotas-notice">
+          o 3 pagos fijos sin interés
+        </div>
+
+        <button id="cartDrawerCheckoutBtn" class="cart-checkout-btn">
+          Formalizar Compra
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ================= MODAL: FICHA TÉCNICA DE PRODUCTO ================= -->
+  <div id="productDetailModal" class="modal-overlay">
+    <div class="modal-card modal-large">
+      <button class="modal-close-btn" title="Cerrar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div id="productModalBody"></div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: INGRESO & REGISTRO ================= -->
+  <div id="authModal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close-btn" title="Cerrar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="auth-tabs">
+        <button id="tabLoginBtn" class="auth-tab-btn active">Ingresar a mi Cuenta</button>
+        <button id="tabRegisterBtn" class="auth-tab-btn">Registrarme como Cliente</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">Correo Electrónico</label>
+          <input type="email" id="loginEmail" required class="form-input" placeholder="ejemplo@correo.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">Contraseña</label>
+          <input type="password" id="loginPassword" required class="form-input" placeholder="••••••••" />
+        </div>
+        <button type="submit" class="auth-submit-btn">Iniciar Sesión</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" style="display: none;">
+        <div class="form-group">
+          <label class="form-label" for="regName">Nombre y Apellido</label>
+          <input type="text" id="regName" required class="form-input" placeholder="Nombre completo" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regEmail">Correo Electrónico</label>
+          <input type="email" id="regEmail" required class="form-input" placeholder="correo@ejemplo.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regPhone">Teléfono de Contacto / WhatsApp</label>
+          <input type="tel" id="regPhone" class="form-input" placeholder="+54 351 1234567" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regAddress">Dirección de Entrega en Córdoba</label>
+          <input type="text" id="regAddress" class="form-input" placeholder="Calle, Número, Barrio o Country" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regPassword">Contraseña Personal</label>
+          <input type="password" id="regPassword" required class="form-input" placeholder="••••••••" />
+        </div>
+        <button type="submit" class="auth-submit-btn">Crear mi Cuenta de Cliente</button>
+      </form>
+
+      <div id="authError" class="auth-error-msg"></div>
+
+      <!-- Selector Rápido para Demostración -->
+      <div class="admin-quick-helper">
+        <div class="admin-quick-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          Acceso Rápido Administradores (Demostración)
+        </div>
+        <div class="quick-admin-chips">
+          <button class="quick-admin-chip" data-email="vinotecalarecta7@gmail.com" data-pass="AdminRecta2024!">
+            <span>vinotecalarecta7@gmail.com</span>
+            <span style="color: var(--gold-light); font-weight: 700;">Superadmin Principal</span>
+          </button>
+          <button class="quick-admin-chip" data-email="floralmada07@gmail.com" data-pass="AdminRecta2024!">
+            <span>floralmada07@gmail.com</span>
+            <span style="color: var(--gold-light); font-weight: 700;">Superadmin (Flor Almada)</span>
+          </button>
+          <button class="quick-admin-chip" data-email="martinballistreri07@gmail.com" data-pass="AdminRecta2024!">
+            <span>martinballistreri07@gmail.com</span>
+            <span style="color: var(--gold-light); font-weight: 700;">Superadmin (Martín B.)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: FINALIZAR PEDIDO ================= -->
+  <div id="checkoutModal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close-btn" title="Cerrar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div style="margin-bottom: 1.75rem;">
+        <h3 style="font-family: var(--font-serif); font-size: 1.9rem; color: #fff;">Confirmación de Pedido</h3>
+        <span style="font-size: 0.85rem; color: var(--gold-champagne);">Complete sus datos para coordinar el despacho seguro</span>
+      </div>
+
+      <form id="checkoutForm">
+        <div class="form-group">
+          <label class="form-label">Nombre y Apellido *</label>
+          <input type="text" id="checkoutName" required class="form-input" placeholder="Nombre completo del destinatario" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo Electrónico *</label>
+          <input type="email" id="checkoutEmail" required class="form-input" placeholder="correo@ejemplo.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Teléfono de Contacto / WhatsApp *</label>
+          <input type="tel" id="checkoutPhone" required class="form-input" placeholder="+54 351 1234567" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dirección de Entrega en Córdoba *</label>
+          <input type="text" id="checkoutAddress" required class="form-input" placeholder="Calle, Número, Barrio, Country o Edificio" />
+        </div>
+
+        <!-- Forma de Pago -->
+        <label class="form-label" style="margin-top: 1.25rem;">Modalidad de Pago Preferida</label>
+        <div class="checkout-payment-options">
+          <label class="payment-radio-card selected">
+            <input type="radio" name="paymentMethod" value="Transferencia Bancaria (10% OFF)" checked />
+            <div>
+              <strong style="color: var(--gold-champagne);">⚡ Transferencia Bancaria (10% de Bonificación Especial)</strong>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Descuento directo deducido del total</div>
+            </div>
+          </label>
+
+          <label class="payment-radio-card">
+            <input type="radio" name="paymentMethod" value="3 Cuotas Sin Interés" />
+            <div>
+              <strong style="color: #fff;">💳 Tarjeta de Crédito (3 Pagos Fijos Sin Interés)</strong>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Visa, Mastercard, American Express bancarizadas</div>
+            </div>
+          </label>
+
+          <label class="payment-radio-card">
+            <input type="radio" name="paymentMethod" value="Efectivo contra entrega" />
+            <div>
+              <strong style="color: #fff;">💵 Efectivo Contra Entrega</strong>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Abona al momento de recibir su pedido en Córdoba</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Instrucciones Especiales de Entrega (Opcional)</label>
+          <textarea id="checkoutNotes" rows="2" class="form-textarea" placeholder="Preferencia de horario, dejar en guardia de country, etc."></textarea>
+        </div>
+
+        <!-- Resumen Financiero -->
+        <div style="background: var(--bg-surface); border: 1px solid var(--gold-border); border-radius: 6px; padding: 1.35rem; margin-top: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.45rem;">
+            <span>Subtotal (<span id="checkoutItemsCount">0</span> botellas):</span>
+            <strong id="checkoutSubtotal" style="color: #fff;">$0</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--status-available); margin-bottom: 0.45rem;">
+            <span>Bonificación Transferencia (10%):</span>
+            <strong id="checkoutDiscount">-$0</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--gold-champagne); margin-bottom: 0.75rem;">
+            <span>Costo de Despacho:</span>
+            <strong>BONIFICADO (GRATIS)</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 700; color: #fff; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.08);">
+            <span>Importe Total:</span>
+            <span id="checkoutTotal" style="color: var(--gold-champagne);">$0</span>
+          </div>
+        </div>
+
+        <button type="submit" class="auth-submit-btn" style="margin-top: 1.5rem;">
+          Confirmar y Formalizar Pedido
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ÉXITO Y ENVÍO POR WHATSAPP ================= -->
+  <div id="orderSuccessModal" class="modal-overlay">
+    <div class="modal-card">
+      <div id="orderSuccessDetails"></div>
+      <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+        <a id="orderSuccessWspBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary" style="justify-content: center; background: #25d366; color: #000; border: none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+          Enviar Comprobante Detallado por WhatsApp a la Vinoteca
+        </a>
+        <button onclick="document.getElementById('orderSuccessModal').classList.remove('active')" class="btn-secondary" style="justify-content: center; width: 100%;">
+          Regresar a la Cava Principal
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor de Avisos / Toasts -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Script Principal de la Tienda -->
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
