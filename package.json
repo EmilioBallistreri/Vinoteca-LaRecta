@@ -7,7 +7,14 @@
     "start": "node backend/server.js",
     "dev": "node --watch backend/server.js"
   },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0"
+  },
   "keywords": ["vinoteca", "ecommerce", "vino", "cordoba"],
   "author": "Vinoteca La Recta",
   "license": "ISC"
 }
+

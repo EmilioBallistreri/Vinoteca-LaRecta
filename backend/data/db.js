@@ -1,7 +1,13 @@
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
-const STORE_PATH = path.join(__dirname, 'store.json');
+const isVercel = Boolean(process.env.VERCEL);
+const STORE_PATH = isVercel
+  ? path.join(os.tmpdir(), 'store.json')
+  : path.join(__dirname, 'store.json');
+const SEED_PATH = path.join(__dirname, 'store.json');
+
 
 // Default initial database seeds
 const DEFAULT_STORE = {
@@ -514,28 +520,51 @@ const DEFAULT_STORE = {
 // Ensure data file exists
 function initStore() {
   if (!fs.existsSync(STORE_PATH)) {
-    fs.writeFileSync(STORE_PATH, JSON.stringify(DEFAULT_STORE, null, 2), 'utf8');
+    let initialData = DEFAULT_STORE;
+    if (fs.existsSync(SEED_PATH)) {
+      try {
+        const raw = fs.readFileSync(SEED_PATH, 'utf8');
+        initialData = JSON.parse(raw);
+      } catch (e) {
+        initialData = DEFAULT_STORE;
+      }
+    }
+    try {
+      fs.writeFileSync(STORE_PATH, JSON.stringify(initialData, null, 2), 'utf8');
+    } catch (e) {
+      console.warn('Could not write initial store to STORE_PATH:', e.message);
+    }
   }
 }
 
 function readStore() {
   initStore();
   try {
-    const raw = fs.readFileSync(STORE_PATH, 'utf8');
-    return JSON.parse(raw);
+    if (fs.existsSync(STORE_PATH)) {
+      const raw = fs.readFileSync(STORE_PATH, 'utf8');
+      return JSON.parse(raw);
+    }
+    if (fs.existsSync(SEED_PATH)) {
+      const raw = fs.readFileSync(SEED_PATH, 'utf8');
+      return JSON.parse(raw);
+    }
+    return DEFAULT_STORE;
   } catch (err) {
-    console.error('Error reading store.json, resetting to defaults:', err);
-    fs.writeFileSync(STORE_PATH, JSON.stringify(DEFAULT_STORE, null, 2), 'utf8');
+    console.error('Error reading store, falling back to defaults:', err.message);
     return DEFAULT_STORE;
   }
 }
 
 function writeStore(data) {
-  // Atomic write via temp file
-  const tempPath = STORE_PATH + '.tmp';
-  fs.writeFileSync(tempPath, JSON.stringify(data, null, 2), 'utf8');
-  fs.renameSync(tempPath, STORE_PATH);
+  try {
+    const tempPath = STORE_PATH + '.tmp';
+    fs.writeFileSync(tempPath, JSON.stringify(data, null, 2), 'utf8');
+    fs.renameSync(tempPath, STORE_PATH);
+  } catch (err) {
+    console.error('Error writing store:', err.message);
+  }
 }
+
 
 module.exports = {
   // PRODUCTS

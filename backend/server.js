@@ -213,7 +213,13 @@ app.get('/api/stats', (req, res) => {
   res.json(db.getStats());
 });
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`🍷 Servidor Backend Vinoteca La Recta iniciado en http://localhost:${PORT}`);
-});
+// Start Server locally if executed directly (e.g., node backend/server.js or npm start)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🍷 Servidor Backend Vinoteca La Recta iniciado en http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
+
+

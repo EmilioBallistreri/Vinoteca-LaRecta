@@ -10,12 +10,13 @@ El sistema está dividido limpiamente en dos carpetas independientes para facili
 
 ```
 web-vinoteca-la-recta/
+├── api/                      # Entrypoint Serverless para Vercel (Express handler)
+│   └── index.js
 ├── backend/                  # Servidor API REST y persistencia
 │   ├── data/
 │   │   ├── db.js             # Gestor de base de datos y métodos CRUD
-│   │   └── store.json        # Base de datos persistente (productos, pedidos, usuarios, logs)
-│   ├── server.js             # Servidor Express con endpoints y servicio estático
-│   └── package.json          # Dependencias de backend (express, cors, morgan, etc.)
+│   │   └── store.json        # Base de datos inicial / semillas
+│   └── server.js             # Servidor Express con endpoints y servicio estático
 │
 ├── frontend/                 # Interfaz de usuario de la tienda y panel de control
 │   ├── public/
@@ -32,16 +33,36 @@ web-vinoteca-la-recta/
 │   ├── index.html            # Tienda E-Commerce para clientes y visitantes
 │   └── admin.html            # Panel de Administración exclusivo
 │
-├── package.json              # Scripts raíz para arranque directo
+├── vercel.json               # Configuración unificada para desplegar Front + Back juntos en Vercel
+├── package.json              # Configuración y dependencias unificadas (Express, CORS, etc.)
 └── README.md                 # Documentación del proyecto
 ```
 
 ---
 
-## 🚀 Puesta en Marcha
+## ☁️ Despliegue en Vercel (Front + Back Juntos)
+
+El proyecto está 100% configurado para desplegarse como **un único proyecto completo** en Vercel:
+
+1. Ve a [vercel.com](https://vercel.com) e inicia sesión con tu cuenta de GitHub.
+2. Haz clic en **"Add New..."** &rarr; **"Project"**.
+3. Selecciona el repositorio `Vinoteca-LaRecta` y haz clic en **Import**.
+4. **Root Directory:** Déjalo en `./` (raíz). Ya **no** te pedirá elegir entre front o back porque la configuración está unificada en la raíz.
+5. Haz clic en **Deploy**.
+
+¡Listo! Vercel servirá automáticamente:
+- **Tienda Front:** En la raíz `/` (`frontend/index.html`)
+- **Panel Admin:** En `/admin` (`frontend/admin.html`)
+- **API Backend:** En `/api/*` (`api/index.js` &rarr; Express)
+- **Recursos estáticos:** En `/css/*`, `/js/*`, `/public/*`
+
+---
+
+## 🚀 Puesta en Marcha Local
 
 ### 1. Iniciar el Servidor Completo
 Desde la raíz del proyecto (`c:\proyectos\web-vinoteca-la-recta`):
+
 
 ```bash
 npm start
