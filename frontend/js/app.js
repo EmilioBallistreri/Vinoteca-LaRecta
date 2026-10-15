@@ -55,7 +55,7 @@ function renderCategories() {
     {
       id: 'promos',
       roman: 'I',
-      name: 'Selección & Promociones',
+      name: 'Promos',
       desc: 'Estuches de madera, combos de degustación y ofertas de cava especiales.',
       isPromo: true,
       iconSvg: `
@@ -67,7 +67,7 @@ function renderCategories() {
     {
       id: 'vinos',
       roman: 'II',
-      name: 'Vinos de Alta Gama',
+      name: 'Vinos',
       desc: 'Grandes Malbecs, Cabernet Sauvignon y cortes de autor de guarda.',
       isPromo: false,
       iconSvg: `
@@ -80,7 +80,7 @@ function renderCategories() {
     {
       id: 'espumantes',
       roman: 'III',
-      name: 'Espumantes & Champagne',
+      name: 'Espumantes',
       desc: 'Método Tradicional Champenoise y cuvées de viñedos de altura.',
       isPromo: false,
       iconSvg: `
@@ -95,7 +95,7 @@ function renderCategories() {
     {
       id: 'whiskys',
       roman: 'IV',
-      name: 'Whiskies & Destilados Finos',
+      name: 'Whiskys',
       desc: 'Single Malts escoceses añejados, Blended de prestigio y Bourbon.',
       isPromo: false,
       iconSvg: `
@@ -109,7 +109,7 @@ function renderCategories() {
     {
       id: 'aperitivos',
       roman: 'V',
-      name: 'Aperitivos & Licores Nobles',
+      name: 'Aperitivos',
       desc: 'Gins botánicos de autor, Vermuts artesanales y amargos tradicionales.',
       isPromo: false,
       iconSvg: `
@@ -122,7 +122,7 @@ function renderCategories() {
     {
       id: 'delicatessen',
       roman: 'VI',
-      name: 'Delicatessen & Maridajes',
+      name: 'Delicatessen',
       desc: 'Chacinados de bellota, aceites de oliva virgen extra y quesos nobles.',
       isPromo: false,
       iconSvg: `
@@ -161,8 +161,9 @@ function renderCategories() {
   grid.querySelectorAll('.category-card').forEach(card => {
     card.addEventListener('click', () => {
       const catId = card.getAttribute('data-category');
-      setFilterCategory(catId);
-      document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' });
+      window.location.href = `/productos.html?categoria=${catId}`;
+    });
+  });
     });
   });
 }
@@ -684,7 +685,12 @@ function setupEventListeners() {
       const res = await api.login(email, pass);
       auth.setUser(res.user);
       auth.closeModal();
-      showToast(`Bienvenido a su cuenta, ${res.user.name}.`);
+      const isAdmin = auth.isAdmin();
+      if (isAdmin) {
+        showToast(`¡Bienvenido Administrador ${res.user.name}! Rol asignado: Administrador.`);
+      } else {
+        showToast(`¡Bienvenido/a ${res.user.name}! Rol asignado: Cliente.`);
+      }
     } catch (err) {
       if (errEl) errEl.textContent = err.message;
     }
@@ -725,7 +731,7 @@ function setupEventListeners() {
         const res = await api.login(email, pass);
         auth.setUser(res.user);
         auth.closeModal();
-        showToast(`Sesión iniciada como ${res.user.name} (${res.user.role})`);
+        showToast(`¡Bienvenido Administrador ${res.user.name}! Rol asignado: Administrador.`);
       } catch (err) {
         alert(err.message);
       }

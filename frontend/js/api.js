@@ -50,6 +50,7 @@ export const api = {
   async getProducts(params = {}) {
     const query = new URLSearchParams();
     if (params.category && params.category !== 'todos') query.append('category', params.category);
+    if (params.subcategory && params.subcategory !== 'todos') query.append('subcategory', params.subcategory);
     if (params.search) query.append('search', params.search);
     if (params.featured) query.append('featured', 'true');
     if (params.promo) query.append('promo', 'true');

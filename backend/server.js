@@ -73,9 +73,10 @@ app.post('/api/auth/register', (req, res) => {
 
 // ================= PRODUCTS ROUTES =================
 app.get('/api/products', (req, res) => {
-  const { category, search, featured, promo } = req.query;
+  const { category, subcategory, search, featured, promo } = req.query;
   const products = db.getProducts({
     category,
+    subcategory,
     search,
     isFeatured: featured === 'true',
     promoOnly: promo === 'true'

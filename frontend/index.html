@@ -21,32 +21,32 @@
     <div class="container top-bar-content">
       <div class="top-bar-perks">
         <span class="perk-item">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="2" y="5" width="20" height="14" rx="2"></rect>
             <line x1="2" y1="10" x2="22" y2="10"></line>
           </svg>
-          3 Pagos sin interés con todas las tarjetas
+          3 Pagos sin interés
         </span>
         <span class="separator">•</span>
         <span class="perk-item">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
           </svg>
-          10% de bonificación por Transferencia Bancaria
+          10% OFF Transferencia Bancaria
         </span>
         <span class="separator">•</span>
         <span class="perk-item">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="1" y="3" width="15" height="13"></rect>
             <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
             <circle cx="5.5" cy="18.5" r="2.5"></circle>
             <circle cx="18.5" cy="18.5" r="2.5"></circle>
           </svg>
-          Envíos directos a domicilio en Córdoba (Gratis +$ 60.000)
+          Envíos en Córdoba (Gratis +$ 60.000)
         </span>
       </div>
       <div class="top-bar-links">
-        <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer">
+        <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="top-ig-link" title="Instagram Oficial Vinoteca La Recta">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -54,11 +54,11 @@
           </svg>
           @vinoteca.larecta
         </a>
-        <a href="https://wa.me/5493512460017" target="_blank" rel="noopener noreferrer">
+        <a href="https://wa.me/5493512460017" target="_blank" rel="noopener noreferrer" title="WhatsApp Vinoteca La Recta">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
           </svg>
-          WhatsApp: 3512460017
+          3512460017
         </a>
       </div>
     </div>
@@ -68,23 +68,82 @@
   <header class="main-header">
     <div class="container navbar">
       <!-- Marca Oficial y Escudo -->
-      <a href="#inicio" class="nav-brand">
+      <a href="/" class="nav-brand">
         <img src="/public/logo-vinoteca.jpg" alt="Escudo Oficial Vinoteca La Recta" class="brand-logo-img" />
         <div class="brand-text-block">
           <span class="brand-title">VINOTECA LA RECTA</span>
-          <span class="brand-subtitle">Cava de Selección & Vinos de Autor</span>
         </div>
       </a>
 
       <!-- Menú de Navegación Formal -->
       <nav>
         <ul class="nav-menu">
-          <li><a href="#inicio" class="nav-link active">INICIO</a></li>
-          <li><a href="#catalogo" class="nav-link">PRODUCTOS</a></li>
+          <li><a href="/" class="nav-link active">INICIO</a></li>
+          
+          <li class="nav-dropdown-item">
+            <a href="/productos.html" class="nav-link nav-dropdown-trigger">
+              CATEGORÍAS
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
+            <div class="nav-megamenu">
+              <div class="megamenu-header">
+                <span class="megamenu-title">Colecciones de Cava</span>
+                <a href="/productos.html" class="megamenu-view-all">Ver Catálogo Completo &rarr;</a>
+              </div>
+              <div class="megamenu-cards-grid">
+                <a href="/productos.html?categoria=promos" class="menu-cat-card promo-card">
+                  <div class="menu-cat-icon">🏷️</div>
+                  <div class="menu-cat-info">
+                    <h4>Promos</h4>
+                    <span>Combos & Ofertas</span>
+                  </div>
+                </a>
+                <a href="/productos.html?categoria=vinos" class="menu-cat-card">
+                  <div class="menu-cat-icon">🍷</div>
+                  <div class="menu-cat-info">
+                    <h4>Vinos</h4>
+                    <span>Malbec, Cabernet & Cortes</span>
+                  </div>
+                </a>
+                <a href="/productos.html?categoria=espumantes" class="menu-cat-card">
+                  <div class="menu-cat-icon">🍾</div>
+                  <div class="menu-cat-info">
+                    <h4>Espumantes</h4>
+                    <span>Nature, Brut & Champagne</span>
+                  </div>
+                </a>
+                <a href="/productos.html?categoria=whiskys" class="menu-cat-card">
+                  <div class="menu-cat-icon">🥃</div>
+                  <div class="menu-cat-info">
+                    <h4>Whiskys</h4>
+                    <span>Single Malt & Bourbon</span>
+                  </div>
+                </a>
+                <a href="/productos.html?categoria=aperitivos" class="menu-cat-card">
+                  <div class="menu-cat-icon">🍸</div>
+                  <div class="menu-cat-info">
+                    <h4>Aperitivos</h4>
+                    <span>Gin, Vermouth & Bitter</span>
+                  </div>
+                </a>
+                <a href="/productos.html?categoria=delicatessen" class="menu-cat-card">
+                  <div class="menu-cat-icon">🧀</div>
+                  <div class="menu-cat-info">
+                    <h4>Delicatessen</h4>
+                    <span>Olivas, Jamón & Quesos</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <li><a href="/productos.html" class="nav-link">PRODUCTOS</a></li>
           <li>
-            <a href="#promos" class="nav-link" id="navPromosLink">
+            <a href="/productos.html?categoria=promos" class="nav-link" id="navPromosLink">
               PROMOS
-              <span class="nav-badge-off">RESERVA</span>
+              <span class="nav-badge-off">OFERTAS</span>
             </a>
           </li>
           <li><a href="#comunidad" class="nav-link">COMUNIDAD</a></li>
@@ -92,26 +151,18 @@
         </ul>
       </nav>
 
-      <!-- Acciones de Cabecera -->
+      <!-- Acciones de Cabecera (Botón único de Ingreso con asignación de rol) -->
       <div class="nav-actions">
-        <!-- Enlace a Instagram -->
+        <!-- Enlace a Instagram Oficial -->
         <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="nav-btn" title="Instagram Oficial">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
           </svg>
         </a>
 
-        <!-- Acceso Administrativo -->
-        <a href="/admin.html" class="nav-btn admin-link-btn" title="Panel de Administración (Sólo Personal Autorizado)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-          </svg>
-          <span class="btn-text">Admin</span>
-        </a>
-
-        <!-- Sesión de Cliente / Ingresar -->
+        <!-- Sesión Unificada: Ingresar (Asigna rol Cliente o Administrador) -->
         <div id="navUserContainer"></div>
 
         <!-- Carrito de Compras de Cava -->
@@ -148,15 +199,15 @@
         </p>
 
         <div class="hero-actions">
-          <a href="#catalogo" class="btn-primary">
+          <a href="/productos.html" class="btn-primary">
             Explorar Catálogo de Cava
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
           </a>
-          <a href="#promos" class="btn-secondary">
-            Selecciones Destacadas
+          <a href="/productos.html?categoria=promos" class="btn-secondary">
+            Selecciones Destacadas & Promos
           </a>
         </div>
 
@@ -255,72 +306,33 @@
     </div>
   </section>
 
-  <!-- ================= SÚMATE A NUESTRA COMUNIDAD (ESTILO CLUB PRIVADO) ================= -->
+  <!-- ================= SÚMATE A NUESTRA COMUNIDAD ================= -->
   <section id="comunidad" class="community-section">
     <div class="container">
-      <div class="community-box">
-        <div class="community-content">
-          <div class="community-text">
-            <span class="brand-watermark">Club Privado &amp; Comunidad Enológica</span>
-            <h2>Súmate a Nuestra Comunidad</h2>
-            <p>
-              Forme parte de un selecto círculo de conocedores y amigos de Vinoteca La Recta. Acceda a invitaciones a catas privadas de añadas históricas, asignación preferencial de partidas limitadas y asesoramiento directo con nuestros sommeliers.
-            </p>
+      <div class="community-box-centered">
+        <span class="section-tag">Club Privado &amp; Comunidad Enológica</span>
+        <h2>Súmate a Nuestra Comunidad</h2>
+        <div class="section-ornament">❖</div>
+        <p>
+          Forme parte de un selecto círculo de conocedores y amigos de Vinoteca La Recta. Acceda a invitaciones a catas privadas, preventas de añadas históricas y atención personalizada con nuestros sommeliers.
+        </p>
 
-            <div class="community-perks-list">
-              <div class="comm-perk-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-                <span><strong>Catas a Puertas Cerradas:</strong> Encuentros exclusivos guiados por enólogos y sommeliers de renombre internacional.</span>
-              </div>
-              <div class="comm-perk-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
-                <span><strong>Preventas Privadas de Cava:</strong> Adquiera cosechas de guarda numeradas antes de su distribución comercial masiva.</span>
-              </div>
-              <div class="comm-perk-item">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                </svg>
-                <span><strong>Línea Directa Sommelier:</strong> Asesoramiento personalizado vía WhatsApp para maridajes y confección de cavas privadas.</span>
-              </div>
-            </div>
+        <div class="community-buttons-row">
+          <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="btn-community-ig">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            Instagram: @vinoteca.larecta
+          </a>
 
-            <!-- Botones formales de acción comunitaria -->
-            <div class="community-actions">
-              <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="btn-instagram-formal">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-                Instagram: @vinoteca.larecta
-              </a>
-
-              <a href="https://wa.me/5493512460017?text=Estimados%20Vinoteca%20La%20Recta,%20deseo%20sumarme%20a%20su%20comunidad%20y%20recibir%20novedades%20de%20cava." target="_blank" rel="noopener noreferrer" class="btn-whatsapp-formal">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                </svg>
-                WhatsApp Oficial: 3512460017
-              </a>
-            </div>
-          </div>
-
-          <!-- Tarjeta VIP Newsletter del Club -->
-          <div class="community-newsletter-card">
-            <div class="comm-logo-circle">
-              <img src="/public/logo-vinoteca.jpg" alt="Escudo Vinoteca La Recta" />
-            </div>
-            <h3>Boletín del Sommelier</h3>
-            <p>Suscríbase para recibir mensualmente nuestras fichas de cata, maridajes recomendados y convocatorias a degustaciones privadas.</p>
-
-            <form id="communityNewsletterForm" class="newsletter-form">
-              <input type="email" id="newsletterEmailInput" required placeholder="Su correo electrónico personal..." class="newsletter-input" />
-              <button type="submit" class="newsletter-submit-btn">Suscribirme al Club Privado</button>
-            </form>
-          </div>
+          <a href="https://wa.me/5493512460017?text=Estimados%20Vinoteca%20La%20Recta,%20deseo%20sumarme%20a%20su%20comunidad%20y%20recibir%20novedades%20de%20cava." target="_blank" rel="noopener noreferrer" class="btn-community-wsp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.09c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.32c0-4.51 3.67-8.18 8.18-8.18 2.18 0 4.24.85 5.78 2.39 1.55 1.55 2.4 3.6 2.4 5.79 0 4.51-3.67 8.17-8.18 8.17zm4.49-6.13c-.25-.12-1.46-.72-1.69-.8-.22-.09-.39-.12-.55.12-.17.25-.64.8-.78.97-.15.17-.29.19-.54.07-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.09-.17.04-.31-.02-.43-.07-.12-.55-1.33-.76-1.82-.2-.48-.41-.41-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.17.21-.58.21-1.07.15-1.17-.07-.1-.23-.17-.48-.29z"/>
+            </svg>
+            WhatsApp: +54 9 351 246-0017
+          </a>
         </div>
       </div>
     </div>
@@ -475,14 +487,11 @@
 
   <!-- ================= BOTONES FLOTANTES FORMALES ================= -->
   <div class="floating-actions-container">
-    <!-- Botón Sommelier WhatsApp Formal -->
-    <a href="https://wa.me/5493512460017?text=Estimado%20Sommelier%20de%20Vinoteca%20La%20Recta,%20deseo%20hacer%20una%20consulta%20sobre%20su%20cava." target="_blank" rel="noopener noreferrer" class="floating-sommelier-btn" title="Contactar Sommelier vía WhatsApp">
-      <div class="sommelier-icon-badge">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-        </svg>
-      </div>
-      <span>Atención Sommelier • WhatsApp</span>
+    <!-- Botón WhatsApp Limpio Sólo Icono Oficial -->
+    <a href="https://wa.me/5493512460017?text=Estimados%20Vinoteca%20La%20Recta,%20deseo%20hacer%20una%20consulta." target="_blank" rel="noopener noreferrer" class="floating-wsp-btn" title="Contactar por WhatsApp">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.09c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.32c0-4.51 3.67-8.18 8.18-8.18 2.18 0 4.24.85 5.78 2.39 1.55 1.55 2.4 3.6 2.4 5.79 0 4.51-3.67 8.17-8.18 8.17zm4.49-6.13c-.25-.12-1.46-.72-1.69-.8-.22-.09-.39-.12-.55.12-.17.25-.64.8-.78.97-.15.17-.29.19-.54.07-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.09-.17.04-.31-.02-.43-.07-.12-.55-1.33-.76-1.82-.2-.48-.41-.41-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.17.21-.58.21-1.07.15-1.17-.07-.1-.23-.17-.48-.29z"/>
+      </svg>
     </a>
 
     <!-- Botón Flotante de Carrito / Cava -->

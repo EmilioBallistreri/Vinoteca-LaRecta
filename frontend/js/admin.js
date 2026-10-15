@@ -755,6 +755,22 @@ function renderActivity(container) {
 
 // ================= PRODUCT FORM MODAL (CREATE / EDIT) =================
 
+const ADMIN_SUBCATS = {
+  promos: ['Combos Degustación', 'Cajas x6', 'Packs con Copas', 'Ofertas Especiales'],
+  vinos: ['Malbec', 'Cabernet Sauvignon', 'Red Blend & Cortes', 'Blancos & Rosados'],
+  espumantes: ['Extra Brut', 'Brut Nature', 'Champagne Francés', 'Rosé & Método Tradicional'],
+  whiskys: ['Single Malt Escocés', 'Blended Scotch', 'Bourbon Americano', 'Irlandés & Otros'],
+  aperitivos: ['Gin Premium', 'Vermouth & Bitter', 'Fernet & Digestivos', 'Licores Finos'],
+  delicatessen: ['Aceites de Oliva Extra Virgen', 'Conservas & Ahumados', 'Chocolates & Dulces Finos', 'Tablas & Embutidos Artesanales']
+};
+
+function updateSubcatDatalist(cat) {
+  const dl = document.getElementById('pSubcatDatalist');
+  if (!dl) return;
+  const list = ADMIN_SUBCATS[cat] || [];
+  dl.innerHTML = list.map(s => '<option value="' + s + '"></option>').join('');
+}
+
 function openProductFormModal(product = null) {
   adminState.editingProduct = product;
   const modal = document.getElementById('adminProductModal');
@@ -767,7 +783,10 @@ function openProductFormModal(product = null) {
   }
 
   document.getElementById('pFormName').value = product?.name || '';
-  document.getElementById('pFormCategory').value = product?.category || 'vinos';
+  const initialCat = product?.category || 'vinos';
+  document.getElementById('pFormCategory').value = initialCat;
+  updateSubcatDatalist(initialCat);
+  document.getElementById('pFormCategory').onchange = (e) => updateSubcatDatalist(e.target.value);
   document.getElementById('pFormSubcategory').value = product?.subcategory || '';
   document.getElementById('pFormBodega').value = product?.bodega || '';
   document.getElementById('pFormPrice').value = product?.price || '';

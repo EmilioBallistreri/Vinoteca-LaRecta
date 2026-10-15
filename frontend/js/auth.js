@@ -65,12 +65,14 @@ export const auth = {
     } else {
       const isAdmin = this.isAdmin();
       const firstName = this.currentUser.name.split(' ')[0];
+      const roleLabel = isAdmin ? 'Administrador' : 'Cliente';
       userContainer.innerHTML = `
         <div class="user-menu-dropdown">
-          <button id="userDropdownTrigger" class="nav-btn user-btn">
-            <span class="user-avatar-badge">${firstName.charAt(0).toUpperCase()}</span>
+          <button id="userDropdownTrigger" class="nav-btn user-btn ${isAdmin ? 'admin-highlight-btn' : ''}" title="Cuenta: ${this.currentUser.name} (${roleLabel})">
+            <span class="user-avatar-badge ${isAdmin ? 'admin-badge' : ''}">${firstName.charAt(0).toUpperCase()}</span>
             <span class="user-name-label">${firstName}</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <span class="user-role-pill ${isAdmin ? 'admin-role' : 'client-role'}">${roleLabel}</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </button>
@@ -78,14 +80,14 @@ export const auth = {
             <div class="dropdown-header">
               <span class="dropdown-user-fullname">${this.currentUser.name}</span>
               <span class="dropdown-user-email">${this.currentUser.email}</span>
-              <span class="dropdown-user-role ${this.currentUser.role}">${this.currentUser.role}</span>
+              <span class="dropdown-user-role ${this.currentUser.role}">Rol asignado: ${roleLabel}</span>
             </div>
             ${isAdmin ? `
-              <a href="/admin.html" class="dropdown-item gold-highlight">
+              <a href="/admin.html" class="dropdown-item gold-highlight" style="background: rgba(197, 160, 89, 0.15); border-left: 3px solid var(--gold-light);">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 </svg>
-                Panel Administrador
+                <strong>Ir al Panel de Administración &rarr;</strong>
               </a>
             ` : ''}
             <button id="viewOrdersBtn" class="dropdown-item">
