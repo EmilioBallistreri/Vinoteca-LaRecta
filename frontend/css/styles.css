@@ -2817,7 +2817,7 @@ img {
   color: #a5d6a7;
 }
 
-/* Mapa y Dirección del Comercio */
+/* Mapa y Dirección del Comercio (Minimapa Clickeable a Google Maps) */
 .store-location-card {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--gold-border);
@@ -2829,9 +2829,13 @@ img {
 }
 
 .store-map-wrap {
+  position: relative;
+  display: block;
   width: 100%;
   height: 280px;
   border-bottom: 1px solid var(--gold-border);
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .store-map-wrap iframe {
@@ -2839,10 +2843,225 @@ img {
   height: 100%;
   border: 0;
   filter: invert(90%) hue-rotate(180deg) contrast(1.1);
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.35s ease;
+}
+
+.store-minimap-link:hover iframe {
+  transform: scale(1.05);
+  filter: invert(88%) hue-rotate(180deg) contrast(1.18) brightness(1.06);
+}
+
+.minimap-click-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(9, 9, 10, 0.08) 0%, rgba(9, 9, 10, 0.65) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem 1.25rem;
+  transition: background 0.3s ease;
+}
+
+.store-minimap-link:hover .minimap-click-overlay {
+  background: linear-gradient(180deg, rgba(197, 160, 89, 0.08) 0%, rgba(9, 9, 10, 0.78) 100%);
+}
+
+.minimap-center-marker {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.minimap-pulse-ring {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(197, 160, 89, 0.35);
+  border: 1.5px solid var(--gold-light);
+  animation: minimapPulse 2.2s infinite ease-out;
+}
+
+@keyframes minimapPulse {
+  0% {
+    transform: scale(0.65);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+}
+
+.minimap-pin-dot {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gold-gradient);
+  color: #09090a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), 0 0 14px rgba(197, 160, 89, 0.6);
+  border: 2px solid #09090a;
+  transition: transform 0.25s ease;
+}
+
+.store-minimap-link:hover .minimap-pin-dot {
+  transform: translateY(-4px) scale(1.1);
+}
+
+.minimap-cta-badge {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(9, 9, 10, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--gold-border-bright);
+  color: var(--gold-champagne);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.5rem 1.05rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+  transition: all 0.25s ease;
+}
+
+.store-minimap-link:hover .minimap-cta-badge {
+  background: var(--gold-gradient);
+  color: #09090a;
+  border-color: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(197, 160, 89, 0.45);
+}
+
+/* Minimapa compacto en el Pie de Página (Footer) */
+.footer-minimap-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 128px;
+  margin-top: 0.65rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--gold-border);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.footer-minimap-card:hover {
+  border-color: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.75), 0 0 16px rgba(197, 160, 89, 0.28);
+}
+
+.footer-minimap-card iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: invert(90%) hue-rotate(180deg) contrast(1.1);
+  pointer-events: none;
+  transition: transform 0.4s ease;
+}
+
+.footer-minimap-card:hover iframe {
+  transform: scale(1.06);
+}
+
+.footer-minimap-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(9, 9, 10, 0.1) 0%, rgba(9, 9, 10, 0.75) 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0.5rem 0.65rem;
+}
+
+.footer-minimap-pin {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--gold-gradient);
+  color: #09090a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #09090a;
+  box-shadow: 0 0 12px rgba(197, 160, 89, 0.65);
+  transition: transform 0.25s ease;
+}
+
+.footer-minimap-card:hover .footer-minimap-pin {
+  transform: translate(-50%, -58%) scale(1.1);
+}
+
+.footer-minimap-badge {
+  position: relative;
+  z-index: 2;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(9, 9, 10, 0.9);
+  border: 1px solid var(--gold-border-bright);
+  color: var(--gold-champagne);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.footer-minimap-card:hover .footer-minimap-badge {
+  background: var(--gold-primary);
+  color: #09090a;
+}
+
+.perk-map-link:hover {
+  color: var(--gold-light);
+  text-decoration: underline;
 }
 
 .store-location-body {
   padding: 2rem;
+}
+
+/* Estandarización uniforme de formato, proporción (4:5) y calidad visual en todas las imágenes de productos */
+.card-img-wrap img,
+.promo-img-wrap img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+}
+
+.modal-img-col img,
+.product-modal-img {
+  width: 100%;
+  height: 420px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  border: 1px solid var(--gold-border);
 }
 
 /* ================= ENCABEZADO DE CATÁLOGO MINIMALISTA (PRODUCTOS.HTML) ================= */

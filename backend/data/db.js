@@ -305,7 +305,7 @@ module.exports = {
       minStock: Number(data.minStock) || 3,
       isFeatured: Boolean(data.isFeatured),
       badge: data.badge || null,
-      image: data.image || 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80',
+      image: data.image || 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
       description: data.description || '',
       createdAt: new Date().toISOString()
     };

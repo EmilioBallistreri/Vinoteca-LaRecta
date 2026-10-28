@@ -764,6 +764,58 @@ const ADMIN_SUBCATS = {
   delicatessen: ['Aceites de Oliva Extra Virgen', 'Conservas & Ahumados', 'Chocolates & Dulces Finos', 'Tablas & Embutidos Artesanales']
 };
 
+// Imágenes de prueba estandarizadas por categoría (mismo formato WebP, proporción 800x1000 4:5 y calidad q=85)
+const CATEGORY_TEST_IMAGES = {
+  promos: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
+  vinos: 'https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
+  espumantes: 'https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
+  whiskys: 'https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
+  aperitivos: 'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
+  delicatessen: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp'
+};
+
+// Normaliza cualquier imagen subida a 800x1000 (4:5) en formato WebP con calidad 85%
+function standardizeProductImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('No se pudo leer el archivo de imagen.'));
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onerror = () => reject(new Error('Formato de imagen inválido.'));
+      img.onload = () => {
+        const targetW = 800;
+        const targetH = 1000;
+        const canvas = document.createElement('canvas');
+        canvas.width = targetW;
+        canvas.height = targetH;
+        const ctx = canvas.getContext('2d');
+
+        // Fondo oscuro de estudio por si la imagen tiene transparencia
+        ctx.fillStyle = '#11100f';
+        ctx.fillRect(0, 0, targetW, targetH);
+
+        // Recorte centrado (cover) manteniendo proporción 4:5
+        const srcRatio = img.width / img.height;
+        const dstRatio = targetW / targetH;
+        let sx = 0, sy = 0, sw = img.width, sh = img.height;
+        if (srcRatio > dstRatio) {
+          sw = img.height * dstRatio;
+          sx = (img.width - sw) / 2;
+        } else {
+          sh = img.width / dstRatio;
+          sy = (img.height - sh) / 2;
+        }
+
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, targetW, targetH);
+        const standardizedDataUrl = canvas.toDataURL('image/webp', 0.85);
+        resolve(standardizedDataUrl);
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 function updateSubcatDatalist(cat) {
   const dl = document.getElementById('pSubcatDatalist');
   if (!dl) return;
@@ -786,7 +838,18 @@ function openProductFormModal(product = null) {
   const initialCat = product?.category || 'vinos';
   document.getElementById('pFormCategory').value = initialCat;
   updateSubcatDatalist(initialCat);
-  document.getElementById('pFormCategory').onchange = (e) => updateSubcatDatalist(e.target.value);
+  document.getElementById('pFormCategory').onchange = (e) => {
+    const newCat = e.target.value;
+    updateSubcatDatalist(newCat);
+    // Si está creando un producto nuevo y tiene una imagen de prueba por defecto, actualizar a la de la categoría elegida
+    const currentImg = document.getElementById('pFormImage').value;
+    if (!adminState.editingProduct && Object.values(CATEGORY_TEST_IMAGES).includes(currentImg)) {
+      const nextImg = CATEGORY_TEST_IMAGES[newCat] || CATEGORY_TEST_IMAGES.vinos;
+      document.getElementById('pFormImage').value = nextImg;
+      const prev = document.getElementById('pFormImagePreview');
+      if (prev) prev.src = nextImg;
+    }
+  };
   document.getElementById('pFormSubcategory').value = product?.subcategory || '';
   document.getElementById('pFormBodega').value = product?.bodega || '';
   document.getElementById('pFormPrice').value = product?.price || '';
@@ -796,7 +859,7 @@ function openProductFormModal(product = null) {
   document.getElementById('pFormMinStock').value = product ? (product.minStock || 3) : 3;
   document.getElementById('pFormBadge').value = product?.badge || '';
 
-  const defaultImg = product?.image || 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80';
+  const defaultImg = product?.image || CATEGORY_TEST_IMAGES[initialCat] || CATEGORY_TEST_IMAGES.vinos;
   document.getElementById('pFormImage').value = defaultImg;
   const previewEl = document.getElementById('pFormImagePreview');
   if (previewEl) previewEl.src = defaultImg;
@@ -870,7 +933,9 @@ function setupAdminListeners() {
         alert(err.message);
       }
     });
-  // Image preview & local file reader
+  });
+
+  // Image preview & local file reader with automatic format/quality standardization
   const imgInput = document.getElementById('pFormImage');
   const imgPreview = document.getElementById('pFormImagePreview');
   imgInput?.addEventListener('input', (e) => {
@@ -879,22 +944,32 @@ function setupAdminListeners() {
     }
   });
 
+  document.querySelectorAll('.p-test-img-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cat = btn.getAttribute('data-cat-img');
+      const url = CATEGORY_TEST_IMAGES[cat] || CATEGORY_TEST_IMAGES.vinos;
+      if (imgInput) imgInput.value = url;
+      if (imgPreview) imgPreview.src = url;
+      const catSelect = document.getElementById('pFormCategory');
+      if (catSelect && catSelect.value !== cat) {
+        catSelect.value = cat;
+        updateSubcatDatalist(cat);
+      }
+    });
+  });
+
   const imgFileInput = document.getElementById('pFormImageFile');
-  imgFileInput?.addEventListener('change', (e) => {
+  imgFileInput?.addEventListener('change', async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 2.5 * 1024 * 1024) {
-      alert('Aviso: La imagen seleccionada es mayor a 2.5MB. Se cargará pero se recomienda optimizarla para mayor velocidad.');
+    try {
+      const standardizedDataUrl = await standardizeProductImage(file);
+      if (imgInput) imgInput.value = standardizedDataUrl;
+      if (imgPreview) imgPreview.src = standardizedDataUrl;
+    } catch (err) {
+      alert('Error al estandarizar la imagen: ' + err.message);
     }
-
-    const reader = new FileReader();
-    reader.onload = (loadEvent) => {
-      const dataUrl = loadEvent.target.result;
-      if (imgInput) imgInput.value = dataUrl;
-      if (imgPreview) imgPreview.src = dataUrl;
-    };
-    reader.readAsDataURL(file);
   });
 
   // Product Form Submit (Create / Edit)

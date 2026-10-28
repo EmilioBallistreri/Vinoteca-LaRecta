@@ -25,7 +25,7 @@
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
             <circle cx="12" cy="10" r="3"></circle>
           </svg>
-          Av. Recta Martinolli 8255, Argüello • Córdoba
+          <a href="https://www.google.com/maps/place/Vinoteca+La+Recta/@-31.347138,-64.279786,17z/data=!3m2!4b1!5s0x94329c27f7fd4923:0x27291cb4f1bd05a5!4m6!3m5!1s0x94329c27f70b2869:0x9d2a7b9c8ee6c518!8m2!3d-31.3471426!4d-64.2772111!16s%2Fg%2F1wk4f42p?entry=ttu&g_ep=EgoyMDI2MTAyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="perk-map-link" title="Ver ubicación en Google Maps">Av. Recta Martinolli 8255, Argüello • Córdoba</a>
         </span>
         <span class="separator">•</span>
         <span class="perk-item">
@@ -391,13 +391,13 @@
 
         <div class="about-visual-stack">
           <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1000&q=85" alt="Cava de Vinoteca La Recta" class="about-main-img" />
-          <div class="about-floating-card">
-            <strong>Recta Martinolli 8255</strong>
+          <a href="https://www.google.com/maps/place/Vinoteca+La+Recta/@-31.347138,-64.279786,17z/data=!3m2!4b1!5s0x94329c27f7fd4923:0x27291cb4f1bd05a5!4m6!3m5!1s0x94329c27f70b2869:0x9d2a7b9c8ee6c518!8m2!3d-31.3471426!4d-64.2772111!16s%2Fg%2F1wk4f42p?entry=ttu&g_ep=EgoyMDI2MTAyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="about-floating-card" title="Abrir ubicación en Google Maps">
+            <strong>📍 Recta Martinolli 8255</strong>
             <span>Argüello, Córdoba • Cava &amp; Colección</span>
             <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--gold-primary); font-weight: 700;">
-              Atención directa: 351 246-0017
+              Ver en Google Maps &rarr; • 351 246-0017
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -416,18 +416,46 @@
       </div>
 
       <div class="contact-grid">
-        <!-- Tarjeta de Datos y Mapa -->
+        <!-- Tarjeta de Datos y Minimapa Clickeable -->
         <div class="store-location-card">
-          <div class="store-map-wrap">
-            <!-- Google Maps Embed centrado en Av. Recta Martinolli 8255, Córdoba -->
+          <a 
+            href="https://www.google.com/maps/place/Vinoteca+La+Recta/@-31.347138,-64.279786,17z/data=!3m2!4b1!5s0x94329c27f7fd4923:0x27291cb4f1bd05a5!4m6!3m5!1s0x94329c27f70b2869:0x9d2a7b9c8ee6c518!8m2!3d-31.3471426!4d-64.2772111!16s%2Fg%2F1wk4f42p?entry=ttu&g_ep=EgoyMDI2MTAyNS4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="store-map-wrap store-minimap-link"
+            title="Hacer clic para abrir Vinoteca La Recta en Google Maps">
+            <!-- Google Maps Embed centrado en Vinoteca La Recta (-31.3471426, -64.2772111) -->
             <iframe 
-              src="https://maps.google.com/maps?q=Av.+Recta+Martinolli+8255,+Arg%C3%BCello,+C%C3%B3rdoba,+Argentina&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              src="https://maps.google.com/maps?ll=-31.3471426,-64.2772111&q=Vinoteca+La+Recta,+Av.+Recta+Martinolli+8255,+Arg%C3%BCello,+C%C3%B3rdoba&t=&z=17&ie=UTF8&iwloc=&output=embed"
               allowfullscreen="" 
               loading="lazy" 
               referrerpolicy="no-referrer-when-downgrade"
+              tabindex="-1"
               title="Ubicación de Vinoteca La Recta en Google Maps">
             </iframe>
-          </div>
+            <div class="minimap-click-overlay">
+              <div class="minimap-center-marker" aria-hidden="true">
+                <span class="minimap-pulse-ring"></span>
+                <span class="minimap-pin-dot">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="minimap-cta-badge">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>Vinoteca La Recta • Clic para abrir en Google Maps</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </div>
+            </div>
+          </a>
 
           <div class="store-location-body">
             <div class="contact-item">
@@ -439,7 +467,11 @@
               </div>
               <div class="contact-details">
                 <h4>Dirección del Comercio</h4>
-                <p><strong>Av. Recta Martinolli 8255</strong>, Argüello, Córdoba (X5022HYI), República Argentina</p>
+                <p>
+                  <a href="https://www.google.com/maps/place/Vinoteca+La+Recta/@-31.347138,-64.279786,17z/data=!3m2!4b1!5s0x94329c27f7fd4923:0x27291cb4f1bd05a5!4m6!3m5!1s0x94329c27f70b2869:0x9d2a7b9c8ee6c518!8m2!3d-31.3471426!4d-64.2772111!16s%2Fg%2F1wk4f42p?entry=ttu&g_ep=EgoyMDI2MTAyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="color: var(--text-ivory); text-decoration: underline; text-decoration-color: var(--gold-primary);">
+                    <strong>Av. Recta Martinolli 8255</strong>, Argüello, Córdoba (X5022HYI), República Argentina ↗
+                  </a>
+                </p>
               </div>
             </div>
 
@@ -610,13 +642,41 @@
         <div class="footer-col">
           <h4>Nuestra Sede</h4>
           <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.6rem; line-height: 1.6;">
-            <strong>Av. Recta Martinolli 8255</strong><br />
-            Argüello • Córdoba, Argentina<br />
+            <a href="https://www.google.com/maps/place/Vinoteca+La+Recta/@-31.347138,-64.279786,17z/data=!3m2!4b1!5s0x94329c27f7fd4923:0x27291cb4f1bd05a5!4m6!3m5!1s0x94329c27f70b2869:0x9d2a7b9c8ee6c518!8m2!3d-31.3471426!4d-64.2772111!16s%2Fg%2F1wk4f42p?entry=ttu&g_ep=EgoyMDI2MTAyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="color: var(--text-ivory);">
+              <strong>Av. Recta Martinolli 8255</strong><br />
+              Argüello • Córdoba, Argentina ↗
+            </a><br />
             Email: <a href="mailto:vinotecalarecta7@gmail.com" style="color: var(--gold-champagne);">vinotecalarecta7@gmail.com</a>
           </p>
-          <div style="font-size: 0.74rem; color: var(--gold-light);">
-            Operamos con 3 cuotas sin interés y 10% OFF por transferencia.
-          </div>
+          <!-- Minimapa Clickeable del Comercio -->
+          <a 
+            href="https://www.google.com/maps/place/Vinoteca+La+Recta/@-31.347138,-64.279786,17z/data=!3m2!4b1!5s0x94329c27f7fd4923:0x27291cb4f1bd05a5!4m6!3m5!1s0x94329c27f70b2869:0x9d2a7b9c8ee6c518!8m2!3d-31.3471426!4d-64.2772111!16s%2Fg%2F1wk4f42p?entry=ttu&g_ep=EgoyMDI2MTAyNS4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-minimap-card"
+            title="Hacer clic para abrir Vinoteca La Recta en Google Maps">
+            <iframe 
+              src="https://maps.google.com/maps?ll=-31.3471426,-64.2772111&q=Vinoteca+La+Recta,+Av.+Recta+Martinolli+8255,+Arg%C3%BCello,+C%C3%B3rdoba&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+              tabindex="-1"
+              title="Minimapa Vinoteca La Recta">
+            </iframe>
+            <div class="footer-minimap-overlay">
+              <span class="footer-minimap-pin" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+              </span>
+              <span class="footer-minimap-badge">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                Ir a Google Maps ↗
+              </span>
+            </div>
+          </a>
         </div>
       </div>
 

@@ -194,7 +194,7 @@ function renderProducts() {
       <article class="product-card" data-id="${product.id}">
         <div class="card-img-wrap">
           ${product.badge ? `<span class="card-badge ${product.badge.includes('PROMO') ? 'promo' : ''}">${product.badge}</span>` : ''}
-          <img src="${product.image}" alt="${product.name}" loading="lazy" />
+          <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp';" />
           <button class="card-quick-view-btn" data-action="quickview" data-id="${product.id}">Ver Ficha Técnica</button>
         </div>
         <div class="card-body">
@@ -881,7 +881,7 @@ function renderPromosGrid() {
       <article class="promo-card-item">
         <span class="promo-badge-tag">${discountTag}</span>
         <div class="promo-img-wrap">
-          <img src="${promo.image}" alt="${promo.name}" loading="lazy" />
+          <img src="${promo.image}" alt="${promo.name}" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp';" />
         </div>
         <div class="promo-body">
           <span class="promo-category">${promo.bodega ? promo.bodega + ' • ' : ''}${promo.category.toUpperCase()}</span>

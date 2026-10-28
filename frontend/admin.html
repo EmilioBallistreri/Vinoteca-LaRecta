@@ -252,20 +252,32 @@
             <input type="text" id="pFormBadge" class="form-input" placeholder="Ej: PROMO 20% OFF, ÍCONO, 94 PTS PARKER" />
           </div>
 
-          <!-- Imagen con Carga de Archivo Local o URL Externa -->
+          <!-- Imagen con Carga de Archivo Local, Estandarización Automática o Imagen de Prueba por Categoría -->
           <div class="form-group" style="grid-column: 1 / -1; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 10px; border: 1px solid var(--admin-border);">
-            <label class="form-label" style="color: var(--gold-champagne); font-weight: 600;">Fotografía del Producto *</label>
+            <label class="form-label" style="color: var(--gold-champagne); font-weight: 600;">Fotografía del Producto (Formato Estandarizado 800×1000 WebP) *</label>
             <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center;">
               <div>
-                <label style="font-size: 0.75rem; color: #aaa; display: block; margin-bottom: 0.3rem;">Opción 1: Subir imagen desde su computadora</label>
+                <label style="font-size: 0.75rem; color: #aaa; display: block; margin-bottom: 0.3rem;">Opción 1: Subir imagen desde su computadora (se estandariza automáticamente a 800×1000 WebP)</label>
                 <input type="file" id="pFormImageFile" accept="image/*" class="form-input" style="padding: 0.45rem; font-size: 0.8rem;" />
                 
-                <label style="font-size: 0.75rem; color: #aaa; display: block; margin-top: 0.6rem; margin-bottom: 0.3rem;">Opción 2: O ingresar URL web directa de la imagen</label>
+                <label style="font-size: 0.75rem; color: #aaa; display: block; margin-top: 0.6rem; margin-bottom: 0.3rem;">Opción 2: Ingresar URL web directa de la imagen</label>
                 <input type="text" id="pFormImage" required class="form-input" placeholder="https://images.unsplash.com/..." />
+
+                <div style="margin-top: 0.65rem;">
+                  <span style="font-size: 0.72rem; color: var(--gold-light); display: block; margin-bottom: 0.35rem; font-weight: 600;">Opción 3: Imágenes de prueba estandarizadas por categoría:</span>
+                  <div id="pCategoryTestImagesBar" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                    <button type="button" class="btn-secondary p-test-img-btn" data-cat-img="promos" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">🏷️ Promo</button>
+                    <button type="button" class="btn-secondary p-test-img-btn" data-cat-img="vinos" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">🍷 Vino</button>
+                    <button type="button" class="btn-secondary p-test-img-btn" data-cat-img="espumantes" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">🍾 Espumante</button>
+                    <button type="button" class="btn-secondary p-test-img-btn" data-cat-img="whiskys" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">🥃 Whisky</button>
+                    <button type="button" class="btn-secondary p-test-img-btn" data-cat-img="aperitivos" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">🍸 Aperitivo</button>
+                    <button type="button" class="btn-secondary p-test-img-btn" data-cat-img="delicatessen" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">🧀 Delicatessen</button>
+                  </div>
+                </div>
               </div>
               <div style="text-align: center;">
-                <span style="font-size: 0.72rem; color: #888; display: block; margin-bottom: 0.3rem;">Vista previa:</span>
-                <img id="pFormImagePreview" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80" alt="Preview" style="width: 72px; height: 72px; object-fit: cover; border-radius: 8px; border: 1.5px solid var(--gold-primary);" />
+                <span style="font-size: 0.72rem; color: #888; display: block; margin-bottom: 0.3rem;">Vista previa (4:5):</span>
+                <img id="pFormImagePreview" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp" alt="Preview" style="width: 80px; height: 100px; object-fit: cover; border-radius: 8px; border: 1.5px solid var(--gold-primary);" />
               </div>
             </div>
           </div>
