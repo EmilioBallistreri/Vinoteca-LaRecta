@@ -164,8 +164,6 @@ function renderCategories() {
       window.location.href = `/productos.html?categoria=${catId}`;
     });
   });
-    });
-  });
 }
 
 function renderProducts() {
@@ -416,12 +414,18 @@ function updateCartDrawerUI(detail) {
 }
 
 function openCartDrawer() {
+  updateCartDrawerUI({
+    items: cart.items,
+    count: cart.getCount(),
+    subtotal: cart.getSubtotal()
+  });
   document.getElementById('cartDrawerOverlay')?.classList.add('active');
 }
 
 function closeCartDrawer() {
   document.getElementById('cartDrawerOverlay')?.classList.remove('active');
 }
+
 
 // ================= PRODUCT QUICK VIEW MODAL =================
 
@@ -707,11 +711,17 @@ function setupEventListeners() {
     const errEl = document.getElementById('authError');
 
     try {
-      if (errEl) errEl.textContent = 'Registrando cliente...';
+      if (errEl) errEl.textContent = 'Registrando cuenta...';
       const res = await api.register({ name, email, phone, address, password: pass });
       auth.setUser(res.user);
       auth.closeModal();
-      showToast(`Cuenta creada exitosamente. Bienvenido/a ${res.user.name}.`);
+      
+      const isAdmin = auth.isAdmin();
+      if (isAdmin) {
+        showToast(`¡Cuenta de Administrador activada! Bienvenido/a ${res.user.name}. Puede abrir el Panel de Administración.`);
+      } else {
+        showToast(`Cuenta creada exitosamente. Bienvenido/a ${res.user.name}.`);
+      }
     } catch (err) {
       if (errEl) errEl.textContent = err.message;
     }
@@ -807,18 +817,186 @@ function showOrderConfirmationModal(order) {
   modal.classList.add('active');
 }
 
+// ================= HERO CAROUSEL =================
+function initHeroCarousel() {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+  if (!slides.length) return;
+
+  let currentIdx = 0;
+  let intervalId = null;
+
+  function showSlide(index) {
+    slides.forEach((s, idx) => {
+      if (idx === index) s.classList.add('active');
+      else s.classList.remove('active');
+    });
+    dots.forEach((d, idx) => {
+      if (idx === index) d.classList.add('active');
+      else d.classList.remove('active');
+    });
+    currentIdx = index;
+  }
+
+  function nextSlide() {
+    const nextIdx = (currentIdx + 1) % slides.length;
+    showSlide(nextIdx);
+  }
+
+  // Auto slide every 5 seconds
+  intervalId = setInterval(nextSlide, 5000);
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.getAttribute('data-index'), 10);
+      clearInterval(intervalId);
+      showSlide(idx);
+      intervalId = setInterval(nextSlide, 5000);
+    });
+  });
+}
+
+// ================= PROMOS EN INICIO =================
+function renderPromosGrid() {
+  const container = document.getElementById('promosGrid');
+  if (!container) return;
+
+  const promos = state.products.filter(p => p.category === 'promos' || (p.discount && p.discount > 0));
+
+  if (!promos.length) {
+    container.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 2.5rem; color: var(--text-muted);">
+        No hay promociones activas en este momento.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = promos.slice(0, 6).map(promo => {
+    const discountTag = promo.badge || (promo.discount ? `${promo.discount}% OFF` : 'PROMO DESTACADA');
+    const cuotas = Math.round(promo.price / 3);
+    const transfer = Math.round(promo.price * 0.90);
+
+    return `
+      <article class="promo-card-item">
+        <span class="promo-badge-tag">${discountTag}</span>
+        <div class="promo-img-wrap">
+          <img src="${promo.image}" alt="${promo.name}" loading="lazy" />
+        </div>
+        <div class="promo-body">
+          <span class="promo-category">${promo.bodega ? promo.bodega + ' • ' : ''}${promo.category.toUpperCase()}</span>
+          <h3 class="promo-title">${promo.name}</h3>
+          <p class="promo-desc">${promo.description ? promo.description.slice(0, 110) + '...' : 'Partida exclusiva con precio bonificado de cava.'}</p>
+          
+          <div class="promo-pricing">
+            <div class="promo-price-main">
+              <span class="promo-current-price">${formatCurrency(promo.price)}</span>
+              ${promo.originalPrice ? `<span class="promo-original-price">${formatCurrency(promo.originalPrice)}</span>` : ''}
+            </div>
+            <div class="promo-perks">
+              💳 3 cuotas fijas sin interés de <strong>${formatCurrency(cuotas)}</strong><br />
+              ⚡ <strong>${formatCurrency(transfer)}</strong> abonando por Transferencia
+            </div>
+          </div>
+
+          <button class="promo-buy-btn" data-action="add-promo" data-id="${promo.id}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            Sumar a mi Cava
+          </button>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  container.querySelectorAll('[data-action="add-promo"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      const prod = state.products.find(p => p.id === id);
+      if (prod) {
+        cart.addItem(prod, 1);
+        openCartDrawer();
+        showToast(`"${prod.name}" incorporado a su selección de cava.`);
+      }
+    });
+  });
+}
+
+// ================= FORMULARIO DE CONSULTA FORMAL (vinotecalarecta7@gmail.com) =================
+function setupContactInquiryForm() {
+  const form = document.getElementById('contactInquiryForm');
+  const feedback = document.getElementById('inquiryFeedback');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('inqName').value.trim();
+    const email = document.getElementById('inqEmail').value.trim();
+    const phone = document.getElementById('inqPhone')?.value.trim() || '';
+    const subject = document.getElementById('inqSubject')?.value || 'Consulta general';
+    const message = document.getElementById('inqMessage').value.trim();
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando consulta a vinotecalarecta7@gmail.com...';
+    }
+
+    try {
+      await api.sendContactInquiry({ name, email, phone, subject, message });
+
+      if (feedback) {
+        feedback.className = 'inquiry-feedback-msg success';
+        feedback.innerHTML = `
+          <strong>✓ ¡Consulta enviada con éxito!</strong><br />
+          Estimado/a ${name}, su mensaje ha sido remitido a <strong>vinotecalarecta7@gmail.com</strong>.<br />
+          Nos pondremos en contacto a la brevedad a su casilla <em>${email}</em>.
+        `;
+      }
+
+      form.reset();
+      showToast('Su consulta ha sido enviada a vinotecalarecta7@gmail.com');
+    } catch (err) {
+      // Fallback mailto
+      const mailtoUrl = `mailto:vinotecalarecta7@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Nombre: ${name}\nTeléfono: ${phone}\nEmail: ${email}\n\nConsulta:\n${message}`)}`;
+      window.location.href = mailtoUrl;
+      if (feedback) {
+        feedback.className = 'inquiry-feedback-msg success';
+        feedback.textContent = 'Abriendo su cliente de correo para enviar a vinotecalarecta7@gmail.com';
+      }
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+          Enviar Consulta a vinotecalarecta7@gmail.com
+        `;
+      }
+    }
+  });
+}
+
 // ================= INITIALIZATION =================
 
 async function init() {
   auth.init();
   cart.init();
   setupEventListeners();
+  initHeroCarousel();
+  setupContactInquiryForm();
 
   try {
     const products = await api.getProducts();
     state.products = products;
     state.filteredProducts = products;
     renderCategories();
+    renderPromosGrid();
     renderProducts();
   } catch (err) {
     console.error('Error loading products from backend:', err);
@@ -827,3 +1005,4 @@ async function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+

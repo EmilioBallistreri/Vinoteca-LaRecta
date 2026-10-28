@@ -324,12 +324,12 @@ function setCategory(catId) {
   state.activeCategory = catId;
   state.activeSubcategory = 'todos';
 
-  // Actualizar Cards visuales
-  document.querySelectorAll('.catalog-cat-card').forEach(card => {
-    if (card.getAttribute('data-category') === catId) {
-      card.classList.add('active');
+  // Actualizar Pills y Cards visuales
+  document.querySelectorAll('.catalog-pill-item, .catalog-cat-card').forEach(item => {
+    if (item.getAttribute('data-category') === catId) {
+      item.classList.add('active');
     } else {
-      card.classList.remove('active');
+      item.classList.remove('active');
     }
   });
 
@@ -519,10 +519,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     showToast('Error de conexión al cargar etiquetas.');
   }
 
-  // Eventos de cards de categoría
-  document.querySelectorAll('.catalog-cat-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const cat = card.getAttribute('data-category');
+  // Eventos de pills y cards de categoría
+  document.querySelectorAll('.catalog-pill-item, .catalog-cat-card').forEach(item => {
+    item.addEventListener('click', () => {
+      const cat = item.getAttribute('data-category');
       setCategory(cat);
     });
   });
@@ -546,9 +546,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     applyFilters();
   });
 
-  // Drawer de Carrito
+  // Drawer de Carrito (siempre actualiza UI al abrir, incluso vacío)
   const cartDrawer = document.getElementById('cartDrawerOverlay');
-  const openCart = () => cartDrawer?.classList.add('active');
+  const openCart = () => {
+    updateCartDrawerUI(cart.getCartData());
+    cartDrawer?.classList.add('active');
+  };
   const closeCart = () => cartDrawer?.classList.remove('active');
 
   document.getElementById('navCartBtn')?.addEventListener('click', openCart);
@@ -690,7 +693,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       const res = await api.register({ name, email, phone, address, password: pass });
       auth.setUser(res.user);
       auth.closeModal();
-      showToast(`Cuenta creada. Bienvenido/a ${res.user.name} (Rol: Cliente).`);
+
+      if (auth.isAdmin()) {
+        showToast(`¡Bienvenido Administrador ${res.user.name}! Se le ha habilitado el Panel de Administración.`);
+      } else {
+        showToast(`Cuenta creada con éxito. ¡Bienvenido/a ${res.user.name}!`);
+      }
     } catch (err) {
       if (errEl) errEl.textContent = err.message;
     }

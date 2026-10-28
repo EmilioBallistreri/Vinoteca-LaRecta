@@ -213,7 +213,8 @@
 
           <div class="form-group">
             <label class="form-label">Subcategoría</label>
-            <input type="text" id="pFormSubcategory" class="form-input" placeholder="Ej: Tinto, Single Malt, Gin, Chacinados" />
+            <input type="text" id="pFormSubcategory" list="pSubcatDatalist" class="form-input" placeholder="Ej: Malbec, Gin Premium, Cajas x6" />
+            <datalist id="pSubcatDatalist"></datalist>
           </div>
 
           <div class="form-group">
@@ -251,9 +252,22 @@
             <input type="text" id="pFormBadge" class="form-input" placeholder="Ej: PROMO 20% OFF, ÍCONO, 94 PTS PARKER" />
           </div>
 
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <label class="form-label">URL de Imagen del Producto</label>
-            <input type="url" id="pFormImage" required class="form-input" placeholder="https://..." />
+          <!-- Imagen con Carga de Archivo Local o URL Externa -->
+          <div class="form-group" style="grid-column: 1 / -1; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 10px; border: 1px solid var(--admin-border);">
+            <label class="form-label" style="color: var(--gold-champagne); font-weight: 600;">Fotografía del Producto *</label>
+            <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center;">
+              <div>
+                <label style="font-size: 0.75rem; color: #aaa; display: block; margin-bottom: 0.3rem;">Opción 1: Subir imagen desde su computadora</label>
+                <input type="file" id="pFormImageFile" accept="image/*" class="form-input" style="padding: 0.45rem; font-size: 0.8rem;" />
+                
+                <label style="font-size: 0.75rem; color: #aaa; display: block; margin-top: 0.6rem; margin-bottom: 0.3rem;">Opción 2: O ingresar URL web directa de la imagen</label>
+                <input type="text" id="pFormImage" required class="form-input" placeholder="https://images.unsplash.com/..." />
+              </div>
+              <div style="text-align: center;">
+                <span style="font-size: 0.72rem; color: #888; display: block; margin-bottom: 0.3rem;">Vista previa:</span>
+                <img id="pFormImagePreview" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80" alt="Preview" style="width: 72px; height: 72px; object-fit: cover; border-radius: 8px; border: 1.5px solid var(--gold-primary);" />
+              </div>
+            </div>
           </div>
 
           <div class="form-group" style="grid-column: 1 / -1;">

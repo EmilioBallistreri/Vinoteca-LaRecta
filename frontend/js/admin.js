@@ -795,7 +795,14 @@ function openProductFormModal(product = null) {
   document.getElementById('pFormStock').value = product ? product.stock : 10;
   document.getElementById('pFormMinStock').value = product ? (product.minStock || 3) : 3;
   document.getElementById('pFormBadge').value = product?.badge || '';
-  document.getElementById('pFormImage').value = product?.image || 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80';
+
+  const defaultImg = product?.image || 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80';
+  document.getElementById('pFormImage').value = defaultImg;
+  const previewEl = document.getElementById('pFormImagePreview');
+  if (previewEl) previewEl.src = defaultImg;
+  const fileInput = document.getElementById('pFormImageFile');
+  if (fileInput) fileInput.value = '';
+
   document.getElementById('pFormDesc').value = product?.description || '';
   document.getElementById('pFormFeatured').checked = Boolean(product?.isFeatured);
 
@@ -863,6 +870,31 @@ function setupAdminListeners() {
         alert(err.message);
       }
     });
+  // Image preview & local file reader
+  const imgInput = document.getElementById('pFormImage');
+  const imgPreview = document.getElementById('pFormImagePreview');
+  imgInput?.addEventListener('input', (e) => {
+    if (imgPreview && e.target.value) {
+      imgPreview.src = e.target.value;
+    }
+  });
+
+  const imgFileInput = document.getElementById('pFormImageFile');
+  imgFileInput?.addEventListener('change', (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 2.5 * 1024 * 1024) {
+      alert('Aviso: La imagen seleccionada es mayor a 2.5MB. Se cargará pero se recomienda optimizarla para mayor velocidad.');
+    }
+
+    const reader = new FileReader();
+    reader.onload = (loadEvent) => {
+      const dataUrl = loadEvent.target.result;
+      if (imgInput) imgInput.value = dataUrl;
+      if (imgPreview) imgPreview.src = dataUrl;
+    };
+    reader.readAsDataURL(file);
   });
 
   // Product Form Submit (Create / Edit)

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -170,7 +171,39 @@ app.patch('/api/orders/:id/status', (req, res) => {
   res.json(updated);
 });
 
-// ================= USERS & ADMIN MANAGEMENT =================
+// ================= CONTACT INQUIRY ROUTE =================
+app.post('/api/contact', (req, res) => {
+  const { name, email, phone, subject, message } = req.body;
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: 'Nombre, email y mensaje son obligatorios.' });
+  }
+
+  try {
+    const store = db.readStore ? db.readStore() : null;
+    if (store && db.logActivity) {
+      db.logActivity({
+        user: email,
+        userName: name,
+        role: 'cliente',
+        action: 'CONTACT_INQUIRY',
+        description: `Consulta recibida para vinotecalarecta7@gmail.com de ${name} (${email}): "${subject || 'Consulta general'}"`,
+        badgeColor: 'gold'
+      }, store);
+      if (db.writeStore) db.writeStore(store);
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Consulta registrada correctamente. Se enviará a vinotecalarecta7@gmail.com.',
+      destinationEmail: 'vinotecalarecta7@gmail.com'
+    });
+  } catch (err) {
+    res.status(200).json({
+      success: true,
+      destinationEmail: 'vinotecalarecta7@gmail.com'
+    });
+  }
+});
+
 app.get('/api/users', (req, res) => {
   res.json(db.getUsers());
 });

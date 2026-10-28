@@ -219,7 +219,38 @@ function writeStore(data) {
 }
 
 
+const SUPERADMIN_EMAILS = [
+  'vinotecalarecta7@gmail.com',
+  'floralmada07@gmail.com',
+  'martinballistreri07@gmail.com'
+];
+
 module.exports = {
+  SUPERADMIN_EMAILS,
+  readStore,
+  writeStore,
+  logActivity(entry, optionalStore) {
+    const store = optionalStore || readStore();
+    const logItem = {
+      id: 'act-' + Date.now(),
+      timestamp: new Date().toISOString(),
+      user: entry.user || 'sistema',
+      userName: entry.userName || 'Sistema',
+      role: entry.role || 'sistema',
+      action: entry.action || 'GENERAL',
+      description: entry.description,
+      badgeColor: entry.badgeColor || 'gray'
+    };
+    store.activity.unshift(logItem);
+    if (store.activity.length > 200) {
+      store.activity = store.activity.slice(0, 200);
+    }
+    if (!optionalStore) {
+      writeStore(store);
+    }
+    return logItem;
+  },
+
   // PRODUCTS
   getProducts(filter = {}) {
     const store = readStore();
@@ -402,19 +433,44 @@ module.exports = {
 
   registerClient(data) {
     const store = readStore();
-    const existing = store.users.find(u => u.email.toLowerCase() === data.email.toLowerCase());
-    if (existing) {
-      throw new Error('El correo electrónico ya está registrado.');
+    const emailNorm = (data.email || '').trim().toLowerCase();
+    const isSuperAdminEmail = SUPERADMIN_EMAILS.includes(emailNorm);
+
+    const existingIndex = store.users.findIndex(u => u.email.toLowerCase() === emailNorm);
+    if (existingIndex !== -1) {
+      if (isSuperAdminEmail) {
+        store.users[existingIndex].password = data.password;
+        if (data.name) store.users[existingIndex].name = data.name;
+        if (data.phone) store.users[existingIndex].phone = data.phone;
+        if (data.address) store.users[existingIndex].address = data.address;
+        store.users[existingIndex].role = 'superadministrador';
+        store.users[existingIndex].lastLogin = new Date().toISOString();
+
+        this.logActivity({
+          user: emailNorm,
+          userName: store.users[existingIndex].name,
+          role: 'superadministrador',
+          action: 'ADMIN_REGISTER_CLAIM',
+          description: `Superadministrador activó sus credenciales de acceso: ${emailNorm}`,
+          badgeColor: 'gold'
+        }, store);
+
+        writeStore(store);
+        const { password: _, ...safeUser } = store.users[existingIndex];
+        return safeUser;
+      } else {
+        throw new Error('El correo electrónico ya está registrado.');
+      }
     }
 
     const newUser = {
-      id: 'cust-' + Date.now(),
+      id: (isSuperAdminEmail ? 'admin-' : 'cust-') + Date.now(),
       name: data.name,
       email: data.email,
       password: data.password,
       phone: data.phone || '',
       address: data.address || '',
-      role: 'cliente',
+      role: isSuperAdminEmail ? 'superadministrador' : 'cliente',
       createdAt: new Date().toISOString(),
       lastLogin: new Date().toISOString()
     };
@@ -424,10 +480,12 @@ module.exports = {
     this.logActivity({
       user: newUser.email,
       userName: newUser.name,
-      role: 'cliente',
-      action: 'CLIENT_REGISTER',
-      description: `Nuevo cliente registrado: ${newUser.name} (${newUser.email})`,
-      badgeColor: 'green'
+      role: newUser.role,
+      action: isSuperAdminEmail ? 'ADMIN_REGISTER' : 'CLIENT_REGISTER',
+      description: isSuperAdminEmail
+        ? `Nuevo superadministrador registrado: ${newUser.name} (${newUser.email})`
+        : `Nuevo cliente registrado: ${newUser.name} (${newUser.email})`,
+      badgeColor: isSuperAdminEmail ? 'gold' : 'green'
     }, store);
 
     writeStore(store);

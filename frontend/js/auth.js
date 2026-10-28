@@ -52,21 +52,40 @@ export const auth = {
 
     if (!this.currentUser) {
       userContainer.innerHTML = `
-        <button id="openAuthBtn" class="nav-btn auth-btn" title="Iniciar sesión o registrarse">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button id="openRegisterBtn" class="nav-btn register-nav-btn" title="Crear una cuenta nueva">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="8.5" cy="7" r="4"></circle>
+            <line x1="20" y1="8" x2="20" y2="14"></line>
+            <line x1="23" y1="11" x2="17" y2="11"></line>
+          </svg>
+          <span class="btn-text">Registrarse</span>
+        </button>
+        <button id="openAuthBtn" class="nav-btn auth-btn" title="Iniciar sesión">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
           </svg>
           <span class="btn-text">Ingresar</span>
         </button>
       `;
-      const btn = document.getElementById('openAuthBtn');
-      if (btn) btn.onclick = () => auth.openModal();
+      const regBtn = document.getElementById('openRegisterBtn');
+      if (regBtn) regBtn.onclick = () => auth.openModal('register');
+      const loginBtn = document.getElementById('openAuthBtn');
+      if (loginBtn) loginBtn.onclick = () => auth.openModal('login');
     } else {
       const isAdmin = this.isAdmin();
       const firstName = this.currentUser.name.split(' ')[0];
       const roleLabel = isAdmin ? 'Administrador' : 'Cliente';
       userContainer.innerHTML = `
+        ${isAdmin ? `
+          <a href="/admin.html" class="nav-btn admin-link-btn" title="Panel de Administración">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span class="btn-text">Panel Admin</span>
+          </a>
+        ` : ''}
         <div class="user-menu-dropdown">
           <button id="userDropdownTrigger" class="nav-btn user-btn ${isAdmin ? 'admin-highlight-btn' : ''}" title="Cuenta: ${this.currentUser.name} (${roleLabel})">
             <span class="user-avatar-badge ${isAdmin ? 'admin-badge' : ''}">${firstName.charAt(0).toUpperCase()}</span>

@@ -187,16 +187,24 @@
 </head>
 <body>
 
-  <!-- ================= BARRA SUPERIOR DE ANUNCIOS ================= -->
+  <!-- ================= BARRA SUPERIOR DE ANUNCIOS & UBICACIÓN ================= -->
   <aside class="top-announcement-bar">
     <div class="container top-bar-content">
       <div class="top-bar-perks">
         <span class="perk-item">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          Av. Recta Martinolli 8255, Argüello • Córdoba
+        </span>
+        <span class="separator">•</span>
+        <span class="perk-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="2" y="5" width="20" height="14" rx="2"></rect>
             <line x1="2" y1="10" x2="22" y2="10"></line>
           </svg>
-          3 Pagos sin interés
+          3 Pagos Sin Interés
         </span>
         <span class="separator">•</span>
         <span class="perk-item">
@@ -205,19 +213,16 @@
           </svg>
           10% OFF Transferencia Bancaria
         </span>
-        <span class="separator">•</span>
-        <span class="perk-item">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="1" y="3" width="15" height="13"></rect>
-            <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
-            <circle cx="5.5" cy="18.5" r="2.5"></circle>
-            <circle cx="18.5" cy="18.5" r="2.5"></circle>
-          </svg>
-          Envíos en Córdoba (Gratis +$ 60.000)
-        </span>
       </div>
       <div class="top-bar-links">
-        <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="top-ig-link" title="Instagram Oficial Vinoteca La Recta">
+        <a href="mailto:vinotecalarecta7@gmail.com" class="top-ig-link" title="Correo Oficial">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          vinotecalarecta7@gmail.com
+        </a>
+        <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="top-ig-link" title="Instagram Oficial">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -225,7 +230,7 @@
           </svg>
           @vinoteca.larecta
         </a>
-        <a href="https://wa.me/5493512460017" target="_blank" rel="noopener noreferrer" title="WhatsApp Vinoteca La Recta">
+        <a href="https://wa.me/5493512460017" target="_blank" rel="noopener noreferrer" title="WhatsApp Oficial">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
           </svg>
@@ -250,6 +255,12 @@
       <nav>
         <ul class="nav-menu">
           <li><a href="/" class="nav-link">INICIO</a></li>
+          <li>
+            <a href="/productos.html?categoria=promos" class="nav-link" id="navPromosLink">
+              PROMOS
+              <span class="nav-badge-off">OFERTAS</span>
+            </a>
+          </li>
           
           <li class="nav-dropdown-item">
             <a href="/productos.html" class="nav-link nav-dropdown-trigger active">
@@ -311,18 +322,12 @@
           </li>
 
           <li><a href="/productos.html" class="nav-link active">PRODUCTOS</a></li>
-          <li>
-            <a href="/productos.html?categoria=promos" class="nav-link" id="navPromosLink">
-              PROMOS
-              <span class="nav-badge-off">OFERTAS</span>
-            </a>
-          </li>
-          <li><a href="/#comunidad" class="nav-link">COMUNIDAD</a></li>
+          <li><a href="/#nosotros" class="nav-link">NOSOTROS</a></li>
           <li><a href="/#contacto" class="nav-link">CONTACTO</a></li>
         </ul>
       </nav>
 
-      <!-- Acciones de Cabecera -->
+      <!-- Acciones de Cabecera: Instagram | Botón Registrarse / Acceso | Carrito -->
       <div class="nav-actions">
         <!-- Instagram Oficial -->
         <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="nav-btn" title="Instagram Oficial">
@@ -333,10 +338,10 @@
           </svg>
         </a>
 
-        <!-- Sesión Unificada: Ingresar -->
+        <!-- Botón para Registrarse / Mi Cuenta (Ubicado entre Instagram y Carrito) -->
         <div id="navUserContainer"></div>
 
-        <!-- Carrito de Compras -->
+        <!-- Carrito de Compras de Cava (Click siempre activo) -->
         <button id="navCartBtn" class="nav-btn nav-cart-btn" title="Ver Cava / Pedido">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -349,70 +354,38 @@
     </div>
   </header>
 
-  <!-- ================= ENCABEZADO Y SELECTOR DE CATEGORÍAS ================= -->
-  <section class="catalog-hero-header">
+  <!-- ================= ENCABEZADO REFINADO DE CATÁLOGO (DISEÑO BOUTIQUE) ================= -->
+  <section class="catalog-refined-header">
     <div class="container">
-      <span class="section-tag" id="catalogHeaderTag">Catálogo General de Cava</span>
-      <h1 class="section-title" id="catalogHeaderTitle" style="font-size: 2.7rem;">Etiquetas &amp; Cava Privada</h1>
+      <span class="section-tag" id="catalogHeaderTag">Colección Exclusiva • Córdoba</span>
+      <h1 class="section-title" id="catalogHeaderTitle" style="font-size: 2.3rem; margin-bottom: 0.5rem;">Catálogo &amp; Cava de Colección</h1>
       <div class="section-ornament">❖</div>
-      <p class="section-subtitle" style="font-size: 0.95rem; max-width: 650px;">
-        Seleccione una de nuestras 6 categorías principales y utilice los filtros de subcategoría para encontrar rápidamente el varietal, añada o destilado de su preferencia.
+      <p class="section-subtitle" style="font-size: 0.92rem; max-width: 680px; margin: 0 auto;">
+        Explore nuestras divisiones de cava. Todas las botellas se conservan bajo atmósfera térmica y humedad controlada con despacho puntual en Córdoba.
       </p>
 
-      <!-- 6 Cards de Categorías (3 por fila) -->
-      <div class="catalog-category-cards-grid">
-        <div class="catalog-cat-card promo-card" data-category="promos">
-          <div class="catalog-cat-icon">🏷️</div>
-          <div class="catalog-cat-text">
-            <h3>Promos</h3>
-            <span>Combos, Cajas x6 &amp; Ofertas</span>
-          </div>
-        </div>
-
-        <div class="catalog-cat-card" data-category="vinos">
-          <div class="catalog-cat-icon">🍷</div>
-          <div class="catalog-cat-text">
-            <h3>Vinos</h3>
-            <span>Malbec, Cabernet &amp; Cortes</span>
-          </div>
-        </div>
-
-        <div class="catalog-cat-card" data-category="espumantes">
-          <div class="catalog-cat-icon">🍾</div>
-          <div class="catalog-cat-text">
-            <h3>Espumantes</h3>
-            <span>Extra Brut, Nature &amp; Champagne</span>
-          </div>
-        </div>
-
-        <div class="catalog-cat-card" data-category="whiskys">
-          <div class="catalog-cat-icon">🥃</div>
-          <div class="catalog-cat-text">
-            <h3>Whiskys</h3>
-            <span>Single Malt, Scotch &amp; Bourbon</span>
-          </div>
-        </div>
-
-        <div class="catalog-cat-card" data-category="aperitivos">
-          <div class="catalog-cat-icon">🍸</div>
-          <div class="catalog-cat-text">
-            <h3>Aperitivos</h3>
-            <span>Gin, Vermouth &amp; Bitter</span>
-          </div>
-        </div>
-
-        <div class="catalog-cat-card" data-category="delicatessen">
-          <div class="catalog-cat-icon">🧀</div>
-          <div class="catalog-cat-text">
-            <h3>Delicatessen</h3>
-            <span>Aceites, Jamón &amp; Quesos</span>
-          </div>
-        </div>
-      </div>
-
-      <div style="margin-top: 1rem;">
-        <button id="viewAllCategoriesBtn" class="subcat-filter-btn" style="padding: 0.5rem 1.4rem;">
-          ❖ Ver Todas las Categorías (Catálogo Completo)
+      <!-- Selector Horizontal de Categorías (Pills Sofisticadas) -->
+      <div class="catalog-pills-nav">
+        <button class="catalog-pill-item active" id="viewAllCategoriesBtn" data-category="todos">
+          <span>❖ Todas las Categorías</span>
+        </button>
+        <button class="catalog-pill-item promo-pill" data-category="promos">
+          <span>🏷️ Promos &amp; Ofertas</span>
+        </button>
+        <button class="catalog-pill-item" data-category="vinos">
+          <span>🍷 Vinos</span>
+        </button>
+        <button class="catalog-pill-item" data-category="espumantes">
+          <span>🍾 Espumantes</span>
+        </button>
+        <button class="catalog-pill-item" data-category="whiskys">
+          <span>🥃 Whiskys</span>
+        </button>
+        <button class="catalog-pill-item" data-category="aperitivos">
+          <span>🍸 Aperitivos</span>
+        </button>
+        <button class="catalog-pill-item" data-category="delicatessen">
+          <span>🧀 Delicatessen</span>
         </button>
       </div>
     </div>
@@ -459,32 +432,38 @@
     <div id="productsGrid" class="products-grid"></div>
   </main>
 
-  <!-- ================= PIE DE PÁGINA (FOOTER) ================= -->
+  <!-- ================= PIE DE PÁGINA COMPACTO Y ELEGANTE ================= -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-top">
         <div class="footer-brand-col">
           <div class="brand-block">
-            <img src="/public/logo-vinoteca.jpg" alt="Vinoteca La Recta" style="width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--gold-primary);" />
+            <img src="/public/logo-vinoteca.jpg" alt="Vinoteca La Recta" style="width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--gold-primary);" />
             <div>
-              <h3 style="font-family: var(--font-brand); font-size: 1.15rem; color: #fff; letter-spacing: 0.12em;">VINOTECA LA RECTA</h3>
-              <span style="font-size: 0.68rem; color: var(--gold-primary); letter-spacing: 0.22em; text-transform: uppercase;">Cava de Autor • Córdoba</span>
+              <h3 style="font-family: var(--font-brand); font-size: 1.05rem; color: #fff; letter-spacing: 0.12em;">VINOTECA LA RECTA</h3>
+              <span style="font-size: 0.65rem; color: var(--gold-primary); letter-spacing: 0.18em; text-transform: uppercase;">Cava &amp; Colección • Argüello</span>
             </div>
           </div>
           <p class="footer-brand-desc">
-            Casa especializada en vinos de autor, espumantes de método tradicional y destilados nobles. Preservación estricta de temperatura y atención exclusiva.
+            Casa enológica sobre Av. Recta Martinolli 8255, Argüello. Preservación estricta de cava, partidas limitadas y despacho a domicilio en Córdoba.
           </p>
           <div class="footer-social-links">
             <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Instagram">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
               </svg>
             </a>
             <a href="https://wa.me/5493512460017" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="WhatsApp">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+            </a>
+            <a href="mailto:vinotecalarecta7@gmail.com" class="footer-social-btn" title="Correo">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
             </a>
           </div>
@@ -493,12 +472,12 @@
         <div class="footer-col">
           <h4>Colecciones</h4>
           <ul class="footer-nav-list">
-            <li><a href="/productos.html?categoria=promos">Promos</a></li>
-            <li><a href="/productos.html?categoria=vinos">Vinos</a></li>
-            <li><a href="/productos.html?categoria=espumantes">Espumantes</a></li>
-            <li><a href="/productos.html?categoria=whiskys">Whiskys</a></li>
-            <li><a href="/productos.html?categoria=aperitivos">Aperitivos</a></li>
-            <li><a href="/productos.html?categoria=delicatessen">Delicatessen</a></li>
+            <li><a href="/productos.html?categoria=promos">Promociones &amp; Cajas x6</a></li>
+            <li><a href="/productos.html?categoria=vinos">Vinos de Colección</a></li>
+            <li><a href="/productos.html?categoria=espumantes">Espumantes &amp; Champagnes</a></li>
+            <li><a href="/productos.html?categoria=whiskys">Whiskies &amp; Destilados</a></li>
+            <li><a href="/productos.html?categoria=aperitivos">Aperitivos &amp; Licores</a></li>
+            <li><a href="/productos.html?categoria=delicatessen">Delicatessen &amp; Maridajes</a></li>
           </ul>
         </div>
 
@@ -506,28 +485,32 @@
           <h4>Navegación</h4>
           <ul class="footer-nav-list">
             <li><a href="/">Portada Principal</a></li>
+            <li><a href="/#promos">Promociones</a></li>
             <li><a href="/productos.html">Catálogo Completo</a></li>
-            <li><a href="/#comunidad">Comunidad &amp; Catas</a></li>
-            <li><a href="/#contacto">Ubicación &amp; Sommelier</a></li>
+            <li><a href="/#nosotros">Nuestra Historia</a></li>
+            <li><a href="/#contacto">Ubicación &amp; Consulta</a></li>
+            <li><a href="/admin.html">Panel de Administración</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h4>Medios de Pago</h4>
-          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.7;">
-            Operamos con todas las tarjetas en <strong>3 cuotas sin interés</strong> y <strong>10% de bonificación</strong> por Transferencia Bancaria.
+          <h4>Nuestra Sede</h4>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.6rem; line-height: 1.6;">
+            <strong>Av. Recta Martinolli 8255</strong><br />
+            Argüello • Córdoba, Argentina<br />
+            Email: <a href="mailto:vinotecalarecta7@gmail.com" style="color: var(--gold-champagne);">vinotecalarecta7@gmail.com</a>
           </p>
-          <div style="font-size: 0.82rem; color: var(--gold-light);">
-            Facturación A/B y envíos con embalaje de protección térmica en Córdoba.
+          <div style="font-size: 0.74rem; color: var(--gold-light);">
+            Operamos con 3 cuotas sin interés y 10% OFF por transferencia.
           </div>
         </div>
       </div>
 
       <div class="footer-bottom">
         <div>&copy; 2024 Vinoteca La Recta. Todos los derechos reservados.</div>
-        <div>Av. Recta Martinolli • Córdoba, Argentina</div>
+        <div>Av. Recta Martinolli 8255 • Argüello, Córdoba</div>
         <p class="footer-legal-notice">
-          Beber con moderación. Prohibida su venta a menores de 18 años. Ley Nacional N° 24.788.
+          Beber con moderación. Prohibida su venta a menores de 18 años. Ley Nacional de Lucha contra el Alcoholismo N° 24.788.
         </p>
       </div>
     </div>

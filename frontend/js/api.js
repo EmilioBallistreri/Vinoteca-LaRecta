@@ -182,5 +182,18 @@ export const api = {
     const res = await fetch('/api/stats', { headers: this.getHeaders() });
     if (!res.ok) throw new Error('Error al cargar estadísticas');
     return await res.json();
+  },
+
+  // CONTACT INQUIRY
+  async sendContactInquiry(contactData) {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(contactData)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Error al enviar consulta');
+    return data;
   }
 };
+
