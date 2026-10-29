@@ -22,12 +22,50 @@ export const cart = {
 
   emitChange() {
     window.dispatchEvent(new CustomEvent('vlr:cart-updated', {
-      detail: {
-        items: this.items,
-        count: this.getCount(),
-        subtotal: this.getSubtotal()
-      }
+      detail: this.getCartData()
     }));
+  },
+
+  getCartData() {
+    const subtotal = this.getSubtotal();
+    const transferDiscount = Math.round(subtotal * 0.10);
+    return {
+      items: this.items,
+      count: this.getCount(),
+      totalQuantity: this.getCount(),
+      subtotal,
+      transferDiscount,
+      total: subtotal
+    };
+  },
+
+  getWhatsAppOrderUrl(user = null) {
+    const formatCurrency = (amount) => new Intl.NumberFormat('es-AR', {
+      style: 'currency',
+      currency: 'ARS',
+      maximumFractionDigits: 0
+    }).format(amount || 0);
+
+    const itemsList = this.items.map(item =>
+      `• ${item.quantity}x ${item.name} — ${formatCurrency(item.price * item.quantity)} (${formatCurrency(item.price)} c/u)`
+    ).join('\n');
+
+    const subtotal = this.getSubtotal();
+    const transferTotal = this.getTransferTotal();
+
+    let message = `🍷 *PEDIDO - VINOTECA LA RECTA*\n\n`;
+    if (user && user.name) {
+      message += `*Cliente:* ${user.name}\n`;
+      if (user.phone) message += `*Teléfono:* ${user.phone}\n`;
+      if (user.address) message += `*Dirección:* ${user.address}\n`;
+      message += `\n`;
+    }
+    message += `*Detalle del Pedido:*\n${itemsList}\n\n`;
+    message += `*Total:* ${formatCurrency(subtotal)}\n`;
+    message += `*Abonando por Transferencia (10% OFF):* ${formatCurrency(transferTotal)}\n\n`;
+    message += `_Hola! Quiero realizar este pedido desde la tienda online._`;
+
+    return `https://wa.me/5493512460017?text=${encodeURIComponent(message)}`;
   },
 
   addItem(product, quantity = 1) {

@@ -348,7 +348,7 @@ function updateCartDrawerUI(detail) {
       `;
       document.getElementById('cartExploreBtn')?.addEventListener('click', () => {
         closeCartDrawer();
-        document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' });
+        window.location.href = '/productos.html';
       });
     }
     if (drawerFooter) drawerFooter.style.display = 'none';
@@ -411,6 +411,11 @@ function updateCartDrawerUI(detail) {
   if (transferEl) transferEl.textContent = formatCurrency(cart.getTransferTotal());
   if (totalEl) totalEl.textContent = formatCurrency(subtotal);
   if (cuotasEl) cuotasEl.textContent = `o 3 pagos fijos sin interés de ${formatCurrency(cart.getCuotasAmount())}`;
+
+  const wspBtn = document.getElementById('cartDrawerWspBtn');
+  if (wspBtn) {
+    wspBtn.href = cart.getWhatsAppOrderUrl(auth.getUser());
+  }
 }
 
 function openCartDrawer() {
@@ -438,6 +443,7 @@ function openProductModal(product) {
   const cuotas = Math.round(product.price / 3);
   const transfer = Math.round(product.price * 0.90);
   const isOutOfStock = product.stock <= 0;
+  const isPromo = product.category === 'promos' || (product.discount && product.discount > 0);
 
   body.innerHTML = `
     <div class="product-modal-grid">
@@ -448,10 +454,12 @@ function openProductModal(product) {
         
         <div style="margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--gold-border);">
           <div style="font-size: 2rem; font-weight: 700; color: #fff;">${formatCurrency(product.price)}</div>
+          ${!isPromo ? `
           <div style="font-size: 0.9rem; color: var(--gold-champagne); margin-top: 0.45rem; line-height: 1.6;">
             💳 3 pagos fijos de ${formatCurrency(cuotas)} sin interés con todas las tarjetas<br>
             ⚡ ${formatCurrency(transfer)} abonando por Transferencia Bancaria (10% de bonificación)
           </div>
+          ` : ''}
         </div>
 
         <h4 style="font-family: var(--font-brand); font-size: 0.85rem; color: var(--gold-primary); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.5rem;">Notas de Cata & Guarda:</h4>
@@ -596,6 +604,9 @@ function setupEventListeners() {
 
   // Cart Drawer Checkout Button
   document.getElementById('cartDrawerCheckoutBtn')?.addEventListener('click', openCheckoutModal);
+  document.getElementById('cartDrawerWspBtn')?.addEventListener('click', (e) => {
+    e.currentTarget.href = cart.getWhatsAppOrderUrl(auth.getUser());
+  });
 
   // Modals Close buttons
   document.querySelectorAll('.modal-close-btn').forEach(btn => {
@@ -874,8 +885,6 @@ function renderPromosGrid() {
 
   container.innerHTML = promos.slice(0, 6).map(promo => {
     const discountTag = promo.badge || (promo.discount ? `${promo.discount}% OFF` : 'PROMO DESTACADA');
-    const cuotas = Math.round(promo.price / 3);
-    const transfer = Math.round(promo.price * 0.90);
 
     return `
       <article class="promo-card-item">
@@ -892,10 +901,6 @@ function renderPromosGrid() {
             <div class="promo-price-main">
               <span class="promo-current-price">${formatCurrency(promo.price)}</span>
               ${promo.originalPrice ? `<span class="promo-original-price">${formatCurrency(promo.originalPrice)}</span>` : ''}
-            </div>
-            <div class="promo-perks">
-              💳 3 cuotas fijas sin interés de <strong>${formatCurrency(cuotas)}</strong><br />
-              ⚡ <strong>${formatCurrency(transfer)}</strong> abonando por Transferencia
             </div>
           </div>
 
@@ -925,7 +930,7 @@ function renderPromosGrid() {
   });
 }
 
-// ================= FORMULARIO DE CONSULTA FORMAL (vinotecalarecta7@gmail.com) =================
+// ================= FORMULARIO DE CONSULTA FORMAL =================
 function setupContactInquiryForm() {
   const form = document.getElementById('contactInquiryForm');
   const feedback = document.getElementById('inquiryFeedback');
@@ -942,7 +947,7 @@ function setupContactInquiryForm() {
     const submitBtn = form.querySelector('button[type="submit"]');
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Enviando consulta a vinotecalarecta7@gmail.com...';
+      submitBtn.textContent = 'Enviando consulta...';
     }
 
     try {
@@ -952,20 +957,20 @@ function setupContactInquiryForm() {
         feedback.className = 'inquiry-feedback-msg success';
         feedback.innerHTML = `
           <strong>✓ ¡Consulta enviada con éxito!</strong><br />
-          Estimado/a ${name}, su mensaje ha sido remitido a <strong>vinotecalarecta7@gmail.com</strong>.<br />
+          Estimado/a ${name}, su mensaje ha sido recibido correctamente.<br />
           Nos pondremos en contacto a la brevedad a su casilla <em>${email}</em>.
         `;
       }
 
       form.reset();
-      showToast('Su consulta ha sido enviada a vinotecalarecta7@gmail.com');
+      showToast('Su consulta ha sido enviada con éxito.');
     } catch (err) {
       // Fallback mailto
       const mailtoUrl = `mailto:vinotecalarecta7@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Nombre: ${name}\nTeléfono: ${phone}\nEmail: ${email}\n\nConsulta:\n${message}`)}`;
       window.location.href = mailtoUrl;
       if (feedback) {
         feedback.className = 'inquiry-feedback-msg success';
-        feedback.textContent = 'Abriendo su cliente de correo para enviar a vinotecalarecta7@gmail.com';
+        feedback.textContent = 'Abriendo su cliente de correo para enviar la consulta...';
       }
     } finally {
       if (submitBtn) {
@@ -975,7 +980,7 @@ function setupContactInquiryForm() {
             <line x1="22" y1="2" x2="11" y2="13"></line>
             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
           </svg>
-          Enviar Consulta a vinotecalarecta7@gmail.com
+          Enviar Consulta
         `;
       }
     }

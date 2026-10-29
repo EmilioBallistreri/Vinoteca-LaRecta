@@ -135,6 +135,7 @@ function renderProducts() {
     const isLowStock = product.stock > 0 && product.stock <= (product.minStock || 3);
     const cuotasAmount = Math.round(product.price / 3);
     const transferPrice = Math.round(product.price * 0.90);
+    const isPromo = product.category === 'promos' || (product.discount && product.discount > 0);
 
     return `
       <article class="product-card" data-id="${product.id}">
@@ -152,10 +153,12 @@ function renderProducts() {
               <span class="card-current-price">${formatCurrency(product.price)}</span>
               ${product.originalPrice ? `<span class="card-original-price">${formatCurrency(product.originalPrice)}</span>` : ''}
             </div>
+            ${!isPromo ? `
             <div class="card-perks-info">
               <div>💳 <strong>3 pagos fijos sin interés</strong> de ${formatCurrency(cuotasAmount)}</div>
               <div>⚡ <strong>${formatCurrency(transferPrice)}</strong> por Transferencia Bancaria (10% OFF)</div>
             </div>
+            ` : ''}
           </div>
 
           <div class="card-stock-status">
@@ -212,6 +215,7 @@ function openProductModal(product) {
   const cuotasAmount = Math.round(product.price / 3);
   const transferPrice = Math.round(product.price * 0.90);
   const isOutOfStock = product.stock <= 0;
+  const isPromo = product.category === 'promos' || (product.discount && product.discount > 0);
 
   body.innerHTML = `
     <div class="product-modal-grid">
@@ -226,12 +230,14 @@ function openProductModal(product) {
         <div class="modal-price-box">
           <div class="modal-price">${formatCurrency(product.price)}</div>
           ${product.originalPrice ? `<span class="card-original-price" style="font-size: 1.1rem;">${formatCurrency(product.originalPrice)}</span>` : ''}
+          ${!isPromo ? `
           <div class="modal-cuotas-notice">
             💳 <strong>3 Cuotas fijas sin interés</strong> de ${formatCurrency(cuotasAmount)} con todas las tarjetas
           </div>
           <div class="modal-cuotas-notice" style="color: var(--status-available);">
             ⚡ <strong>${formatCurrency(transferPrice)}</strong> con Bonificación por Transferencia Bancaria (10% OFF)
           </div>
+          ` : ''}
         </div>
 
         <div class="modal-desc-block">
@@ -379,20 +385,26 @@ function updateCartDrawerUI(cartData) {
   });
 
   const itemsContainer = document.getElementById('cartDrawerItems');
+  const drawerFooter = document.getElementById('cartDrawerFooter');
   const subtotalEl = document.getElementById('cartDrawerSubtotal');
   const transferEl = document.getElementById('cartDrawerTransfer');
   const totalEl = document.getElementById('cartDrawerTotal');
   const cuotasEl = document.getElementById('cartDrawerCuotas');
   const progressFill = document.getElementById('shippingProgressFill');
   const progressText = document.getElementById('shippingNoticeText');
+  const wspBtn = document.getElementById('cartDrawerWspBtn');
 
   if (subtotalEl) subtotalEl.textContent = formatCurrency(cartData.subtotal);
-  if (transferEl) transferEl.textContent = `-${formatCurrency(cartData.transferDiscount)}`;
+  if (transferEl) transferEl.textContent = formatCurrency(cart.getTransferTotal());
   if (totalEl) totalEl.textContent = formatCurrency(cartData.total);
 
   if (cuotasEl) {
     const cuota = Math.round(cartData.total / 3);
     cuotasEl.textContent = `o 3 pagos fijos sin interés de ${formatCurrency(cuota)}`;
+  }
+
+  if (wspBtn) {
+    wspBtn.href = cart.getWhatsAppOrderUrl(auth.getUser());
   }
 
   if (progressFill && progressText) {
@@ -409,6 +421,7 @@ function updateCartDrawerUI(cartData) {
 
   if (!itemsContainer) return;
   if (cartData.items.length === 0) {
+    if (drawerFooter) drawerFooter.style.display = 'none';
     itemsContainer.innerHTML = `
       <div style="text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
         <p style="font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem;">Su Cava de compras está vacía</p>
@@ -418,27 +431,46 @@ function updateCartDrawerUI(cartData) {
     return;
   }
 
+  if (drawerFooter) drawerFooter.style.display = 'block';
+
   itemsContainer.innerHTML = cartData.items.map(item => `
-    <div class="cart-item-row" data-id="${item.id}">
-      <img src="${item.image}" alt="${item.name}" />
+    <div class="cart-item" data-id="${item.id}">
+      <img src="${item.image}" alt="${item.name}" class="cart-item-img" />
       <div class="cart-item-info">
+        <span class="cart-item-bodega">${item.bodega || ''}</span>
         <h4 class="cart-item-title">${item.name}</h4>
-        <div class="cart-item-unit-price">${formatCurrency(item.price)} por botella</div>
-        <div class="cart-item-stepper">
-          <button data-action="dec-cart" data-id="${item.id}">-</button>
-          <span>${item.quantity}</span>
-          <button data-action="inc-cart" data-id="${item.id}">+</button>
-          <button data-action="rem-cart" data-id="${item.id}" style="margin-left: auto; color: #ff6b6b; font-size: 0.75rem;">Quitar</button>
+        <span class="cart-item-price">${formatCurrency(item.price * item.quantity)}</span>
+        <div class="cart-item-controls">
+          <div class="qty-stepper">
+            <button class="qty-btn" data-action="dec-cart" data-id="${item.id}">-</button>
+            <span class="qty-val">${item.quantity}</span>
+            <button class="qty-btn" data-action="inc-cart" data-id="${item.id}">+</button>
+          </div>
+          <button class="cart-item-remove-btn" data-action="rem-cart" data-id="${item.id}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            Quitar
+          </button>
         </div>
       </div>
     </div>
   `).join('');
 
   itemsContainer.querySelectorAll('[data-action="inc-cart"]').forEach(btn => {
-    btn.onclick = () => cart.updateQuantity(btn.getAttribute('data-id'), 1);
+    btn.onclick = () => {
+      const id = btn.getAttribute('data-id');
+      const itm = cart.items.find(i => i.id === id);
+      if (itm) cart.updateQuantity(id, itm.quantity + 1);
+    };
   });
   itemsContainer.querySelectorAll('[data-action="dec-cart"]').forEach(btn => {
-    btn.onclick = () => cart.updateQuantity(btn.getAttribute('data-id'), -1);
+    btn.onclick = () => {
+      const id = btn.getAttribute('data-id');
+      const itm = cart.items.find(i => i.id === id);
+      if (itm) cart.updateQuantity(id, itm.quantity - 1);
+    };
   });
   itemsContainer.querySelectorAll('[data-action="rem-cart"]').forEach(btn => {
     btn.onclick = () => cart.removeItem(btn.getAttribute('data-id'));
@@ -577,6 +609,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Checkout modal trigger
   document.getElementById('cartDrawerCheckoutBtn')?.addEventListener('click', openCheckoutModal);
+  document.getElementById('cartDrawerWspBtn')?.addEventListener('click', (e) => {
+    e.currentTarget.href = cart.getWhatsAppOrderUrl(auth.getUser());
+  });
 
   // Finalizar Compra Form
   document.getElementById('checkoutForm')?.addEventListener('submit', async (e) => {

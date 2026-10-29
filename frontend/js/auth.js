@@ -52,8 +52,8 @@ export const auth = {
 
     if (!this.currentUser) {
       userContainer.innerHTML = `
-        <button id="openRegisterBtn" class="nav-btn register-nav-btn" title="Crear una cuenta nueva">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button id="openRegisterBtn" class="nav-btn register-nav-btn" title="Registrarse o Iniciar Sesión">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
             <circle cx="8.5" cy="7" r="4"></circle>
             <line x1="20" y1="8" x2="20" y2="14"></line>
@@ -61,18 +61,9 @@ export const auth = {
           </svg>
           <span class="btn-text">Registrarse</span>
         </button>
-        <button id="openAuthBtn" class="nav-btn auth-btn" title="Iniciar sesión">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          <span class="btn-text">Ingresar</span>
-        </button>
       `;
       const regBtn = document.getElementById('openRegisterBtn');
       if (regBtn) regBtn.onclick = () => auth.openModal('register');
-      const loginBtn = document.getElementById('openAuthBtn');
-      if (loginBtn) loginBtn.onclick = () => auth.openModal('login');
     } else {
       const isAdmin = this.isAdmin();
       const firstName = this.currentUser.name.split(' ')[0];

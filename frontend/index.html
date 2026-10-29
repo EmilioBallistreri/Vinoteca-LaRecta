@@ -159,8 +159,8 @@
       <!-- Acciones de Cabecera: Instagram | Botón Registrarse / Acceso | Carrito -->
       <div class="nav-actions">
         <!-- Enlace a Instagram Oficial -->
-        <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="nav-btn" title="Instagram Oficial">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="nav-btn nav-icon-btn" title="Instagram Oficial">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -313,44 +313,6 @@
     </div>
   </section>
 
-  <!-- ================= CATÁLOGO DE PRODUCTOS ================= -->
-  <section id="catalogo" class="products-section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Cava Online &amp; Stock en Tiempo Real</span>
-        <h2 class="section-title">Nuestra Cava Privada</h2>
-        <div class="section-ornament">❖</div>
-        <p class="section-subtitle">
-          Exclusiva colección de botellas con procedencia garantizada, ideales para su cava personal, eventos de gala o agasajos corporativos.
-        </p>
-      </div>
-
-      <!-- Barra de herramientas: Filtros sobrios + Búsqueda -->
-      <div class="catalog-toolbar">
-        <div class="category-pills">
-          <button class="filter-pill active" data-filter="todos">Ver Todo el Catálogo</button>
-          <button class="filter-pill promo-pill" data-filter="promos">Selección &amp; Promociones</button>
-          <button class="filter-pill" data-filter="vinos">Vinos de Colección</button>
-          <button class="filter-pill" data-filter="espumantes">Espumantes &amp; Champagnes</button>
-          <button class="filter-pill" data-filter="whiskys">Whiskies &amp; Destilados Finos</button>
-          <button class="filter-pill" data-filter="aperitivos">Aperitivos &amp; Licores</button>
-          <button class="filter-pill" data-filter="delicatessen">Delicatessen &amp; Maridajes</button>
-        </div>
-
-        <div class="catalog-search-wrap">
-          <svg class="catalog-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input type="text" id="catalogSearchInput" class="catalog-search-input" placeholder="Buscar por bodega, etiqueta, varietal o región..." />
-        </div>
-      </div>
-
-      <!-- Grilla de Productos -->
-      <div id="productsGrid" class="products-grid"></div>
-    </div>
-  </section>
-
   <!-- ================= SECCIÓN NOSOTROS (HISTORIA & TRADICIÓN EN LA RECTA) ================= -->
   <section id="nosotros" class="about-section">
     <div class="container">
@@ -368,25 +330,6 @@
           <p>
             Ya sea para engalanar una cena íntima, atesorar una cosecha histórica en su cava privada o coordinar elegantes obsequios corporativos con embalajes de protección térmica, en nuestra casa encontrará dedicación exclusiva y envíos puntuales en toda la provincia de Córdoba.
           </p>
-
-          <div class="about-highlights-list">
-            <div class="about-highlight-card">
-              <h4>🏛️ Sede Propia en Argüello</h4>
-              <span>Av. Recta Martinolli 8255, punto de fácil acceso con estacionamiento y retiro inmediato.</span>
-            </div>
-            <div class="about-highlight-card">
-              <h4>❄️ Guarda Climatizada</h4>
-              <span>Ambiente a 16°C y 70% de humedad para preservar bouquet, corchos y taninos intactos.</span>
-            </div>
-            <div class="about-highlight-card">
-              <h4>📦 Despacho Especializado</h4>
-              <span>Embalajes anti-impacto y entrega asegurada en countries y domicilios de Córdoba.</span>
-            </div>
-            <div class="about-highlight-card">
-              <h4>🍷 Curaduría de Autor</h4>
-              <span>Alianza directa con las bodegas más distinguidas de Mendoza, Salta y la Patagonia.</span>
-            </div>
-          </div>
         </div>
 
         <div class="about-visual-stack">
@@ -483,18 +426,11 @@
           </div>
         </div>
 
-        <!-- Formulario de Consulta por Email a vinotecalarecta7@gmail.com -->
+        <!-- Formulario de Consulta Formal -->
         <div class="inquiry-card">
           <div class="inquiry-header">
             <h3>Formulario de Consulta Formal</h3>
             <p>Escríbanos directamente a nuestro buzón enológico oficial.</p>
-            <div class="inquiry-destination-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-              Destino: <strong>vinotecalarecta7@gmail.com</strong>
-            </div>
           </div>
 
           <form id="contactInquiryForm">
@@ -536,7 +472,7 @@
                 <line x1="22" y1="2" x2="11" y2="13"></line>
                 <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
               </svg>
-              Enviar Consulta a vinotecalarecta7@gmail.com
+              Enviar Consulta
             </button>
 
             <div id="inquiryFeedback" class="inquiry-feedback-msg"></div>
@@ -694,13 +630,22 @@
           o 3 pagos fijos sin interés
         </div>
 
-        <button id="cartDrawerCheckoutBtn" class="cart-checkout-btn">
-          Formalizar Compra
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </button>
+        <div class="cart-checkout-actions">
+          <button id="cartDrawerCheckoutBtn" class="cart-checkout-btn">
+            Terminar Pedido por la Web
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+
+          <a id="cartDrawerWspBtn" href="https://wa.me/5493512460017" target="_blank" rel="noopener noreferrer" class="cart-wsp-checkout-btn">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.09c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.32c0-4.51 3.67-8.18 8.18-8.18 2.18 0 4.24.85 5.78 2.39 1.55 1.55 2.4 3.6 2.4 5.79 0 4.51-3.67 8.17-8.18 8.17zm4.49-6.13c-.25-.12-1.46-.72-1.69-.8-.22-.09-.39-.12-.55.12-.17.25-.64.8-.78.97-.15.17-.29.19-.54.07-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.09-.17.04-.31-.02-.43-.07-.12-.55-1.33-.76-1.82-.2-.48-.41-.41-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.17.21-.58.21-1.07.15-1.17-.07-.1-.23-.17-.48-.29z"/>
+            </svg>
+            Terminar Pedido por WhatsApp
+          </a>
+        </div>
       </div>
     </aside>
   </div>
