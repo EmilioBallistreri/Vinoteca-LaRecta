@@ -18,7 +18,7 @@ const PRODUCTS_60 = [
     minStock: 5,
     isFeatured: true,
     badge: 'PROMO 18% OFF',
-    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Selección premium: 1 D.V. Catena Cabernet-Malbec, 1 Rutini Single Vineyard y 1 Angélica Zapata. Incluye estuche de madera de regalo.'
   },
   {
@@ -34,7 +34,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: true,
     badge: 'PROMO 20% OFF',
-    image: 'https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1521512233585-c0bb78faee37?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: '2 Botellas Chandon Extra Brut 750ml acompañadas de dos copas de cristal grabadas Vinoteca La Recta.'
   },
   {
@@ -50,7 +50,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: true,
     badge: 'OFERTA ESPECIAL',
-    image: 'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'El kit perfecto para los amantes del Gin Tonic clásico. Botella 700ml con botánicos seleccionados y tónicas premium.'
   },
   {
@@ -66,7 +66,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: true,
     badge: 'CAJA MADERA 17% OFF',
-    image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Caja cerrada de 6 botellas del clásico ícono mendocino. Ideal para guarda o regalos empresariales de jerarquía.'
   },
   {
@@ -82,7 +82,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: true,
     badge: 'DUO VIGIL 16% OFF',
-    image: 'https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Cata guiada de dos grandes creaciones de Alejandro Vigil en Gualtallary. Incluye fichas de cata exclusivas.'
   },
   {
@@ -98,7 +98,7 @@ const PRODUCTS_60 = [
     minStock: 5,
     isFeatured: false,
     badge: 'PROMO x6 BOTELLAS',
-    image: 'https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Pack de 6 botellas Trumpeter Malbec. Joven, frutado, con taninos dulces y excelente relación precio-calidad.'
   },
   {
@@ -114,7 +114,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: false,
     badge: 'EDICIÓN REGALO',
-    image: 'https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Botella De Sangre Malbec Edición Limitada en estuche formal rígido acompañado de sacacorchos profesional de sommelier.'
   },
   {
@@ -130,7 +130,7 @@ const PRODUCTS_60 = [
     minStock: 2,
     isFeatured: false,
     badge: 'BRINDIS ALTA GAMA',
-    image: 'https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1754490843182-13e24044dce8?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: '2 Botellas Barón B Extra Brut Cuvée Spéciale más 2 copas de cristal fino talladas para espumantes.'
   },
   {
@@ -146,7 +146,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: false,
     badge: 'EDICIÓN CAVA',
-    image: 'https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1653596662119-95f12558a15a?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Botella de litro de Johnnie Walker Black Label 12 años con 2 vasos pesados de cristal para degustación en las rocas.'
   },
   {
@@ -162,7 +162,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: true,
     badge: 'MARIDAJE GOURMET',
-    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1745970800085-6a107073ca46?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Maridaje completo: 1 botella D.V. Catena Cabernet-Malbec, 200g Jamón Crudo Reserva 18 meses y 500ml Aceite Zuelo Extra Virgen.'
   },
 
@@ -182,7 +182,7 @@ const PRODUCTS_60 = [
     minStock: 2,
     isFeatured: true,
     badge: 'ÍCONO MUNDIAL',
-    image: 'https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'La etiqueta legendaria que rinde tributo a la historia del Malbec en Francia y Argentina. Uvas de viñedos centenarios de Angélica y Nicasia.'
   },
   {
@@ -198,7 +198,7 @@ const PRODUCTS_60 = [
     minStock: 5,
     isFeatured: true,
     badge: '100 PTS ROBERT PARKER',
-    image: 'https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Gualtallary, Tupungato, Mendoza. Aromas minerales, hierbas de montaña y taninos filosos con extraordinaria frescura.'
   },
   {
@@ -214,7 +214,7 @@ const PRODUCTS_60 = [
     minStock: 6,
     isFeatured: false,
     badge: 'RECOMENDADO',
-    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Gran estructura, notas de frutas rojas maduras, vainilla y chocolate aportados por su crianza de 12 meses en roble francés.'
   },
   {
@@ -230,7 +230,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: true,
     badge: 'DENOMINACIÓN DE ORIGEN',
-    image: 'https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Expresión genuina de Las Compuertas. Ciruelas pasas, especias dulces y notas tostadas de roble francés.'
   },
   {
@@ -246,7 +246,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: true,
     badge: 'ALTA GAMA',
-    image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Elegancia pura del viñedo La Pirámide. Aromas a grosellas maduras, grafito y cedro, con final prolongado.'
   },
   {
@@ -262,7 +262,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: false,
     badge: 'COBOS PRESTIGE',
-    image: 'https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1474722883678-b7ae712217c2?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Enología de precisión por Paul Hobbs. Fruta negra profunda, tabaco y taninos sedosos de altísima concentración.'
   },
   {
@@ -278,7 +278,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: false,
     badge: 'VALLE DE UCO',
-    image: 'https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1586370434639-0fe43b2d32e6?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Corte bordelés de Malbec, Cabernet Sauvignon, Cabernet Franc, Merlot y Petit Verdot cosechados a más de 1200 msnm.'
   },
   {
@@ -294,7 +294,7 @@ const PRODUCTS_60 = [
     minStock: 2,
     isFeatured: true,
     badge: 'BLANCO DE CULTURA',
-    image: 'https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1632484294866-ea98c852f222?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Proviene de un sector calcáreo en Gualtallary donde abundaban fósiles. Mineralidad extrema, jazmín y acidez punzante.'
   },
   {
@@ -310,7 +310,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: false,
     badge: 'PARCELA ÚNICA',
-    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Elaborado por Mariano Di Paola con uvas seleccionadas de viñedo propio. Pimiento rojo asado, pimienta negra y roble tostado.'
   },
   {
@@ -326,7 +326,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: false,
     badge: 'ROSÉ DISTINGUIDO',
-    image: 'https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: '100% Pinot Noir de Los Árboles, Tunuyán. Color piel de cebolla sutil, notas de frutillas silvestres y flores secas.'
   },
 
@@ -346,7 +346,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: true,
     badge: 'MÉTODO TRADICIONAL',
-    image: 'https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Elaborado bajo el método tradicional champenoise con uvas Chardonnay y Pinot Noir de altura. Burbuja diminuta y corona persistente.'
   },
   {
@@ -362,7 +362,7 @@ const PRODUCTS_60 = [
     minStock: 1,
     isFeatured: true,
     badge: 'MÁXIMO LUJO FRANCÉS',
-    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1521512233585-c0bb78faee37?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'La máxima expresión del Champagne francés. Complejidad aromática insuperable con notas tostadas de brioche, humo y frutas maduras.'
   },
   {
@@ -378,7 +378,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: true,
     badge: '40 MESES SOBRE LÍAS',
-    image: 'https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1754490843182-13e24044dce8?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Elaborado con 85% Pinot Noir y 15% Chardonnay. Crianza prolongada sobre lías que aporta notas de levadura, pan tostado y frutos secos.'
   },
   {
@@ -394,7 +394,7 @@ const PRODUCTS_60 = [
     minStock: 2,
     isFeatured: true,
     badge: 'REIMS FRANCIA',
-    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1630771496884-46ce7c270a52?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Predominancia de Pinot Noir que otorga la estructura emblemática de Clicquot, complementado con Chardonnay y Meunier.'
   },
   {
@@ -410,7 +410,7 @@ const PRODUCTS_60 = [
     minStock: 6,
     isFeatured: false,
     badge: 'RESERVA EXCLUSIVA',
-    image: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: '100% Pinot Noir de viñedos de más de 1400 msnm. Frutas rojas frescas, cuerpo aterciopelado y final persistente.'
   },
   {
@@ -426,7 +426,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: false,
     badge: 'Tupungato',
-    image: 'https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1762854382956-110a4021d92a?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Chardonnay y Pinot Noir cosechados manualmente en Gualtallary. Frescura frutal, burbuja fina y acidez chispeante.'
   },
   {
@@ -442,7 +442,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: false,
     badge: 'BOHEME ÍCONO',
-    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Pionero de los espumantes de alta gama argentinos. 2 años de maduración sobre lías con bouquet de avellanas tostadas y manzanas al horno.'
   },
   {
@@ -458,7 +458,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: false,
     badge: 'ESPECIALISTA ESPUMANTES',
-    image: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Elaborado exclusivamente por bodega dedicada a espumantes. 24 meses sobre borras con destellos cobrizos y notas a frambuesa.'
   },
   {
@@ -474,7 +474,7 @@ const PRODUCTS_60 = [
     minStock: 5,
     isFeatured: false,
     badge: 'VALLE DE UCO',
-    image: 'https://images.unsplash.com/photo-1569919659476-f0852f6834b7?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1754490843182-13e24044dce8?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Cuvée equilibrada con gran frescura cítrica y notas a flores blancas. Excelente versatilidad para aperitivo y maridaje de pescados.'
   },
   {
@@ -490,7 +490,7 @@ const PRODUCTS_60 = [
     minStock: 2,
     isFeatured: false,
     badge: 'CHAMPAGNE IMPÉRIAL',
-    image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1521512233585-c0bb78faee37?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'El champagne más distinguido del mundo desde 1869. Manzana verde, cítricos vibrantes y sutil mineralidad con brioche.'
   },
 
@@ -510,7 +510,7 @@ const PRODUCTS_60 = [
     minStock: 2,
     isFeatured: true,
     badge: 'SPEYSIDE SINGLE MALT',
-    image: 'https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1570575573331-c9a348e0a349?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Madurado en dos tipos de roble seleccionados a mano sazonados con jerez oloroso. Aromas a caramelo, manzana confitada, cítricos y roble dulce.'
   },
   {
@@ -526,7 +526,7 @@ const PRODUCTS_60 = [
     minStock: 2,
     isFeatured: true,
     badge: '1 BARRICA EN 10.000',
-    image: 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Mezcla maestra de los whiskies más raros y excepcionales de Escocia, incluyendo destilerías cerradas ya fantasmas.'
   },
   {
@@ -542,7 +542,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: false,
     badge: 'SOLERA VAT',
-    image: 'https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Envejecido en barricas de roble español sazonadas con jerez y roble nuevo. Armonizado en una cuba Solera de pino oregonés nunca vaciada.'
   },
   {
@@ -558,7 +558,7 @@ const PRODUCTS_60 = [
     minStock: 1,
     isFeatured: true,
     badge: 'CORONA REAL 21 AÑOS',
-    image: 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1653596662119-95f12558a15a?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Creado para honrar la coronación de la reina Isabel II. Envasado en frasco artesanal de porcelana Wade esmaltada en color zafiro.'
   },
   {
@@ -574,7 +574,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: false,
     badge: 'SUPER PREMIUM BOURBON',
-    image: 'https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1609325331523-2e2a388676b9?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Destilado en alambiques de cobre en el condado de Woodford. Más de 200 notas de cata identificables, desde vainilla hasta tabaco y canela.'
   },
   {
@@ -590,7 +590,7 @@ const PRODUCTS_60 = [
     minStock: 2,
     isFeatured: false,
     badge: '18 AÑOS SINGLE MALT',
-    image: 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1570575573331-c9a348e0a349?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Crianza doble en roble americano y europeo. Paladar sedoso con capas de especias de invierno, naranjas amargas y pasas sultanas.'
   },
   {
@@ -606,7 +606,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: false,
     badge: '15 AÑOS PURO MALTA',
-    image: 'https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1653596662119-95f12558a15a?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Elaborado exclusivamente con cuatro maltas icónicas: Talisker, Linkwood, Cragganmore y Caol Ila. Notas herbales, ahumadas y amaderadas.'
   },
   {
@@ -622,7 +622,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: false,
     badge: 'BARRICA INDIVIDUAL',
-    image: 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1707745731140-1f3ce97166ed?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Embotellado barrica por barrica de los niveles superiores de la bodega. Notas pronunciadas de roble tostado, caramelo y clavo de olor.'
   },
   {
@@ -638,7 +638,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: false,
     badge: 'DOBLE CHARRING',
-    image: 'https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1613140506142-277c6241b858?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Madurado en barricas de bourbon dos veces carbonizadas. Suavidad inigualable del triple destilado irlandés con cremosidad y notas frutales.'
   },
   {
@@ -654,7 +654,7 @@ const PRODUCTS_60 = [
     minStock: 2,
     isFeatured: true,
     badge: 'TURBA AHUMADA INTENSA',
-    image: 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'El whisky más emblemático de la Isla de Islay. Inconfundible carácter ahumado medicinal, algas marinas, yodo y dulzura residual de cebada.'
   },
 
@@ -674,7 +674,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: true,
     badge: 'INFUSIÓN PEPINO & ROSA',
-    image: 'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Destilado en Escocia con 11 botánicos selectos e infusión final de pétalos de rosa damascena búlgara y pepinos holandeses.'
   },
   {
@@ -690,7 +690,7 @@ const PRODUCTS_60 = [
     minStock: 2,
     isFeatured: true,
     badge: '47 BOTÁNICOS SELVA NEGRA',
-    image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1785765795257-1bb831c683ab?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Obra maestra de la Selva Negra alemana. Elaborado con 47 botánicos autóctonos, agua pura de manantial y enebro silvestre.'
   },
   {
@@ -706,7 +706,7 @@ const PRODUCTS_60 = [
     minStock: 10,
     isFeatured: false,
     badge: 'TRADICIÓN CORDOBESA',
-    image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'La tradición cordobesa indiscutible. Receta secreta de 27 hierbas maceradas y añejadas 12 meses en cubas de roble esloveno.'
   },
   {
@@ -722,7 +722,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: true,
     badge: 'ORIGINAL 1786 TURÍN',
-    image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'El vermut original creado por Antonio Benedetto Carpano en 1786. Base de vino blanco italiano con azafrán, vainilla de Madagascar y ajenjo.'
   },
   {
@@ -738,7 +738,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: false,
     badge: 'HALL OF FAME',
-    image: 'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Destilado en pequeños lotes con cítricos enteros frescos (toronjas, naranjas de Florida y limas) y flores de manzanilla silvestre.'
   },
   {
@@ -754,7 +754,7 @@ const PRODUCTS_60 = [
     minStock: 8,
     isFeatured: false,
     badge: 'CLÁSICO ITALIANO',
-    image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'El corazón del Negroni y el Americano. Infusión inconfundible de hierbas amargas, plantas aromáticas y frutas en alcohol y agua.'
   },
   {
@@ -770,7 +770,7 @@ const PRODUCTS_60 = [
     minStock: 8,
     isFeatured: false,
     badge: 'APEROL SPRITZ',
-    image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Infusión de naranjas dulces y amargas con ruibarbo y hierbas selectas. El aperitivo por excelencia para acompañar el atardecer.'
   },
   {
@@ -786,7 +786,7 @@ const PRODUCTS_60 = [
     minStock: 5,
     isFeatured: false,
     badge: 'CREMA DE IRLANDA',
-    image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'La unión perfecta entre crema láctea irlandesa fresca y auténtico whisky irlandés añejado con toques de cacao y vainilla pura.'
   },
   {
@@ -802,7 +802,7 @@ const PRODUCTS_60 = [
     minStock: 5,
     isFeatured: false,
     badge: '56 BOTÁNICOS',
-    image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1785765795257-1bb831c683ab?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Elaborado según una receta celosamente guardada con 56 hierbas, flores, raíces y frutas de todo el mundo. Servir helado a -18°C.'
   },
   {
@@ -818,7 +818,7 @@ const PRODUCTS_60 = [
     minStock: 6,
     isFeatured: false,
     badge: 'GIN DE AUTOR ARGENTINO',
-    image: 'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'El primer gin de autor de Sudamérica. Destilado con hojas frescas de yerba mate misionera, peperina de las sierras de Córdoba y eucalipto.'
   },
 
@@ -838,7 +838,7 @@ const PRODUCTS_60 = [
     minStock: 5,
     isFeatured: true,
     badge: 'ESTACIONAMIENTO 18M',
-    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Curación artesanal en la brisa serrana. Feteado ultra fino al vacío, punto óptimo de salazón y aroma suave inconfundible.'
   },
   {
@@ -854,7 +854,7 @@ const PRODUCTS_60 = [
     minStock: 5,
     isFeatured: false,
     badge: 'PRIMER PRENSADO',
-    image: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Cosecha temprana en Maipú, Mendoza. Notas herbales a tomate verde y manzana fresca, acidez inferior a 0.2%.'
   },
   {
@@ -870,7 +870,7 @@ const PRODUCTS_60 = [
     minStock: 3,
     isFeatured: true,
     badge: 'D.O.P. AUTÉNTICO ITALIA',
-    image: 'https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1452195100486-9cc805987862?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Maduración garantizada de 24 meses. Textura granulada con cristales de tirosina crujientes y sabor umami profundo e inigualable.'
   },
   {
@@ -886,7 +886,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: true,
     badge: 'N°1 DEL MUNDO EVOO',
-    image: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Distinguido reiteradamente como la olivícola N°1 del mundo en el ranking EVOO World Ranking. Blend de Arauco, Changlot y Picual.'
   },
   {
@@ -902,7 +902,7 @@ const PRODUCTS_60 = [
     minStock: 6,
     isFeatured: false,
     badge: 'I.G. COLONIA CAROYA',
-    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1768758923759-bb572a8857ee?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Elaborado bajo receta ancestral de los colonos friulanos de Colonia Caroya con vino blanco, ajo machacado y estacionamiento en sótano.'
   },
   {
@@ -918,7 +918,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: false,
     badge: 'CONSERVA GOURMET',
-    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1745970800085-6a107073ca46?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Corazones tiernos seleccionados a mano, macerados con aceite de oliva virgen extra y hierbas aromáticas de la precordillera.'
   },
   {
@@ -934,7 +934,7 @@ const PRODUCTS_60 = [
     minStock: 5,
     isFeatured: false,
     badge: 'AHUMADO A LEÑA',
-    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1764436988814-4eff7322ee9c?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Asados a leña de algarrobo y pelados a mano sin agua para preservar todo su aroma tostado y dulzura natural.'
   },
   {
@@ -950,7 +950,7 @@ const PRODUCTS_60 = [
     minStock: 4,
     isFeatured: true,
     badge: 'CHOCOLATE & VINO',
-    image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Chocolate amargo 70% cacao belga con corazón untuoso de ganache reducida con Malbec de guarda de Mendoza. Exquisito maridaje.'
   },
   {
@@ -966,7 +966,7 @@ const PRODUCTS_60 = [
     minStock: 5,
     isFeatured: false,
     badge: 'TAPENADE MEDITERRÁNEO',
-    image: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Pasta rústica de olivas negras Arauco maduradas, alcaparras ácidas y un chorro generoso de aceite de oliva virgen extra.'
   },
   {
@@ -982,7 +982,7 @@ const PRODUCTS_60 = [
     minStock: 6,
     isFeatured: false,
     badge: 'SNACK DE CAVA',
-    image: 'https://images.unsplash.com/photo-1536599018102-9f803c140fc1?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1536599018102-9f803c140fc1?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
     description: 'Almendras non-pareil, nueces mariposa y castañas de cajú tostadas en seco al horno con un toque de sal mineral rosada.'
   }
 ];
