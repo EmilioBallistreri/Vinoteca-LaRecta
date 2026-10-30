@@ -14,7 +14,8 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-user']
 }));
-app.use(express.json());
+app.use(express.json({ limit: '15mb' }));
+app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 app.use(morgan('dev'));
 
 // Static files for frontend and uploads
@@ -245,6 +246,21 @@ app.get('/api/activity', (req, res) => {
 // ================= STATS FOR DASHBOARD =================
 app.get('/api/stats', (req, res) => {
   res.json(db.getStats());
+});
+
+// ================= SITE CONFIG & FESTIVITIES =================
+app.get('/api/site-config', (req, res) => {
+  res.json(db.getSiteConfig());
+});
+
+app.put('/api/site-config', (req, res) => {
+  try {
+    const user = req.headers['x-user'] ? JSON.parse(req.headers['x-user']) : null;
+    const updated = db.updateSiteConfig(req.body, user);
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 });
 
 // Start Server locally if executed directly (e.g., node backend/server.js or npm start)

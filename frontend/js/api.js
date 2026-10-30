@@ -194,6 +194,24 @@ export const api = {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Error al enviar consulta');
     return data;
+  },
+
+  // SITE CONFIG (CAROUSEL, FESTIVITIES & BANNERS)
+  async getSiteConfig() {
+    const res = await fetch('/api/site-config');
+    if (!res.ok) throw new Error('Error al cargar configuración del sitio');
+    return await res.json();
+  },
+
+  async updateSiteConfig(configData) {
+    const res = await fetch('/api/site-config', {
+      method: 'PUT',
+      headers: this.getHeaders(),
+      body: JSON.stringify(configData)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Error al guardar configuración del sitio');
+    return data;
   }
 };
 

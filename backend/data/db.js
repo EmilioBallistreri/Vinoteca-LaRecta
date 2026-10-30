@@ -303,6 +303,9 @@ module.exports = {
       discount: Number(data.discount) || 0,
       stock: Number(data.stock) || 0,
       minStock: Number(data.minStock) || 3,
+      stockMode: data.stockMode || 'unidad',
+      unitsPerBox: Number(data.unitsPerBox) || 6,
+      boxesCount: data.boxesCount !== undefined ? Number(data.boxesCount) : Number((Number(data.stock || 0) / (Number(data.unitsPerBox) || 6)).toFixed(2)),
       isFeatured: Boolean(data.isFeatured),
       badge: data.badge || null,
       image: data.image || 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
@@ -338,6 +341,9 @@ module.exports = {
       discount: updates.discount !== undefined ? Number(updates.discount) : old.discount,
       stock: updates.stock !== undefined ? Number(updates.stock) : old.stock,
       minStock: updates.minStock !== undefined ? Number(updates.minStock) : old.minStock,
+      stockMode: updates.stockMode !== undefined ? updates.stockMode : (old.stockMode || 'unidad'),
+      unitsPerBox: updates.unitsPerBox !== undefined ? Number(updates.unitsPerBox) : (old.unitsPerBox || 6),
+      boxesCount: updates.boxesCount !== undefined ? Number(updates.boxesCount) : old.boxesCount,
       updatedAt: new Date().toISOString()
     };
 
@@ -710,5 +716,92 @@ module.exports = {
       salesByCategory,
       recentOrders: store.orders.slice(0, 5)
     };
+  },
+
+  // SITE CUSTOMIZATION & FESTIVITIES
+  getDefaultSiteConfig() {
+    return {
+      heroSlides: [
+        {
+          id: 'slide-1',
+          image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1920&q=85',
+          label: 'Cava Principal'
+        },
+        {
+          id: 'slide-2',
+          image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1920&q=85',
+          label: 'Degustación & Copas'
+        },
+        {
+          id: 'slide-3',
+          image: 'https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=1920&q=85',
+          label: 'Destilados & Barricas'
+        }
+      ],
+      heroTag: 'CAVA & EXPERIENCIA ENOLÓGICA — CÓRDOBA',
+      heroTitle: 'Donde cada etiqueta cuenta una',
+      heroHighlight: 'gran historia',
+      heroDescription: 'Seleccionamos bodegas de autor, grandes reservas, destilados importados y habanos legítimos para transformar cada brindis en un momento inolvidable.',
+      activeFestivity: 'clasico',
+      banner: {
+        enabled: false,
+        badge: 'ESPECIAL DE TEMPORADA',
+        title: 'Celebrá con Etiquetas Seleccionadas',
+        subtitle: 'Descubrí nuestros combos exclusivos, estuches de regalo y descuentos especiales para esta celebración.',
+        ctaText: 'Ver Promociones Especiales',
+        ctaLink: '#promos',
+        image: ''
+      }
+    };
+  },
+
+  getSiteConfig() {
+    const store = readStore();
+    const defaults = this.getDefaultSiteConfig();
+    if (!store.siteConfig) {
+      return defaults;
+    }
+    return {
+      ...defaults,
+      ...store.siteConfig,
+      heroSlides: Array.isArray(store.siteConfig.heroSlides) && store.siteConfig.heroSlides.length > 0
+        ? store.siteConfig.heroSlides
+        : defaults.heroSlides,
+      banner: {
+        ...defaults.banner,
+        ...(store.siteConfig.banner || {})
+      }
+    };
+  },
+
+  updateSiteConfig(newConfig, user) {
+    const store = readStore();
+    const current = this.getSiteConfig();
+    const updated = {
+      ...current,
+      ...newConfig,
+      heroSlides: Array.isArray(newConfig.heroSlides) && newConfig.heroSlides.length > 0
+        ? newConfig.heroSlides
+        : current.heroSlides,
+      banner: {
+        ...current.banner,
+        ...(newConfig.banner || {})
+      },
+      updatedAt: new Date().toISOString()
+    };
+
+    store.siteConfig = updated;
+
+    this.logActivity({
+      user: user?.email || 'admin',
+      userName: user?.name || 'Administrador',
+      role: user?.role || 'superadministrador',
+      action: 'SITE_CUSTOMIZATION',
+      description: `Actualizó el diseño de Inicio / Festividad activa: [${updated.activeFestivity}]`,
+      badgeColor: 'gold'
+    }, store);
+
+    writeStore(store);
+    return updated;
   }
 };

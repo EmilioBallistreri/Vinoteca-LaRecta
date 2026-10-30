@@ -1,6 +1,7 @@
 import { api } from './api.js';
 import { cart, FREE_SHIPPING_THRESHOLD } from './cart.js';
 import { auth } from './auth.js';
+import { applySiteCustomization } from './festivities.js';
 
 // Subcategorías oficiales organizadas por cada una de las 6 categorías
 const SUBCATEGORIES_MAP = {
@@ -540,9 +541,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     state.activeSubcategory = subParam;
   }
 
-  // Cargar productos
+  // Cargar productos y configuración festiva
   try {
-    const products = await api.getProducts();
+    const [products, siteConfig] = await Promise.all([
+      api.getProducts(),
+      api.getSiteConfig().catch(() => null)
+    ]);
+    if (siteConfig) {
+      applySiteCustomization(siteConfig);
+    }
     state.products = products;
     setCategory(state.activeCategory);
     if (subParam) setSubcategory(subParam);
@@ -737,22 +744,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (err) {
       if (errEl) errEl.textContent = err.message;
     }
-  });
-
-  // Quick Superadmin Chips en Demo
-  document.querySelectorAll('.quick-admin-chip').forEach(chip => {
-    chip.addEventListener('click', async () => {
-      const email = chip.getAttribute('data-email');
-      const pass = chip.getAttribute('data-pass');
-      try {
-        const res = await api.login(email, pass);
-        auth.setUser(res.user);
-        auth.closeModal();
-        showToast(`Sesión iniciada como Administrador (${res.user.name})`);
-      } catch (err) {
-        alert(err.message);
-      }
-    });
   });
 
   // Escuchar actualizaciones de carrito

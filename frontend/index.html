@@ -183,10 +183,14 @@
     </div>
   </header>
 
+  <!-- ================= CINTA AMBIENTAL DE FESTIVIDAD ACTIVA ================= -->
+  <div id="festivityTopRibbon" class="festivity-top-ribbon" style="display: none;"></div>
+  <div id="festivityAmbientDecor" class="festivity-ambient-decor" aria-hidden="true"></div>
+
   <!-- ================= SECCIÓN HERO PRINCIPAL CON CARRUSEL DE FONDO ================= -->
   <section id="inicio" class="hero-section">
     <!-- Carrusel de imágenes de fondo automáticas con crossfade -->
-    <div class="hero-carousel">
+    <div id="heroCarousel" class="hero-carousel">
       <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1920&q=85');"></div>
       <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1920&q=85');"></div>
       <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1558001373-4b9345df0bc8?auto=format&fit=crop&w=1920&q=85');"></div>
@@ -195,7 +199,7 @@
     </div>
 
     <!-- Indicadores de diapositiva -->
-    <div class="hero-dots">
+    <div id="heroDotsContainer" class="hero-dots">
       <span class="hero-dot active" data-index="0" title="Cava Histórica"></span>
       <span class="hero-dot" data-index="1" title="Barricas de Roble"></span>
       <span class="hero-dot" data-index="2" title="Cosecha & Varietales"></span>
@@ -204,19 +208,19 @@
 
     <div class="container hero-container-relative">
       <div class="hero-content">
-        <span class="hero-tag">
+        <span id="heroTagBadge" class="hero-tag">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
           </svg>
-          Av. Recta Martinolli 8255 • Cava de Selección
+          <span id="heroTagText">Av. Recta Martinolli 8255 • Cava de Selección</span>
         </span>
 
         <h1 class="hero-title">
-          Tradición, Linaje &amp; <br />
-          <span class="gold-text">Vinos de Colección</span>
+          <span id="heroMainTitle">Tradición, Linaje &amp;</span> <br />
+          <span id="heroHighlightText" class="gold-text">Vinos de Colección</span>
         </h1>
 
-        <p class="hero-description">
+        <p id="heroDescriptionText" class="hero-description">
           Una cuidada curaduría de cosechas históricas, partidas limitadas de bodegas boutique y destilados nobles. Brindamos asesoramiento personalizado y despacho a domicilio en Córdoba desde nuestra cava en Argüello.
         </p>
 
@@ -273,6 +277,9 @@
       </div>
     </div>
   </section>
+
+  <!-- ================= BANNER ESPECIAL DE FESTIVIDAD / TEMPORADA ================= -->
+  <section id="festivityBannerSection" class="festivity-banner-section" style="display: none;"></section>
 
   <!-- ================= SECCIÓN DE PROMOS EN INICIO ================= -->
   <section id="promos" class="promos-section">
@@ -571,7 +578,6 @@
             <li><a href="/productos.html">Catálogo Completo</a></li>
             <li><a href="#nosotros">Nuestra Historia</a></li>
             <li><a href="#contacto">Ubicación &amp; Consulta</a></li>
-            <li><a href="/admin.html">Panel de Administración</a></li>
           </ul>
         </div>
 
@@ -777,30 +783,6 @@
       </form>
 
       <div id="authError" class="auth-error-msg"></div>
-
-      <!-- Selector Rápido para Demostración -->
-      <div class="admin-quick-helper">
-        <div class="admin-quick-title">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-          </svg>
-          Acceso Rápido Administradores (Demostración)
-        </div>
-        <div class="quick-admin-chips">
-          <button class="quick-admin-chip" data-email="vinotecalarecta7@gmail.com" data-pass="AdminRecta2024!">
-            <span>vinotecalarecta7@gmail.com</span>
-            <span style="color: var(--gold-light); font-weight: 700;">Superadmin Principal</span>
-          </button>
-          <button class="quick-admin-chip" data-email="floralmada07@gmail.com" data-pass="AdminRecta2024!">
-            <span>floralmada07@gmail.com</span>
-            <span style="color: var(--gold-light); font-weight: 700;">Superadmin (Flor Almada)</span>
-          </button>
-          <button class="quick-admin-chip" data-email="martinballistreri07@gmail.com" data-pass="AdminRecta2024!">
-            <span>martinballistreri07@gmail.com</span>
-            <span style="color: var(--gold-light); font-weight: 700;">Superadmin (Martín B.)</span>
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 

@@ -36,25 +36,6 @@
         <div id="adminLockError" class="auth-error-msg"></div>
       </form>
 
-      <!-- Quick Superadmin Selectors for Testing / Access -->
-      <div class="quick-admin-chips-list">
-        <span style="font-size: 0.72rem; color: var(--gold-light); font-weight: 700; text-transform: uppercase;">
-          Superadministradores Autorizados (Acceso Demo):
-        </span>
-        <button type="button" class="quick-admin-chip-btn" data-email="vinotecalarecta7@gmail.com" data-pass="AdminRecta2024!">
-          <span>vinotecalarecta7@gmail.com</span>
-          <strong style="color: var(--gold-light);">Principal</strong>
-        </button>
-        <button type="button" class="quick-admin-chip-btn" data-email="floralmada07@gmail.com" data-pass="AdminRecta2024!">
-          <span>floralmada07@gmail.com</span>
-          <strong style="color: var(--gold-light);">Flor Almada</strong>
-        </button>
-        <button type="button" class="quick-admin-chip-btn" data-email="martinballistreri07@gmail.com" data-pass="AdminRecta2024!">
-          <span>martinballistreri07@gmail.com</span>
-          <strong style="color: var(--gold-light);">Martín B.</strong>
-        </button>
-      </div>
-
       <div style="margin-top: 1.5rem;">
         <a href="/" style="font-size: 0.78rem; color: #888;">&larr; Volver a la Tienda</a>
       </div>
@@ -94,6 +75,19 @@
             <line x1="12" y1="22.08" x2="12" y2="12"></line>
           </svg>
           <span>Control de Stock</span>
+        </button>
+      </li>
+
+      <li class="admin-nav-item">
+        <button data-tab="customization">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
+            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
+            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
+            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
+          </svg>
+          <span>Inicio &amp; Festividades</span>
         </button>
       </li>
 
@@ -238,13 +232,44 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Stock Actual (Unidades) *</label>
-            <input type="number" id="pFormStock" required min="0" class="form-input" placeholder="12" />
-          </div>
-
-          <div class="form-group">
             <label class="form-label">Stock Mínimo para Alerta</label>
             <input type="number" id="pFormMinStock" min="1" class="form-input" placeholder="3" />
+          </div>
+
+          <!-- Bloque de Stock Actual Bidireccional (Por Unidad <-> Por Caja) -->
+          <div class="form-group" style="grid-column: 1 / -1; background: rgba(197, 160, 89, 0.05); padding: 1.15rem; border-radius: 10px; border: 1px solid rgba(197, 160, 89, 0.28);">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.9rem;">
+              <div>
+                <label class="form-label" style="color: var(--gold-champagne); font-weight: 700; margin-bottom: 0.15rem;">Stock Actual (Por Unidad o Por Caja — Cálculo Bidireccional) *</label>
+                <span style="font-size: 0.74rem; color: #aaa;">Podés cargar por botellas sueltas o por cajas cerradas; el sistema calcula automáticamente ambas equivalencias.</span>
+              </div>
+              <div class="stock-mode-toggle">
+                <button type="button" id="stockModeUnitBtn" class="stock-mode-btn active" data-mode="unidad">🍾 Por Unidad</button>
+                <button type="button" id="stockModeBoxBtn" class="stock-mode-btn" data-mode="caja">📦 Por Caja</button>
+              </div>
+              <input type="hidden" id="pFormStockMode" value="unidad" />
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; align-items: end;">
+              <div>
+                <label class="form-label" for="pFormUnitsPerBox" style="font-size: 0.74rem;">Unidades por Caja</label>
+                <input type="number" id="pFormUnitsPerBox" min="1" value="6" class="form-input" placeholder="Ej: 6" />
+              </div>
+
+              <div>
+                <label class="form-label" for="pFormBoxesCount" style="font-size: 0.74rem;">Cantidad de Cajas</label>
+                <input type="number" id="pFormBoxesCount" min="0" step="any" class="form-input" placeholder="Ej: 2" />
+              </div>
+
+              <div>
+                <label class="form-label" for="pFormStock" style="font-size: 0.74rem; color: var(--gold-light);">Stock Total (Unidades) *</label>
+                <input type="number" id="pFormStock" required min="0" class="form-input" placeholder="12" style="border-color: var(--gold-primary); font-weight: 700;" />
+              </div>
+            </div>
+
+            <div id="pStockConversionSummary" class="stock-conversion-badge">
+              📦 Equivalencia automática: <strong>2 cajas</strong> de <strong>6 un.</strong> = <strong>12 unidades totales</strong> en stock
+            </div>
           </div>
 
           <div class="form-group" style="grid-column: 1 / -1;">
@@ -252,32 +277,26 @@
             <input type="text" id="pFormBadge" class="form-input" placeholder="Ej: PROMO 20% OFF, ÍCONO, 94 PTS PARKER" />
           </div>
 
-          <!-- Imagen con Carga de Archivo Local, Estandarización Automática o Imagen de Prueba por Categoría -->
-          <div class="form-group" style="grid-column: 1 / -1; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 10px; border: 1px solid var(--admin-border);">
-            <label class="form-label" style="color: var(--gold-champagne); font-weight: 600;">Fotografía del Producto (Formato Estandarizado 800×1000 WebP) *</label>
-            <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center;">
-              <div>
-                <label style="font-size: 0.75rem; color: #aaa; display: block; margin-bottom: 0.3rem;">Opción 1: Subir imagen desde su computadora (se estandariza automáticamente a 800×1000 WebP)</label>
-                <input type="file" id="pFormImageFile" accept="image/*" class="form-input" style="padding: 0.45rem; font-size: 0.8rem;" />
-                
-                <label style="font-size: 0.75rem; color: #aaa; display: block; margin-top: 0.6rem; margin-bottom: 0.3rem;">Opción 2: Ingresar URL web directa de la imagen</label>
-                <input type="text" id="pFormImage" required class="form-input" placeholder="https://images.unsplash.com/..." />
-
-                <div style="margin-top: 0.65rem;">
-                  <span style="font-size: 0.72rem; color: var(--gold-light); display: block; margin-bottom: 0.35rem; font-weight: 600;">Opción 3: Imágenes de prueba estandarizadas por categoría:</span>
-                  <div id="pCategoryTestImagesBar" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-                    <button type="button" class="btn-secondary p-test-img-btn" data-cat-img="promos" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">🏷️ Promo</button>
-                    <button type="button" class="btn-secondary p-test-img-btn" data-cat-img="vinos" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">🍷 Vino</button>
-                    <button type="button" class="btn-secondary p-test-img-btn" data-cat-img="espumantes" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">🍾 Espumante</button>
-                    <button type="button" class="btn-secondary p-test-img-btn" data-cat-img="whiskys" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">🥃 Whisky</button>
-                    <button type="button" class="btn-secondary p-test-img-btn" data-cat-img="aperitivos" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">🍸 Aperitivo</button>
-                    <button type="button" class="btn-secondary p-test-img-btn" data-cat-img="delicatessen" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">🧀 Delicatessen</button>
-                  </div>
+          <!-- Imagen con Carga desde Dispositivo o Drag & Drop (Sin URL ni imágenes de prueba) -->
+          <div class="form-group" style="grid-column: 1 / -1; background: rgba(255,255,255,0.02); padding: 1.15rem; border-radius: 10px; border: 1px solid var(--admin-border);">
+            <label class="form-label" style="color: var(--gold-champagne); font-weight: 600; margin-bottom: 0.65rem;">Fotografía del Producto (Carga desde dispositivo o arrastrar) *</label>
+            <div style="display: grid; grid-template-columns: 1fr auto; gap: 1.25rem; align-items: center;">
+              <div id="pImageDropzone" class="admin-image-dropzone" tabindex="0" role="button" aria-label="Cargar o arrastrar imagen del producto">
+                <input type="file" id="pFormImageFile" accept="image/*" hidden />
+                <input type="hidden" id="pFormImage" />
+                <div class="dropzone-icon-circle">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
                 </div>
+                <div class="dropzone-title">Arrastrá y soltá la imagen acá o <span>hacé clic para subir desde tu dispositivo</span></div>
+                <div id="pDropzoneStatusText" class="dropzone-sub">Formatos aceptados: JPG, PNG, WebP • Se optimiza automáticamente a proporción 4:5 (800×1000)</div>
               </div>
               <div style="text-align: center;">
-                <span style="font-size: 0.72rem; color: #888; display: block; margin-bottom: 0.3rem;">Vista previa (4:5):</span>
-                <img id="pFormImagePreview" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp" alt="Preview" style="width: 80px; height: 100px; object-fit: cover; border-radius: 8px; border: 1.5px solid var(--gold-primary);" />
+                <span style="font-size: 0.72rem; color: #888; display: block; margin-bottom: 0.35rem;">Vista previa (4:5):</span>
+                <img id="pFormImagePreview" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp" alt="Preview" style="width: 92px; height: 115px; object-fit: cover; border-radius: 8px; border: 1.5px solid var(--gold-primary); box-shadow: 0 6px 18px rgba(0,0,0,0.5);" />
               </div>
             </div>
           </div>

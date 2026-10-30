@@ -1,6 +1,7 @@
 import { api } from './api.js';
 import { cart, FREE_SHIPPING_THRESHOLD } from './cart.js';
 import { auth } from './auth.js';
+import { applySiteCustomization } from './festivities.js';
 
 // Application state
 const state = {
@@ -738,27 +739,6 @@ function setupEventListeners() {
     }
   });
 
-  // Quick superadmin chips demo login helper
-  document.querySelectorAll('.quick-admin-chip').forEach(chip => {
-    chip.addEventListener('click', async () => {
-      const email = chip.getAttribute('data-email');
-      const pass = chip.getAttribute('data-pass');
-      const emailInput = document.getElementById('loginEmail');
-      const passInput = document.getElementById('loginPassword');
-      if (emailInput) emailInput.value = email;
-      if (passInput) passInput.value = pass;
-
-      try {
-        const res = await api.login(email, pass);
-        auth.setUser(res.user);
-        auth.closeModal();
-        showToast(`¡Bienvenido Administrador ${res.user.name}! Rol asignado: Administrador.`);
-      } catch (err) {
-        alert(err.message);
-      }
-    });
-  });
-
   // Newsletter Form
   document.getElementById('communityNewsletterForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -830,12 +810,16 @@ function showOrderConfirmationModal(order) {
 
 // ================= HERO CAROUSEL =================
 function initHeroCarousel() {
+  if (window._vlrCarouselTimer) {
+    clearInterval(window._vlrCarouselTimer);
+    window._vlrCarouselTimer = null;
+  }
+
   const slides = document.querySelectorAll('.hero-slide');
   const dots = document.querySelectorAll('.hero-dot');
   if (!slides.length) return;
 
   let currentIdx = 0;
-  let intervalId = null;
 
   function showSlide(index) {
     slides.forEach((s, idx) => {
@@ -855,14 +839,14 @@ function initHeroCarousel() {
   }
 
   // Auto slide every 5 seconds
-  intervalId = setInterval(nextSlide, 5000);
+  window._vlrCarouselTimer = setInterval(nextSlide, 5000);
 
   dots.forEach(dot => {
     dot.addEventListener('click', () => {
       const idx = parseInt(dot.getAttribute('data-index'), 10);
-      clearInterval(intervalId);
+      if (window._vlrCarouselTimer) clearInterval(window._vlrCarouselTimer);
       showSlide(idx);
-      intervalId = setInterval(nextSlide, 5000);
+      window._vlrCarouselTimer = setInterval(nextSlide, 5000);
     });
   });
 }
@@ -997,7 +981,14 @@ async function init() {
   setupContactInquiryForm();
 
   try {
-    const products = await api.getProducts();
+    const [products, siteConfig] = await Promise.all([
+      api.getProducts(),
+      api.getSiteConfig().catch(() => null)
+    ]);
+    if (siteConfig) {
+      applySiteCustomization(siteConfig);
+      initHeroCarousel();
+    }
     state.products = products;
     state.filteredProducts = products;
     renderCategories();
