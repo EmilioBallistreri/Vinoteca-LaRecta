@@ -2,6 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const { PRODUCTS_60 } = require('./products_seed');
+let BUNDLED_SEED_STORE = null;
+try {
+  BUNDLED_SEED_STORE = require('./store.json');
+} catch (_) {
+  BUNDLED_SEED_STORE = null;
+}
 
 const isVercel = Boolean(process.env.VERCEL);
 const STORE_PATH = isVercel
@@ -173,14 +179,17 @@ const DEFAULT_STORE = {
 // Ensure data file exists
 function initStore() {
   if (!fs.existsSync(STORE_PATH)) {
-    let initialData = DEFAULT_STORE;
+    let initialData = BUNDLED_SEED_STORE || DEFAULT_STORE;
     if (fs.existsSync(SEED_PATH)) {
       try {
         const raw = fs.readFileSync(SEED_PATH, 'utf8');
         initialData = JSON.parse(raw);
       } catch (e) {
-        initialData = DEFAULT_STORE;
+        initialData = BUNDLED_SEED_STORE || DEFAULT_STORE;
       }
+    }
+    if (!Array.isArray(initialData.products) || initialData.products.length === 0) {
+      initialData.products = PRODUCTS_60;
     }
     try {
       fs.writeFileSync(STORE_PATH, JSON.stringify(initialData, null, 2), 'utf8');
@@ -193,18 +202,28 @@ function initStore() {
 function readStore() {
   initStore();
   try {
+    let data = null;
     if (fs.existsSync(STORE_PATH)) {
       const raw = fs.readFileSync(STORE_PATH, 'utf8');
-      return JSON.parse(raw);
-    }
-    if (fs.existsSync(SEED_PATH)) {
+      data = JSON.parse(raw);
+    } else if (fs.existsSync(SEED_PATH)) {
       const raw = fs.readFileSync(SEED_PATH, 'utf8');
-      return JSON.parse(raw);
+      data = JSON.parse(raw);
+    } else {
+      data = BUNDLED_SEED_STORE || DEFAULT_STORE;
     }
-    return DEFAULT_STORE;
+    if (!data || typeof data !== 'object') {
+      return BUNDLED_SEED_STORE || DEFAULT_STORE;
+    }
+    if (!Array.isArray(data.products) || data.products.length === 0) {
+      data.products = (BUNDLED_SEED_STORE && Array.isArray(BUNDLED_SEED_STORE.products) && BUNDLED_SEED_STORE.products.length > 0)
+        ? BUNDLED_SEED_STORE.products
+        : PRODUCTS_60;
+    }
+    return data;
   } catch (err) {
     console.error('Error reading store, falling back to defaults:', err.message);
-    return DEFAULT_STORE;
+    return BUNDLED_SEED_STORE || DEFAULT_STORE;
   }
 }
 

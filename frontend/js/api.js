@@ -1,7 +1,69 @@
 // Centralized API Client for Vinoteca La Recta
-const API_BASE = window.location.origin.includes('localhost')
-  ? '' // Uses relative path to hit same origin / proxy
-  : '';
+const LOCAL_PRODUCTS_KEY = 'vlr_local_products_override';
+const LOCAL_DELETED_KEY = 'vlr_local_deleted_products';
+const LOCAL_SITE_CONFIG_KEY = 'vlr_local_site_config';
+
+function getLocalOverrides() {
+  try {
+    return JSON.parse(localStorage.getItem(LOCAL_PRODUCTS_KEY) || '{}');
+  } catch {
+    return {};
+  }
+}
+
+function saveLocalOverride(product) {
+  try {
+    const map = getLocalOverrides();
+    map[product.id] = product;
+    localStorage.setItem(LOCAL_PRODUCTS_KEY, JSON.stringify(map));
+  } catch (_) {}
+}
+
+function getLocalDeletedIds() {
+  try {
+    return JSON.parse(localStorage.getItem(LOCAL_DELETED_KEY) || '[]');
+  } catch {
+    return [];
+  }
+}
+
+function markLocalDeleted(id) {
+  try {
+    const list = getLocalDeletedIds();
+    if (!list.includes(id)) list.push(id);
+    localStorage.setItem(LOCAL_DELETED_KEY, JSON.stringify(list));
+    const map = getLocalOverrides();
+    delete map[id];
+    localStorage.setItem(LOCAL_PRODUCTS_KEY, JSON.stringify(map));
+  } catch (_) {}
+}
+
+function mergeProductsWithLocal(serverProducts = []) {
+  const deleted = new Set(getLocalDeletedIds());
+  const overrides = getLocalOverrides();
+  const result = [];
+  const seen = new Set();
+
+  // Put newly created local products first if not in server list yet
+  Object.values(overrides).forEach(prod => {
+    if (!deleted.has(prod.id) && !serverProducts.some(sp => sp.id === prod.id)) {
+      result.push(prod);
+      seen.add(prod.id);
+    }
+  });
+
+  serverProducts.forEach(sp => {
+    if (deleted.has(sp.id)) return;
+    if (overrides[sp.id]) {
+      result.push({ ...sp, ...overrides[sp.id] });
+    } else {
+      result.push(sp);
+    }
+    seen.add(sp.id);
+  });
+
+  return result;
+}
 
 export const api = {
   // Get current auth user from localStorage for header tracking
@@ -55,9 +117,26 @@ export const api = {
     if (params.featured) query.append('featured', 'true');
     if (params.promo) query.append('promo', 'true');
 
-    const res = await fetch(`/api/products?${query.toString()}`);
-    if (!res.ok) throw new Error('Error al cargar productos');
-    return await res.json();
+    let list = [];
+    try {
+      const res = await fetch(`/api/products?${query.toString()}`);
+      if (res.ok) {
+        list = await res.json();
+      }
+    } catch (_) {}
+
+    // Fallback to bundled static seed if serverless cold-start or static hosting returns empty
+    if (!Array.isArray(list) || list.length === 0) {
+      try {
+        const fbRes = await fetch('/public/store-fallback.json');
+        if (fbRes.ok) {
+          const fbStore = await fbRes.json();
+          list = fbStore.products || [];
+        }
+      } catch (_) {}
+    }
+
+    return mergeProductsWithLocal(list);
   },
 
   async getProductById(id) {
@@ -74,6 +153,7 @@ export const api = {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Error al crear producto');
+    saveLocalOverride(data);
     return data;
   },
 
@@ -85,6 +165,7 @@ export const api = {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Error al actualizar producto');
+    saveLocalOverride(data);
     return data;
   },
 
@@ -96,6 +177,7 @@ export const api = {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Error al actualizar stock');
+    saveLocalOverride(data);
     return data;
   },
 
@@ -106,6 +188,7 @@ export const api = {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Error al eliminar producto');
+    markLocalDeleted(id);
     return data;
   },
 
@@ -198,20 +281,41 @@ export const api = {
 
   // SITE CONFIG (CAROUSEL, FESTIVITIES & BANNERS)
   async getSiteConfig() {
-    const res = await fetch('/api/site-config');
-    if (!res.ok) throw new Error('Error al cargar configuración del sitio');
-    return await res.json();
+    try {
+      const res = await fetch('/api/site-config');
+      if (res.ok) {
+        const serverCfg = await res.json();
+        const localCfgRaw = localStorage.getItem(LOCAL_SITE_CONFIG_KEY);
+        if (localCfgRaw) {
+          const localCfg = JSON.parse(localCfgRaw);
+          if (localCfg.updatedAt && (!serverCfg.updatedAt || new Date(localCfg.updatedAt) > new Date(serverCfg.updatedAt))) {
+            return localCfg;
+          }
+        }
+        return serverCfg;
+      }
+    } catch (_) {}
+
+    const localCfgRaw = localStorage.getItem(LOCAL_SITE_CONFIG_KEY);
+    return localCfgRaw ? JSON.parse(localCfgRaw) : null;
   },
 
   async updateSiteConfig(configData) {
+    const withTimestamp = { ...configData, updatedAt: new Date().toISOString() };
+    try {
+      localStorage.setItem(LOCAL_SITE_CONFIG_KEY, JSON.stringify(withTimestamp));
+    } catch (_) {}
+
     const res = await fetch('/api/site-config', {
       method: 'PUT',
       headers: this.getHeaders(),
-      body: JSON.stringify(configData)
+      body: JSON.stringify(withTimestamp)
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Error al guardar configuración del sitio');
+    try {
+      localStorage.setItem(LOCAL_SITE_CONFIG_KEY, JSON.stringify(data));
+    } catch (_) {}
     return data;
   }
 };
-
