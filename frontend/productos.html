@@ -322,6 +322,7 @@
           </li>
 
           <li><a href="/productos.html" class="nav-link active">PRODUCTOS</a></li>
+          <li><a href="/mayorista.html" class="nav-link">MAYORISTA</a></li>
           <li><a href="/#nosotros" class="nav-link">NOSOTROS</a></li>
           <li><a href="/#contacto" class="nav-link">CONTACTO</a></li>
         </ul>
@@ -571,7 +572,11 @@
   <div id="cartDrawerOverlay" class="cart-drawer-overlay">
     <aside class="cart-drawer">
       <div class="cart-drawer-header">
-        <h3 class="cart-drawer-title">Su Selección de Cava</h3>
+        <div class="cart-drawer-header-left">
+          <h3 class="cart-drawer-title">Su Selección de Cava</h3>
+          <span id="cartDrawerCountPill" class="cart-drawer-count-pill">0 productos</span>
+        </div>
+        <button id="cartClearAllBtn" class="cart-clear-all-btn" style="display: none;" title="Vaciar selección">Vaciar</button>
         <button id="cartCloseBtn" class="cart-close-btn" title="Cerrar">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>

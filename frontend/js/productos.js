@@ -384,6 +384,19 @@ function updateCartDrawerUI(cartData) {
   countEls.forEach(el => {
     if (el) el.textContent = cartData.totalQuantity;
   });
+  const headerPill = document.getElementById('cartDrawerCountPill');
+  if (headerPill) {
+    const totalBottles = cartData.totalQuantity || 0;
+    const totalLabels = cartData.items ? cartData.items.length : 0;
+    headerPill.textContent = totalBottles > 0 ? `${totalBottles} ${totalBottles === 1 ? 'unidad' : 'unidades'} • ${totalLabels} ${totalLabels === 1 ? 'etiqueta' : 'etiquetas'}` : '0 productos';
+  }
+  const clearAllBtn = document.getElementById('cartClearAllBtn');
+  if (clearAllBtn) {
+    clearAllBtn.style.display = cartData.items && cartData.items.length > 0 ? 'inline-flex' : 'none';
+    clearAllBtn.onclick = () => {
+      cart.clear();
+    };
+  });
 
   const itemsContainer = document.getElementById('cartDrawerItems');
   const drawerFooter = document.getElementById('cartDrawerFooter');
@@ -440,7 +453,10 @@ function updateCartDrawerUI(cartData) {
       <div class="cart-item-info">
         <span class="cart-item-bodega">${item.bodega || ''}</span>
         <h4 class="cart-item-title">${item.name}</h4>
-        <span class="cart-item-price">${formatCurrency(item.price * item.quantity)}</span>
+        <div class="cart-item-pricing-row">
+          <span class="cart-item-unit-price">${formatCurrency(item.price)} c/u × ${item.quantity}</span>
+          <span class="cart-item-price">${formatCurrency(item.price * item.quantity)}</span>
+        </div>
         <div class="cart-item-controls">
           <div class="qty-stepper">
             <button class="qty-btn" data-action="dec-cart" data-id="${item.id}">-</button>

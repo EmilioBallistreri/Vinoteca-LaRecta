@@ -28,6 +28,10 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/admin.html'));
 });
 
+app.get('/mayorista', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/mayorista.html'));
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({

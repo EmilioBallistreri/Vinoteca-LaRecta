@@ -595,9 +595,11 @@ module.exports = {
   createOrder(data) {
     const store = readStore();
 
-    const orderId = 'ORD-' + (Math.floor(1000 + Math.random() * 9000));
+    const orderId = (data.isWholesale ? 'MAY-' : 'ORD-') + (Math.floor(1000 + Math.random() * 9000));
     const newOrder = {
       id: orderId,
+      isWholesale: Boolean(data.isWholesale),
+      businessInfo: data.businessInfo || null,
       customer: {
         name: data.customer.name,
         email: data.customer.email,
@@ -608,7 +610,9 @@ module.exports = {
         id: item.id,
         name: item.name,
         price: item.price,
-        quantity: item.quantity
+        quantity: item.quantity,
+        boxes: item.boxes || null,
+        unitsPerBox: item.unitsPerBox || null
       })),
       paymentMethod: data.paymentMethod || 'Transferencia Bancaria (10% OFF)',
       subtotal: data.subtotal,

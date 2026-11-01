@@ -1,7 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "outputDirectory": "frontend",
-  "cleanUrls": true,
   "functions": {
     "api/index.js": {
       "includeFiles": "backend/**"
@@ -15,6 +14,10 @@
     {
       "source": "/admin",
       "destination": "/admin.html"
+    },
+    {
+      "source": "/mayorista",
+      "destination": "/mayorista.html"
     }
   ]
 }

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canal Mayorista para Comercios | Vinoteca La Recta — Córdoba</title>
+  <meta name="description" content="Portal exclusivo de venta mayorista por caja cerrada para comercios, restaurantes, bares, hoteles y eventos en Córdoba. Descuentos por volumen de hasta 25% OFF." />
+  <link rel="icon" type="image/jpeg" href="/public/logo-vinoteca.jpg" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+  <!-- ================= BARRA DE NAVEGACIÓN PRINCIPAL ================= -->
+  <header class="navbar scrolled" id="mainNavbar">
+    <div class="container nav-container">
+      <a href="/" class="nav-brand">
+        <img src="/public/logo-vinoteca.jpg" alt="Escudo Oficial Vinoteca La Recta" class="brand-logo-img" />
+        <div class="brand-text-block">
+          <span class="brand-title">VINOTECA LA RECTA</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">INICIO</a></li>
+          <li>
+            <a href="/productos.html?categoria=promos" class="nav-link">
+              PROMOS
+              <span class="nav-badge-off">OFERTAS</span>
+            </a>
+          </li>
+          <li><a href="/productos.html" class="nav-link">PRODUCTOS</a></li>
+          <li><a href="/mayorista.html" class="nav-link active">MAYORISTA</a></li>
+          <li><a href="/#nosotros" class="nav-link">NOSOTROS</a></li>
+          <li><a href="/#contacto" class="nav-link">CONTACTO</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://instagram.com/vinoteca.larecta" target="_blank" rel="noopener noreferrer" class="nav-btn nav-icon-btn" title="Instagram Oficial">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+
+        <div id="navUserContainer"></div>
+
+        <button id="navCartBtn" class="nav-btn nav-cart-btn" title="Ver Cava Minorista">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span id="navCartCount" class="cart-badge-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO MAYORISTA PARA COMERCIOS ================= -->
+  <section class="wholesale-hero">
+    <div class="container wholesale-hero-grid">
+      <div>
+        <span class="wholesale-badge">🏢 División Comercial &amp; Horeca</span>
+        <h1 class="wholesale-hero-title">Portal Mayorista para Comercios</h1>
+        <p class="wholesale-hero-desc">
+          Abastecimiento directo de bodega por <strong>caja cerrada</strong> para comercios gastronómicos, bares, vinotecas, hoteles, salones de eventos y autoservicios. Seleccione las cajas que necesita su negocio, acceda a bonificaciones automáticas por volumen y finalice su pedido por la web o por WhatsApp.
+        </p>
+        <div class="wholesale-segments-row">
+          <span class="wholesale-segment-tag">🍽️ Restaurantes &amp; Parrillas</span>
+          <span class="wholesale-segment-tag">🍸 Bares &amp; Coctelería</span>
+          <span class="wholesale-segment-tag">🍷 Vinotecas &amp; Autoservicios</span>
+          <span class="wholesale-segment-tag">🏨 Hoteles &amp; Catering</span>
+          <span class="wholesale-segment-tag">🥂 Eventos Corporativos</span>
+        </div>
+      </div>
+
+      <div class="wholesale-tiers-card">
+        <div class="wholesale-tiers-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          </svg>
+          Escala de Bonificación Mayorista (Cajas Combinables)
+        </div>
+        <div class="wholesale-tier-item">
+          <div>
+            <span class="wholesale-tier-range">1 a 2 Cajas Cerradas</span>
+            <span class="wholesale-tier-sub">Precio Mayorista Inicial (Todo el catálogo combinable)</span>
+          </div>
+          <span class="wholesale-tier-off">10% OFF</span>
+        </div>
+        <div class="wholesale-tier-item">
+          <div>
+            <span class="wholesale-tier-range">3 a 5 Cajas Cerradas</span>
+            <span class="wholesale-tier-sub">Ideal reposición semanal para gastronomía y comercios</span>
+          </div>
+          <span class="wholesale-tier-off">15% OFF</span>
+        </div>
+        <div class="wholesale-tier-item">
+          <div>
+            <span class="wholesale-tier-range">6 a 11 Cajas Cerradas</span>
+            <span class="wholesale-tier-sub">Volumen intermedio con envío prioritario bonificado</span>
+          </div>
+          <span class="wholesale-tier-off">20% OFF</span>
+        </div>
+        <div class="wholesale-tier-item highlight">
+          <div>
+            <span class="wholesale-tier-range">12 o más Cajas Cerradas</span>
+            <span class="wholesale-tier-sub">Máxima bonificación mayorista de distribuidora</span>
+          </div>
+          <span class="wholesale-tier-off">25% OFF</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WORKSPACE: CATÁLOGO MAYORISTA + ARMADOR DE PEDIDO ================= -->
+  <section class="wholesale-workspace">
+    <div class="container wholesale-layout">
+
+      <!-- Columna Izquierda: Catálogo por Caja Cerrada -->
+      <div>
+        <div class="wholesale-toolbar">
+          <div class="wholesale-search-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="wholesaleSearchInput" placeholder="Buscar por etiqueta, bodega o varietal..." />
+          </div>
+
+          <div class="wholesale-cat-pills" id="wholesaleCatPills">
+            <button class="wholesale-cat-pill active" data-cat="todos">Todos</button>
+            <button class="wholesale-cat-pill" data-cat="vinos">Vinos</button>
+            <button class="wholesale-cat-pill" data-cat="espumantes">Espumantes</button>
+            <button class="wholesale-cat-pill" data-cat="whiskys">Whiskys</button>
+            <button class="wholesale-cat-pill" data-cat="gin">Gin &amp; Destilados</button>
+            <button class="wholesale-cat-pill" data-cat="cervezas">Cervezas</button>
+            <button class="wholesale-cat-pill" data-cat="aperitivos">Aperitivos</button>
+          </div>
+        </div>
+
+        <div id="wholesaleProductsGrid" class="wholesale-products-grid">
+          <!-- Renderizado dinámicamente por mayorista.js -->
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Resumen de Pedido Mayorista y Datos del Comercio -->
+      <aside class="wholesale-order-panel" id="wholesaleOrderPanel">
+        <div class="wholesale-panel-header">
+          <div>
+            <h2 class="wholesale-panel-title">Pedido Mayorista</h2>
+            <span style="font-size: 0.76rem; color: var(--text-muted);">Cajas combinables entre etiquetas</span>
+          </div>
+          <span id="wholesaleBoxesBadge" class="cart-drawer-count-pill">0 cajas • 0 u.</span>
+        </div>
+
+        <div id="wholesaleTierStatus" class="wholesale-tier-status">
+          📦 Sume cajas cerradas para activar su escala de descuento mayorista (hasta <strong>25% OFF</strong>).
+        </div>
+
+        <!-- Lista de cajas seleccionadas -->
+        <div id="wholesaleCartList" class="wholesale-items-list">
+          <div style="text-align: center; padding: 1.5rem 0.5rem; color: var(--text-muted); font-size: 0.84rem;">
+            Aún no ha sumado cajas a su pedido comercial. Seleccione las etiquetas del catálogo izquierdo.
+          </div>
+        </div>
+
+        <!-- Totales Mayoristas -->
+        <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(197,160,89,0.22); border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 1rem;">
+          <div class="cart-summary-line">
+            <span>Subtotal Lista:</span>
+            <strong id="wholesaleSubtotalList">$0</strong>
+          </div>
+          <div class="cart-summary-line discount">
+            <span id="wholesaleDiscountLabel">Bonificación Mayorista (10%):</span>
+            <strong id="wholesaleDiscountAmount">-$0</strong>
+          </div>
+          <div class="cart-summary-total">
+            <span>Total Mayorista:</span>
+            <strong id="wholesaleFinalTotal" style="color: var(--gold-champagne);">$0</strong>
+          </div>
+        </div>
+
+        <!-- Formulario de Datos del Comercio -->
+        <form id="wholesaleOrderForm">
+          <h4 style="font-family: var(--font-brand); font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-primary); margin: 0 0 0.5rem;">
+            Datos del Comercio / Facturación
+          </h4>
+
+          <div class="wholesale-form-grid">
+            <div class="full-span">
+              <input type="text" id="bizCompanyName" class="wholesale-input" placeholder="Nombre del Comercio / Razón Social *" required />
+            </div>
+            <div>
+              <select id="bizSegment" class="wholesale-select" required>
+                <option value="Restaurante / Gastronomía">Restaurante / Gastronomía</option>
+                <option value="Bar / Coctelería">Bar / Coctelería</option>
+                <option value="Vinoteca / Autoservicio">Vinoteca / Autoservicio</option>
+                <option value="Hotel / Catering / Eventos">Hotel / Catering / Eventos</option>
+                <option value="Comercio / Empresa">Otro Comercio / Empresa</option>
+              </select>
+            </div>
+            <div>
+              <input type="text" id="bizCuit" class="wholesale-input" placeholder="CUIT / DNI Comercial *" required />
+            </div>
+            <div>
+              <select id="bizIva" class="wholesale-select">
+                <option value="Responsable Inscripto (Factura A)">Resp. Inscripto (Fact. A)</option>
+                <option value="Monotributista">Monotributista</option>
+                <option value="Exento / Consumidor Final">Exento / Cons. Final</option>
+              </select>
+            </div>
+            <div>
+              <input type="text" id="bizContactName" class="wholesale-input" placeholder="Persona de Contacto *" required />
+            </div>
+            <div>
+              <input type="tel" id="bizPhone" class="wholesale-input" placeholder="WhatsApp / Teléfono *" required />
+            </div>
+            <div>
+              <input type="email" id="bizEmail" class="wholesale-input" placeholder="Email del Comercio *" required />
+            </div>
+            <div class="full-span">
+              <input type="text" id="bizAddress" class="wholesale-input" placeholder="Dirección del Local / Entrega en Córdoba *" required />
+            </div>
+            <div class="full-span">
+              <select id="bizPayment" class="wholesale-select">
+                <option value="Transferencia Bancaria Mayorista">Transferencia Bancaria Mayorista</option>
+                <option value="Efectivo Contra Entrega">Efectivo Contra Entrega en Local</option>
+                <option value="Echeq / Cuenta Corriente Comercial">Echeq / Cuenta Corriente Comercial</option>
+              </select>
+            </div>
+            <div class="full-span">
+              <input type="text" id="bizNotes" class="wholesale-input" placeholder="Horarios de recepción o indicaciones (opcional)" />
+            </div>
+          </div>
+
+          <button type="submit" id="submitWholesaleWebBtn" class="btn-checkout" style="width: 100%; margin-top: 1rem;">
+            TERMINAR PEDIDO MAYORISTA POR LA WEB &rarr;
+          </button>
+
+          <button type="button" id="submitWholesaleWspBtn" class="btn-whatsapp-order" style="width: 100%; margin-top: 0.55rem; border: none; cursor: pointer;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.09c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.32c0-4.51 3.67-8.18 8.18-8.18 2.18 0 4.24.85 5.78 2.39 1.55 1.55 2.4 3.6 2.4 5.79 0 4.51-3.67 8.17-8.18 8.17zm4.49-6.13c-.25-.12-1.46-.72-1.69-.8-.22-.09-.39-.12-.55.12-.17.25-.64.8-.78.97-.15.17-.29.19-.54.07-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.09-.17.04-.31-.02-.43-.07-.12-.55-1.33-.76-1.82-.2-.48-.41-.41-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.17.21-.58.21-1.07.15-1.17-.07-.1-.23-.17-.48-.29z"/>
+            </svg>
+            ENVIAR PEDIDO MAYORISTA POR WHATSAPP
+          </button>
+        </form>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- ================= DRAWER LATERAL DE CARRITO MINORISTA ================= -->
+  <div id="cartDrawerOverlay" class="cart-drawer-overlay">
+    <aside class="cart-drawer">
+      <div class="cart-drawer-header">
+        <div class="cart-drawer-header-left">
+          <h3 class="cart-drawer-title">Su Selección de Cava</h3>
+          <span id="cartDrawerCountPill" class="cart-drawer-count-pill">0 productos</span>
+        </div>
+        <button id="cartClearAllBtn" class="cart-clear-all-btn" style="display: none;">Vaciar</button>
+        <button id="cartCloseBtn" class="cart-close-btn" title="Cerrar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="cart-shipping-notice">
+        <div id="shippingNoticeText" class="shipping-text">🚚 Envíos a domicilio en Córdoba</div>
+        <div class="shipping-progress-bar">
+          <div id="shippingProgressFill" class="shipping-progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+      <div id="cartDrawerItems" class="cart-items-body"></div>
+      <div id="cartDrawerFooter" class="cart-drawer-footer">
+        <div class="cart-summary-line">
+          <span>Subtotal:</span>
+          <strong id="cartDrawerSubtotal">$0</strong>
+        </div>
+        <div class="cart-summary-line discount">
+          <span>Bonificación Transferencia (10%):</span>
+          <strong id="cartDrawerTransfer">$0</strong>
+        </div>
+        <div class="cart-summary-total">
+          <span>Total:</span>
+          <strong id="cartDrawerTotal">$0</strong>
+        </div>
+        <div id="cartDrawerCuotas" class="cart-cuotas-info"></div>
+        <a href="/productos.html" class="btn-checkout" style="display: flex; justify-content: center; text-decoration: none;">
+          IR AL CATÁLOGO MINORISTA &rarr;
+        </a>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ================= MODAL DE CONFIRMACIÓN DE PEDIDO MAYORISTA ================= -->
+  <div id="wholesaleSuccessModal" class="modal-overlay">
+    <div class="modal-container" style="max-width: 600px;">
+      <button class="modal-close-btn" id="closeWholesaleSuccessBtn">&times;</button>
+      <div class="modal-body" style="padding: 2.2rem;">
+        <div id="wholesaleSuccessDetails"></div>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.25rem;">
+          <a id="wholesaleSuccessWspBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-order" style="text-decoration: none;">
+            Enviar Comprobante de Orden Mayorista por WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL DE INGRESO / REGISTRO DE CUENTA ================= -->
+  <div id="authModal" class="modal-overlay">
+    <div class="modal-container" style="max-width: 480px;">
+      <button class="modal-close-btn" onclick="document.getElementById('authModal').classList.remove('active')">&times;</button>
+      <div class="modal-body" style="padding: 2.25rem;">
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <img src="/public/logo-vinoteca.jpg" alt="Escudo Vinoteca La Recta" style="width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--gold-primary); margin: 0 auto 0.75rem; object-fit: cover;" />
+          <h3 style="font-family: var(--font-serif); font-size: 1.75rem; color: #fff;">Acceso de Clientes &amp; Comercios</h3>
+        </div>
+
+        <div class="auth-tabs">
+          <button id="tabLoginBtn" class="auth-tab active">Iniciar Sesión</button>
+          <button id="tabRegisterBtn" class="auth-tab">Crear Cuenta</button>
+        </div>
+
+        <div id="authError" style="color: var(--status-out); font-size: 0.85rem; text-align: center; margin-bottom: 1rem; min-height: 1.2em;"></div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label class="form-label">Correo Electrónico</label>
+            <input type="email" id="loginEmail" class="form-input" required placeholder="correo@ejemplo.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contraseña</label>
+            <input type="password" id="loginPassword" class="form-input" required placeholder="••••••••" />
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;">Ingresar a mi Cuenta</button>
+        </form>
+
+        <form id="registerForm" style="display: none;">
+          <div class="form-group">
+            <label class="form-label">Nombre Completo o Comercio *</label>
+            <input type="text" id="regName" class="form-input" required placeholder="Ej: Juan Pérez / Restaurante El Paso" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Correo Electrónico *</label>
+            <input type="email" id="regEmail" class="form-input" required placeholder="su.correo@ejemplo.com" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Teléfono / WhatsApp *</label>
+              <input type="tel" id="regPhone" class="form-input" required placeholder="351 000 0000" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Domicilio en Córdoba</label>
+              <input type="text" id="regAddress" class="form-input" placeholder="Calle y Número, Barrio" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Crear Contraseña *</label>
+            <input type="password" id="regPassword" class="form-input" required placeholder="Mínimo 4 caracteres" minlength="4" />
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;">Registrar Cuenta</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script type="module" src="/js/mayorista.js"></script>
+</body>
+</html>

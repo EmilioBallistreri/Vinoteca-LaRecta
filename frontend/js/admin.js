@@ -1027,7 +1027,10 @@ function renderOrders(container) {
           <tbody>
             ${list.map(order => `
               <tr data-order-id="${order.id}">
-                <td><strong style="color: var(--gold-light);">#${order.id}</strong></td>
+                <td>
+                  <strong style="color: var(--gold-light);">#${order.id}</strong>
+                  ${(order.isWholesale || String(order.id).startsWith('MAY-')) ? `<span style="display:inline-block;margin-left:0.35rem;background:rgba(197,160,89,0.2);border:1px solid var(--gold-primary);color:var(--gold-light);font-size:0.65rem;padding:0.1rem 0.4rem;border-radius:4px;font-weight:700;">🏢 MAYORISTA</span>` : ''}
+                </td>
                 <td><span style="font-size: 0.78rem; color: #aaa;">${formatDate(order.createdAt)}</span></td>
                 <td>
                   <strong>${order.customer.name}</strong>
@@ -1103,7 +1106,8 @@ function openOrderDetailModal(order) {
 
   body.innerHTML = `
     <div style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--admin-border); padding-bottom: 1rem;">
-      <h3 style="font-family: 'Cinzel', serif; font-size: 1.45rem; color: #fff;">Pedido #${order.id}</h3>
+      <h3 style="font-family: 'Cinzel', serif; font-size: 1.45rem; color: #fff;">Pedido #${order.id} ${(order.isWholesale || String(order.id).startsWith('MAY-')) ? '<span style="font-size:0.75rem;background:rgba(197,160,89,0.2);border:1px solid var(--gold-primary);color:var(--gold-light);padding:0.2rem 0.6rem;border-radius:999px;vertical-align:middle;margin-left:0.5rem;">🏢 ORDEN MAYORISTA COMERCIAL</span>' : ''}</h3>
+      ${order.businessInfo ? `<div style="margin-top:0.4rem;font-size:0.82rem;color:#ddd;"><strong>Comercio:</strong> ${order.businessInfo.companyName || '-'} • <strong>Rubro:</strong> ${order.businessInfo.segment || '-'} • <strong>CUIT:</strong> ${order.businessInfo.cuit || '-'} (${order.businessInfo.ivaCondition || '-'})</div>` : ''}
       <span style="font-size: 0.78rem; color: var(--gold-light);">Registrado el ${formatDate(order.createdAt)}</span>
     </div>
 
