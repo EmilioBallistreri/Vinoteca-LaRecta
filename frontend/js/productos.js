@@ -396,7 +396,7 @@ function updateCartDrawerUI(cartData) {
     clearAllBtn.onclick = () => {
       cart.clear();
     };
-  });
+  }
 
   const itemsContainer = document.getElementById('cartDrawerItems');
   const drawerFooter = document.getElementById('cartDrawerFooter');

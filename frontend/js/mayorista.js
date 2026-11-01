@@ -569,3 +569,4 @@ async function initWholesalePage() {
 }
 
 document.addEventListener('DOMContentLoaded', initWholesalePage);
+
