@@ -47,45 +47,18 @@ const showToast = (message) => {
 
 // ================= RENDER FUNCTIONS =================
 
-function renderCategories() {
-  const grid = document.getElementById('categoriesGrid');
+function renderPreventaCategories() {
+  const grid = document.getElementById('preventaCategoriesGrid');
   if (!grid) return;
 
-  // Formal Category definitions with Roman Numerals and refined SVG icons
   const categories = [
     {
-      id: 'promos',
-      roman: 'I',
-      name: 'Promos',
-      desc: 'Estuches de madera, combos de degustación y ofertas de cava especiales.',
-      isPromo: true,
-      iconSvg: `
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-        </svg>
-      `
-    },
-    {
-      id: 'vinos',
-      roman: 'II',
-      name: 'Vinos',
-      desc: 'Grandes Malbecs, Cabernet Sauvignon y cortes de autor de guarda.',
-      isPromo: false,
-      iconSvg: `
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M8 22h8m-4-4v4m-5-8a5 5 0 0 1 10 0v1a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-1z"></path>
-          <line x1="12" y1="2" x2="12" y2="4"></line>
-        </svg>
-      `
-    },
-    {
       id: 'espumantes',
-      roman: 'III',
-      name: 'Espumantes',
-      desc: 'Método Tradicional Champenoise y cuvées de viñedos de altura.',
-      isPromo: false,
+      title: 'Espumantes y Sidras',
+      tag: 'Cuvées, Método Tradicional & Sidras',
+      desc: 'Selección de espumantes, método Champenoise, Nature y sidras artesanales prémium.',
       iconSvg: `
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M7 21h10m-5-3v3m-3-9a3 3 0 0 1 6 0v2a2 2 0 0 1-2 2H11a2 2 0 0 1-2-2v-2z"></path>
           <circle cx="12" cy="5" r="1"></circle>
           <circle cx="10" cy="8" r="1"></circle>
@@ -94,62 +67,47 @@ function renderCategories() {
       `
     },
     {
-      id: 'whiskys',
-      roman: 'IV',
-      name: 'Whiskys',
-      desc: 'Single Malts escoceses añejados, Blended de prestigio y Bourbon.',
-      isPromo: false,
+      id: 'vinos',
+      title: 'Vinos',
+      tag: 'Grandes Malbecs, Cabernet & Cortes',
+      desc: 'Añadas de guarda, partidas limitadas de autor y cosechas destacadas de las mejores bodegas.',
       iconSvg: `
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="5" y="4" width="14" height="16" rx="2"></rect>
-          <line x1="5" y1="10" x2="19" y2="10"></line>
-          <line x1="10" y1="2" x2="14" y2="2"></line>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 22h8m-4-4v4m-5-8a5 5 0 0 1 10 0v1a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-1z"></path>
+          <line x1="12" y1="2" x2="12" y2="4"></line>
         </svg>
       `
     },
     {
       id: 'aperitivos',
-      roman: 'V',
-      name: 'Aperitivos',
-      desc: 'Gins botánicos de autor, Vermuts artesanales y amargos tradicionales.',
-      isPromo: false,
+      title: 'Aperitivos',
+      tag: 'Gins, Vermuts & Botánicos',
+      desc: 'Botánicos de alta gama, vermuts artesanales, aperitivos clásicos y destilados finos.',
       iconSvg: `
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 2L3 8l9 6 9-6-9-6z"></path>
           <path d="M3 8v10l9 5 9-5V8"></path>
-        </svg>
-      `
-    },
-    {
-      id: 'delicatessen',
-      roman: 'VI',
-      name: 'Delicatessen',
-      desc: 'Chacinados de bellota, aceites de oliva virgen extra y quesos nobles.',
-      isPromo: false,
-      iconSvg: `
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="9"></circle>
-          <path d="M12 3a9 9 0 0 0 9 9"></path>
         </svg>
       `
     }
   ];
 
   grid.innerHTML = categories.map(cat => {
-    const count = state.products.filter(p => cat.id === 'promos' ? (p.category === 'promos' || p.discount > 0) : p.category === cat.id).length;
+    const count = state.products.filter(p => p.category === cat.id).length;
     return `
-      <article class="category-card ${cat.isPromo ? 'featured-promo' : ''}" data-category="${cat.id}">
-        <div class="category-card-top">
-          <span class="category-roman-numeral">${cat.roman}</span>
-          <div class="category-icon-box">${cat.iconSvg}</div>
+      <article class="preventa-card" data-category="${cat.id}" role="button" tabindex="0" title="Ver preventa de ${cat.title}">
+        <div class="preventa-card-badge">PRE-VENTA</div>
+        <div class="preventa-icon-wrap">${cat.iconSvg}</div>
+        <div class="preventa-card-info">
+          <span class="preventa-card-tag">${cat.tag}</span>
+          <h3 class="preventa-card-title">${cat.title}</h3>
+          <p class="preventa-card-desc">${cat.desc}</p>
         </div>
-        <h3 class="category-name">${cat.name}</h3>
-        <p class="category-desc">${cat.desc}</p>
-        <div class="category-card-footer">
-          <span class="category-count">${count} Botellas en Cava</span>
-          <span class="category-explore-link">
-            Explorar
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <div class="preventa-card-footer">
+          <span class="preventa-count">${count > 0 ? `${count} botellas disponibles` : 'Ver colección'}</span>
+          <span class="preventa-link">
+            Ver Productos
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
@@ -159,12 +117,23 @@ function renderCategories() {
     `;
   }).join('');
 
-  grid.querySelectorAll('.category-card').forEach(card => {
-    card.addEventListener('click', () => {
+  grid.querySelectorAll('.preventa-card').forEach(card => {
+    const navigate = () => {
       const catId = card.getAttribute('data-category');
       window.location.href = `/productos.html?categoria=${catId}`;
+    };
+    card.addEventListener('click', navigate);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        navigate();
+      }
     });
   });
+}
+
+function renderCategories() {
+  renderPreventaCategories();
 }
 
 function renderProducts() {
@@ -494,7 +463,7 @@ function openProductModal(product) {
         </div>
 
         <button id="modalAddCartBtn" class="btn-primary" style="width: 100%; justify-content: center; font-size: 0.95rem;" ${isOutOfStock ? 'disabled' : ''}>
-          ${isOutOfStock ? 'Partida Agotada' : 'Adquirir y Agregar a la Cava'}
+          ${isOutOfStock ? 'Partida Agotada' : 'Agregar al Carrito'}
         </button>
       </div>
     </div>
@@ -881,19 +850,27 @@ function renderPromosGrid() {
     return;
   }
 
-  container.innerHTML = promos.slice(0, 6).map(promo => {
-    const discountTag = promo.badge || (promo.discount ? `${promo.discount}% OFF` : 'PROMO DESTACADA');
+  // Exactamente dos cards de promociones exclusivas
+  container.innerHTML = promos.slice(0, 2).map(promo => {
+    const discountTag = promo.badge || (promo.discount ? `${promo.discount}% OFF` : 'PROMO EXCLUSIVA');
 
     return `
-      <article class="promo-card-item">
+      <article class="promo-card-item" data-id="${promo.id}" style="cursor: pointer;" title="Hacer clic para ver detalles y descripción de ${promo.name}">
         <span class="promo-badge-tag">${discountTag}</span>
         <div class="promo-img-wrap">
           <img src="${promo.image}" alt="${promo.name}" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp';" />
+          <span class="promo-quick-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            Ver Ficha Técnica
+          </span>
         </div>
         <div class="promo-body">
-          <span class="promo-category">${promo.bodega ? promo.bodega + ' • ' : ''}${promo.category.toUpperCase()}</span>
+          <span class="promo-category">${promo.bodega ? promo.bodega + ' • ' : ''}${promo.subcategory || promo.category.toUpperCase()}</span>
           <h3 class="promo-title">${promo.name}</h3>
-          <p class="promo-desc">${promo.description ? promo.description.slice(0, 110) + '...' : 'Partida exclusiva con precio bonificado de cava.'}</p>
+          <p class="promo-desc">${promo.description ? promo.description.slice(0, 115) + '...' : 'Partida exclusiva con precio bonificado de cava.'}</p>
           
           <div class="promo-pricing">
             <div class="promo-price-main">
@@ -902,27 +879,41 @@ function renderPromosGrid() {
             </div>
           </div>
 
-          <button class="promo-buy-btn" data-action="add-promo" data-id="${promo.id}">
+          <button class="promo-buy-btn" data-action="add-promo" data-id="${promo.id}" type="button">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
               <line x1="3" y1="6" x2="21" y2="6"></line>
               <path d="M16 10a4 4 0 0 1-8 0"></path>
             </svg>
-            Sumar a mi Cava
+            Agregar al Carrito
           </button>
         </div>
       </article>
     `;
   }).join('');
 
+  // Evento agregar al carrito
   container.querySelectorAll('[data-action="add-promo"]').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
       const id = btn.getAttribute('data-id');
       const prod = state.products.find(p => p.id === id);
       if (prod) {
         cart.addItem(prod, 1);
         openCartDrawer();
-        showToast(`"${prod.name}" incorporado a su selección de cava.`);
+        showToast(`"${prod.name}" agregado a tu carrito.`);
+      }
+    });
+  });
+
+  // Evento clic en la card para ver descripción detallada (modal)
+  container.querySelectorAll('.promo-card-item').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('[data-action="add-promo"]')) return;
+      const id = card.getAttribute('data-id');
+      const prod = state.products.find(p => p.id === id);
+      if (prod) {
+        openProductModal(prod);
       }
     });
   });
@@ -1005,7 +996,7 @@ async function init() {
     }
     state.products = products;
     state.filteredProducts = products;
-    renderCategories();
+    renderPreventaCategories();
     renderPromosGrid();
     renderProducts();
   } catch (err) {

@@ -7,7 +7,7 @@ import { applySiteCustomization } from './festivities.js';
 const SUBCATEGORIES_MAP = {
   promos: ['Combos Degustación', 'Cajas x6', 'Packs con Copas', 'Ofertas Especiales'],
   vinos: ['Malbec', 'Cabernet Sauvignon', 'Red Blend & Cortes', 'Blancos & Rosados'],
-  espumantes: ['Extra Brut', 'Brut Nature', 'Champagne Francés', 'Rosé & Método Tradicional'],
+  espumantes: ['Extra Brut', 'Brut Nature', 'Sidras Artesanales & Cuvées', 'Champagne Francés', 'Rosé & Método Tradicional'],
   whiskys: ['Single Malt Escocés', 'Blended Scotch', 'Bourbon Americano', 'Irlandés & Otros'],
   aperitivos: ['Gin Premium', 'Vermouth & Bitter', 'Fernet & Digestivos', 'Licores Finos'],
   delicatessen: ['Aceites de Oliva Extra Virgen', 'Conservas & Ahumados', 'Chocolates & Dulces Finos', 'Tablas & Embutidos Artesanales']
@@ -17,7 +17,7 @@ const CATEGORY_TITLES = {
   todos: { tag: 'Catálogo General de Cava', title: 'Todas las Colecciones' },
   promos: { tag: 'Selección & Oportunidades', title: 'Promos & Ofertas Especiales' },
   vinos: { tag: 'Vinos de Autor & Guarda', title: 'Vinos de Alta Gama' },
-  espumantes: { tag: 'Método Tradicional & Cuvées', title: 'Espumantes & Champagne' },
+  espumantes: { tag: 'Método Tradicional, Cuvées & Sidras', title: 'Espumantes y Sidras' },
   whiskys: { tag: 'Destilados Nobles Añejados', title: 'Whiskys del Mundo' },
   aperitivos: { tag: 'Coctelería & Botánicos', title: 'Aperitivos & Licores Finos' },
   delicatessen: { tag: 'Maridajes & Gastronomía', title: 'Delicatessen Sibarita' }
@@ -178,7 +178,7 @@ function renderProducts() {
               <line x1="3" y1="6" x2="21" y2="6"></line>
               <path d="M16 10a4 4 0 0 1-8 0"></path>
             </svg>
-            ${isOutOfStock ? 'Partida Agotada' : 'Adquirir / Agregar a la Cava'}
+            ${isOutOfStock ? 'Partida Agotada' : 'Agregar al Carrito'}
           </button>
         </div>
       </article>
@@ -187,23 +187,37 @@ function renderProducts() {
 
   // Eventos de botones de cada card
   grid.querySelectorAll('[data-action="add-cart"]').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
       const id = btn.getAttribute('data-id');
       const prod = state.products.find(p => p.id === id);
       if (prod) {
         cart.addItem(prod, 1);
-        showToast(`Agregado a la Cava: ${prod.name}`);
+        showToast(`"${prod.name}" agregado a tu carrito.`);
       }
     });
   });
 
   grid.querySelectorAll('[data-action="quickview"]').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
       const id = btn.getAttribute('data-id');
       const prod = state.products.find(p => p.id === id);
       if (prod) openProductModal(prod);
     });
   });
+
+  // Clic en la card completa para ver descripción más detallada
+  grid.querySelectorAll('.product-card').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('[data-action="add-cart"]')) return;
+      const id = card.getAttribute('data-id');
+      const prod = state.products.find(p => p.id === id);
+      if (prod) openProductModal(prod);
+    });
+  });
+});
 }
 
 // ================= MODAL FICHA TÉCNICA =================
@@ -258,7 +272,7 @@ function openProductModal(product) {
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <path d="M16 10a4 4 0 0 1-8 0"></path>
           </svg>
-          ${isOutOfStock ? 'Partida Agotada' : 'Adquirir Botella / Agregar a la Cava'}
+          ${isOutOfStock ? 'Partida Agotada' : 'Agregar al Carrito'}
         </button>
       </div>
     </div>
@@ -266,7 +280,7 @@ function openProductModal(product) {
 
   document.getElementById('modalAddToCartBtn')?.addEventListener('click', () => {
     cart.addItem(product, 1);
-    showToast(`Agregado a la Cava: ${product.name}`);
+    showToast(`"${product.name}" agregado a tu carrito.`);
     modal.classList.remove('active');
   });
 
