@@ -70,14 +70,7 @@ export const auth = {
       const roleLabel = isAdmin ? 'Administrador' : 'Cliente';
       const shortRoleLabel = isAdmin ? 'Admin' : 'Cliente';
       userContainer.innerHTML = `
-        ${isAdmin ? `
-          <a href="/admin.html" class="nav-btn admin-link-btn" title="Ir al Panel de Administración">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            </svg>
-            <span class="btn-text">Panel Admin</span>
-          </a>
-        ` : ''}
+        
         <div class="user-menu-dropdown">
           <button id="userDropdownTrigger" class="nav-btn user-btn ${isAdmin ? 'admin-highlight-btn' : ''}" title="Cuenta: ${this.currentUser.name} (${roleLabel})">
             <span class="user-avatar-badge ${isAdmin ? 'admin-badge' : ''}">${firstName.charAt(0).toUpperCase()}</span>
