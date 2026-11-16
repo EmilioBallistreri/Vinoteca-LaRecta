@@ -415,11 +415,7 @@ function applyFilters() {
   let list = [...state.products];
 
   if (state.activeCategory !== 'todos') {
-    if (state.activeCategory === 'promos') {
-      list = list.filter(p => p.category === 'promos' || (p.discount && p.discount > 0));
-    } else {
-      list = list.filter(p => p.category.toLowerCase() === state.activeCategory.toLowerCase());
-    }
+    list = list.filter(p => p.category.toLowerCase() === state.activeCategory.toLowerCase());
   }
 
   if (state.searchQuery.trim()) {
