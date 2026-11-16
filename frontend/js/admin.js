@@ -329,14 +329,12 @@ function renderStock(container) {
             style="width: 250px; font-size: 0.82rem; padding: 0.5rem 0.85rem;" 
           />
 
-          <select id="stockCategoryFilter" class="form-select" style="width: 170px; font-size: 0.82rem; padding: 0.5rem 0.85rem;">
+          <select id="stockCategoryFilter" class="form-select" style="width: 220px; font-size: 0.82rem; padding: 0.5rem 0.85rem;">
             <option value="todos" ${adminState.filterStockCategory === 'todos' ? 'selected' : ''}>Todas las Categorías</option>
-            <option value="promos" ${adminState.filterStockCategory === 'promos' ? 'selected' : ''}>Promos</option>
-            <option value="vinos" ${adminState.filterStockCategory === 'vinos' ? 'selected' : ''}>Vinos</option>
-            <option value="espumantes" ${adminState.filterStockCategory === 'espumantes' ? 'selected' : ''}>Espumantes</option>
-            <option value="whiskys" ${adminState.filterStockCategory === 'whiskys' ? 'selected' : ''}>Whiskys</option>
-            <option value="aperitivos" ${adminState.filterStockCategory === 'aperitivos' ? 'selected' : ''}>Aperitivos</option>
-            <option value="delicatessen" ${adminState.filterStockCategory === 'delicatessen' ? 'selected' : ''}>Delicatessen</option>
+            <option value="vinos" ${adminState.filterStockCategory === 'vinos' ? 'selected' : ''}>Vinos (Pre-venta)</option>
+            <option value="espumantes" ${adminState.filterStockCategory === 'espumantes' ? 'selected' : ''}>Espumantes y Sidras (Pre-venta)</option>
+            <option value="aperitivos" ${adminState.filterStockCategory === 'aperitivos' ? 'selected' : ''}>Aperitivos (Pre-venta)</option>
+            <option value="promos" ${adminState.filterStockCategory === 'promos' ? 'selected' : ''}>Promociones Exclusivas</option>
           </select>
         </div>
 
@@ -366,7 +364,7 @@ function renderStock(container) {
                 <tr data-product-id="${p.id}">
                   <td>
                     <div style="display: flex; align-items: center; gap: 0.85rem;">
-                      <img src="${p.image}" alt="${p.name}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover; border: 1px solid var(--admin-border);" />
+                      <img src="${p.image}" alt="${p.name}" style="width: 44px; height: 56px; border-radius: 6px; object-fit: contain; background: #161318; padding: 2px; border: 1px solid var(--admin-border);" onerror="this.onerror=null;this.src='${DEFAULT_FALLBACK_IMAGE}';" />
                       <div>
                         <strong style="color: #fff; font-size: 0.9rem;">${p.name}</strong>
                         ${p.badge ? `<span style="font-size: 0.65rem; background: rgba(197, 160, 89, 0.2); color: var(--gold-light); padding: 0.1rem 0.4rem; border-radius: 4px; margin-left: 0.35rem;">${p.badge}</span>` : ''}
@@ -1300,17 +1298,15 @@ function renderActivity(container) {
 // ================= PRODUCT FORM MODAL (CREATE / EDIT) =================
 
 const ADMIN_SUBCATS = {
-  promos: ['Combos Degustación', 'Cajas x6', 'Packs con Copas', 'Ofertas Especiales'],
-  vinos: ['Malbec', 'Cabernet Sauvignon', 'Red Blend & Cortes', 'Blancos & Rosados'],
-  espumantes: ['Extra Brut', 'Brut Nature', 'Champagne Francés', 'Rosé & Método Tradicional'],
-  whiskys: ['Single Malt Escocés', 'Blended Scotch', 'Bourbon Americano', 'Irlandés & Otros'],
-  aperitivos: ['Gin Premium', 'Vermouth & Bitter', 'Fernet & Digestivos', 'Licores Finos'],
-  delicatessen: ['Aceites de Oliva Extra Virgen', 'Conservas & Ahumados', 'Chocolates & Dulces Finos', 'Tablas & Embutidos Artesanales']
+  vinos: ['Malbec', 'Cabernet Sauvignon', 'Cabernet Franc', 'Red Blend & Cortes', 'Blancos & Rosados', 'Chardonnay', 'Pinot Noir', 'Grandes Partidas de Guarda'],
+  espumantes: ['Extra Brut', 'Brut Nature', 'Champenoise Tradicional', 'Cuvée Rosé', 'Sidras Artesanales Patagónicas', 'Partidas Limitadas'],
+  aperitivos: ['Gin Prémium & Botánicos', 'Vermuts de Autor', 'Aperitivos Clásicos', 'Whiskys & Destilados Finos', 'Fernets & Digestivos', 'Licores de Guarda'],
+  promos: ['Cajas Cerradas x6', 'Combos Degustación', 'Dúos Exclusivos', 'Selección Estacional', 'Promociones Especiales', 'Delicatessen & Maridajes']
 };
 
 const DEFAULT_FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp';
 
-// Normaliza cualquier imagen subida a 800x1000 (4:5) en formato WebP con calidad 85%
+// Normaliza cualquier imagen subida a 800x1000 (4:5) en WebP con calidad 90%, adaptándola completa y centrada (CONTAIN) sin cortar ninguna parte
 function standardizeProductImage(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -1326,22 +1322,36 @@ function standardizeProductImage(file) {
         canvas.height = targetH;
         const ctx = canvas.getContext('2d');
 
-        ctx.fillStyle = '#11100f';
+        // Fondo elegante a juego con la cava de Vinoteca La Recta (#241f27 a #0e0b10 con degradado radial suave)
+        const grad = ctx.createRadialGradient(targetW / 2, targetH / 2, 40, targetW / 2, targetH / 2, 580);
+        grad.addColorStop(0, '#241f27');
+        grad.addColorStop(0.65, '#151218');
+        grad.addColorStop(1, '#0e0b10');
+        ctx.fillStyle = grad;
         ctx.fillRect(0, 0, targetW, targetH);
 
-        const srcRatio = img.width / img.height;
-        const dstRatio = targetW / targetH;
-        let sx = 0, sy = 0, sw = img.width, sh = img.height;
-        if (srcRatio > dstRatio) {
-          sw = img.height * dstRatio;
-          sx = (img.width - sw) / 2;
-        } else {
-          sh = img.width / dstRatio;
-          sy = (img.height - sh) / 2;
-        }
+        // Ajuste proporcional COMPLETO (CONTAIN): nunca recorta ni amplía indebidamente la botella
+        const padX = 36;
+        const padY = 36;
+        const availW = targetW - padX * 2;
+        const availH = targetH - padY * 2;
 
-        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, targetW, targetH);
-        const standardizedDataUrl = canvas.toDataURL('image/webp', 0.85);
+        const scale = Math.min(availW / img.width, availH / img.height);
+        const drawW = Math.round(img.width * scale);
+        const drawH = Math.round(img.height * scale);
+        const drawX = Math.round((targetW - drawW) / 2);
+        const drawY = Math.round((targetH - drawH) / 2);
+
+        // Sombra sutil para realismo prémium
+        ctx.save();
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.55)';
+        ctx.shadowBlur = 28;
+        ctx.shadowOffsetY = 14;
+
+        ctx.drawImage(img, 0, 0, img.width, img.height, drawX, drawY, drawW, drawH);
+        ctx.restore();
+
+        const standardizedDataUrl = canvas.toDataURL('image/webp', 0.90);
         resolve(standardizedDataUrl);
       };
       img.src = ev.target.result;
@@ -1420,7 +1430,9 @@ function openProductFormModal(product = null) {
   }
 
   document.getElementById('pFormName').value = product?.name || '';
-  const initialCat = product?.category || 'vinos';
+  let initialCat = product?.category || 'vinos';
+  if (initialCat === 'whiskys') initialCat = 'aperitivos';
+  if (initialCat === 'delicatessen') initialCat = 'promos';
   document.getElementById('pFormCategory').value = initialCat;
   updateSubcatDatalist(initialCat);
   document.getElementById('pFormCategory').onchange = (e) => {
@@ -1455,7 +1467,20 @@ function openProductFormModal(product = null) {
   if (statusText) {
     statusText.textContent = product?.image
       ? 'Imagen actual cargada • Arrastrá o hacé clic para reemplazarla desde tu dispositivo'
-      : 'Formatos aceptados: JPG, PNG, WebP • Se optimiza automáticamente a proporción 4:5 (800×1000)';
+      : 'Formatos aceptados: JPG, PNG, WebP • Se adapta completa y centrada (4:5, 800×1000)';
+  }
+
+  const urlInput = document.getElementById('pFormImageUrl');
+  if (urlInput) {
+    urlInput.value = (product?.image && !product.image.startsWith('data:')) ? product.image : '';
+    urlInput.oninput = () => {
+      const v = urlInput.value.trim();
+      if (v) {
+        document.getElementById('pFormImage').value = v;
+        if (previewEl) previewEl.src = v;
+        if (statusText) statusText.textContent = 'Imagen vinculada por link web directo';
+      }
+    };
   }
 
   document.getElementById('pFormDesc').value = product?.description || '';
@@ -1543,11 +1568,13 @@ function setupAdminListeners() {
   const processSelectedProductImage = async (file) => {
     if (!file) return;
     try {
-      if (dropStatus) dropStatus.textContent = 'Optimizando imagen a 800×1000 WebP...';
+      if (dropStatus) dropStatus.textContent = 'Ajustando imagen completa a 800×1000 WebP (sin cortes)...';
       const standardizedDataUrl = await standardizeProductImage(file);
       if (imgHiddenInput) imgHiddenInput.value = standardizedDataUrl;
       if (imgPreview) imgPreview.src = standardizedDataUrl;
-      if (dropStatus) dropStatus.textContent = `✓ Imagen "${file.name}" cargada y estandarizada (800×1000 WebP)`;
+      const urlInp = document.getElementById('pFormImageUrl');
+      if (urlInp) urlInp.value = '';
+      if (dropStatus) dropStatus.textContent = `✓ "${file.name}" adaptada completa y centrada (800×1000 WebP)`;
     } catch (err) {
       alert('Error al procesar la imagen: ' + err.message);
     }

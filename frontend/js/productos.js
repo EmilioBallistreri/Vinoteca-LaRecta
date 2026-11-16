@@ -5,22 +5,18 @@ import { applySiteCustomization } from './festivities.js';
 
 // Subcategorías oficiales organizadas por cada una de las 6 categorías
 const SUBCATEGORIES_MAP = {
-  promos: ['Combos Degustación', 'Cajas x6', 'Packs con Copas', 'Ofertas Especiales'],
-  vinos: ['Malbec', 'Cabernet Sauvignon', 'Red Blend & Cortes', 'Blancos & Rosados'],
+  promos: ['Combos Degustación', 'Cajas x6', 'Dúos Exclusivos', 'Delicatessen & Maridajes', 'Ofertas Especiales'],
+  vinos: ['Malbec', 'Cabernet Sauvignon', 'Cabernet Franc', 'Red Blend & Cortes', 'Blancos & Rosados', 'Chardonnay', 'Pinot Noir'],
   espumantes: ['Extra Brut', 'Brut Nature', 'Sidras Artesanales & Cuvées', 'Champagne Francés', 'Rosé & Método Tradicional'],
-  whiskys: ['Single Malt Escocés', 'Blended Scotch', 'Bourbon Americano', 'Irlandés & Otros'],
-  aperitivos: ['Gin Premium', 'Vermouth & Bitter', 'Fernet & Digestivos', 'Licores Finos'],
-  delicatessen: ['Aceites de Oliva Extra Virgen', 'Conservas & Ahumados', 'Chocolates & Dulces Finos', 'Tablas & Embutidos Artesanales']
+  aperitivos: ['Gin Premium', 'Vermouth & Bitter', 'Whiskys & Destilados Finos', 'Fernet & Digestivos', 'Licores Finos']
 };
 
 const CATEGORY_TITLES = {
   todos: { tag: 'Catálogo General de Cava', title: 'Todas las Colecciones' },
-  promos: { tag: 'Selección & Oportunidades', title: 'Promos & Ofertas Especiales' },
   vinos: { tag: 'Vinos de Autor & Guarda', title: 'Vinos de Alta Gama' },
   espumantes: { tag: 'Método Tradicional, Cuvées & Sidras', title: 'Espumantes y Sidras' },
-  whiskys: { tag: 'Destilados Nobles Añejados', title: 'Whiskys del Mundo' },
-  aperitivos: { tag: 'Coctelería & Botánicos', title: 'Aperitivos & Licores Finos' },
-  delicatessen: { tag: 'Maridajes & Gastronomía', title: 'Delicatessen Sibarita' }
+  aperitivos: { tag: 'Coctelería, Gins & Destilados Finos', title: 'Aperitivos de Selección' },
+  promos: { tag: 'Selección & Oportunidades', title: 'Promociones Exclusivas de Vinoteca La Recta' }
 };
 
 // Estado local de la página de productos
@@ -563,7 +559,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const catParam = urlParams.get('categoria');
   const subParam = urlParams.get('subcategoria');
 
-  if (catParam && ['promos', 'vinos', 'espumantes', 'whiskys', 'aperitivos', 'delicatessen'].includes(catParam.toLowerCase())) {
+  if (catParam && ['promos', 'vinos', 'espumantes', 'aperitivos'].includes(catParam.toLowerCase())) {
     state.activeCategory = catParam.toLowerCase();
   }
 

@@ -501,7 +501,7 @@ module.exports = {
   {
     "id": "prod-whis-1",
     "name": "The Macallan Double Cask 12 Años Single Malt 700ml",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Single Malt Escocés",
     "bodega": "The Macallan Distillery (Speyside, Escocia)",
     "price": 185000,
@@ -517,7 +517,7 @@ module.exports = {
   {
     "id": "prod-whis-2",
     "name": "Johnnie Walker Blue Label Edición Limitada Cava 750ml",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Blended Scotch",
     "bodega": "Johnnie Walker (Kilmarnock, Escocia)",
     "price": 360000,
@@ -533,7 +533,7 @@ module.exports = {
   {
     "id": "prod-whis-3",
     "name": "Glenfiddich 15 Años Solera Single Malt 750ml",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Single Malt Escocés",
     "bodega": "William Grant & Sons (Dufftown, Escocia)",
     "price": 110000,
@@ -549,7 +549,7 @@ module.exports = {
   {
     "id": "prod-whis-4",
     "name": "Chivas Regal Royal Salute 21 Años Porcelana Azul 700ml",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Blended Scotch",
     "bodega": "Chivas Brothers (Aberdeen, Escocia)",
     "price": 295000,
@@ -565,7 +565,7 @@ module.exports = {
   {
     "id": "prod-whis-5",
     "name": "Woodford Reserve Distiller's Select Kentucky Bourbon",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Bourbon Americano",
     "bodega": "Woodford Reserve Distillery (Kentucky, USA)",
     "price": 74000,
@@ -581,7 +581,7 @@ module.exports = {
   {
     "id": "prod-whis-6",
     "name": "The Glenlivet 18 Años Batch Reserve Single Malt 700ml",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Single Malt Escocés",
     "bodega": "The Glenlivet (Moray, Escocia)",
     "price": 165000,
@@ -597,7 +597,7 @@ module.exports = {
   {
     "id": "prod-whis-7",
     "name": "Johnnie Walker Green Label 15 Años Blended Malt",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Blended Scotch",
     "bodega": "Johnnie Walker Escocia",
     "price": 88000,
@@ -613,7 +613,7 @@ module.exports = {
   {
     "id": "prod-whis-8",
     "name": "Jack Daniel's Single Barrel Select Tennessee Whiskey",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Bourbon Americano",
     "bodega": "Jack Daniel Distillery (Lynchburg, USA)",
     "price": 78000,
@@ -629,7 +629,7 @@ module.exports = {
   {
     "id": "prod-whis-9",
     "name": "Jameson Black Barrel Triple Distilled Irish Whiskey",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Irlandés & Otros",
     "bodega": "Midleton Distillery (Cork, Irlanda)",
     "price": 46000,
@@ -645,7 +645,7 @@ module.exports = {
   {
     "id": "prod-whis-10",
     "name": "Laphroaig 10 Años Islay Single Malt Peated 750ml",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Single Malt Escocés",
     "bodega": "Laphroaig Distillery (Isla de Islay, Escocia)",
     "price": 138000,
@@ -821,7 +821,7 @@ module.exports = {
   {
     "id": "prod-deli-1",
     "name": "Jamón Crudo Serrano Reserva 18 Meses (Feteado 200g)",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Tablas & Embutidos Artesanales",
     "bodega": "Cabaña La Candelaria (Tandil)",
     "price": 16500,
@@ -837,7 +837,7 @@ module.exports = {
   {
     "id": "prod-deli-2",
     "name": "Aceite de Oliva Zuelo Virgen Extra Selección Familiar 500ml",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Aceites de Oliva Extra Virgen",
     "bodega": "Familia Zuccardi (Maipú, Mendoza)",
     "price": 14200,
@@ -853,7 +853,7 @@ module.exports = {
   {
     "id": "prod-deli-3",
     "name": "Queso Parmigiano Reggiano D.O.P. Estacionado 24M (Cuña 250g)",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Tablas & Embutidos Artesanales",
     "bodega": "Consorzio Parmigiano Reggiano (Parma, Italia)",
     "price": 24800,
@@ -869,7 +869,7 @@ module.exports = {
   {
     "id": "prod-deli-4",
     "name": "Aceite de Oliva Laur Gran Mendoza Virgen Extra 500ml",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Aceites de Oliva Extra Virgen",
     "bodega": "Olivícola Laur (Mendoza)",
     "price": 19800,
@@ -885,7 +885,7 @@ module.exports = {
   {
     "id": "prod-deli-5",
     "name": "Salame de Colonia Caroya Tradicional Friulano 350g",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Tablas & Embutidos Artesanales",
     "bodega": "Embutidos Don Lino (Colonia Caroya, Córdoba)",
     "price": 12500,
@@ -901,7 +901,7 @@ module.exports = {
   {
     "id": "prod-deli-6",
     "name": "Corazones de Alcaucil en Aceite de Oliva & Romero 330g",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Conservas & Ahumados",
     "bodega": "Finca El Retiro (San Juan)",
     "price": 11800,
@@ -917,7 +917,7 @@ module.exports = {
   {
     "id": "prod-deli-7",
     "name": "Pimientos del Piquillo Ahumados Artesanales 280g",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Conservas & Ahumados",
     "bodega": "Gourmet San Juan Artesanos",
     "price": 10500,
@@ -933,7 +933,7 @@ module.exports = {
   {
     "id": "prod-deli-8",
     "name": "Bombones de Chocolate Belga Rellenos de Malbec (16 Unid)",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Chocolates & Dulces Finos",
     "bodega": "Gouleyant Chocolatier de Autor",
     "price": 18500,
@@ -949,7 +949,7 @@ module.exports = {
   {
     "id": "prod-deli-9",
     "name": "Tapenade de Aceitunas Negras y Alcaparras 200g",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Conservas & Ahumados",
     "bodega": "Zuelo Selección (Mendoza)",
     "price": 8900,
@@ -965,7 +965,7 @@ module.exports = {
   {
     "id": "prod-deli-10",
     "name": "Mix de Frutos Secos Tostados con Sal del Himalaya 250g",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Chocolates & Dulces Finos",
     "bodega": "Cava Selección Premium",
     "price": 9800,
@@ -1301,7 +1301,7 @@ module.exports = {
   {
     "id": "prod-whi-new-1",
     "name": "The Balvenie DoubleWood 12 Años Single Malt Speyside",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Single Malt Escocés",
     "bodega": "The Balvenie",
     "price": 145000,
@@ -1317,7 +1317,7 @@ module.exports = {
   {
     "id": "prod-whi-new-2",
     "name": "Laphroaig 10 Años Islay Single Malt 700ml",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Single Malt Escocés",
     "bodega": "Laphroaig",
     "price": 155000,
@@ -1333,7 +1333,7 @@ module.exports = {
   {
     "id": "prod-whi-new-3",
     "name": "Woodford Reserve Master's Select Kentucky Bourbon",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Bourbon Americano",
     "bodega": "Woodford Reserve",
     "price": 98000,
@@ -1349,7 +1349,7 @@ module.exports = {
   {
     "id": "prod-whi-new-4",
     "name": "Redbreast 12 Años Single Pot Still Irish Whiskey",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Irlandés & Otros",
     "bodega": "Midleton Distillery",
     "price": 160000,
@@ -1365,7 +1365,7 @@ module.exports = {
   {
     "id": "prod-whi-new-5",
     "name": "Dalmore 12 Años Highland Single Malt 700ml",
-    "category": "whiskys",
+    "category": "aperitivos",
     "subcategory": "Single Malt Escocés",
     "bodega": "The Dalmore",
     "price": 170000,
@@ -1381,7 +1381,7 @@ module.exports = {
   {
     "id": "prod-deli-new-1",
     "name": "Aceite de Oliva Virgen Extra Zuelo Gran Guardia 500ml",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Aceites de Oliva Extra Virgen",
     "bodega": "Zuccardi Aceites",
     "price": 21000,
@@ -1397,7 +1397,7 @@ module.exports = {
   {
     "id": "prod-deli-new-2",
     "name": "Jamón Crudo Tipo Ibérico Reserva La Recta 250g",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Tablas & Embutidos Artesanales",
     "bodega": "Frigorífico Serrano",
     "price": 28500,
@@ -1413,7 +1413,7 @@ module.exports = {
   {
     "id": "prod-deli-new-3",
     "name": "Queso Lincoln Gran Reserva Cabaña Las Lilas 300g",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Tablas & Embutidos Artesanales",
     "bodega": "Quesería Las Lilas",
     "price": 24000,
@@ -1429,7 +1429,7 @@ module.exports = {
   {
     "id": "prod-deli-new-4",
     "name": "Pasta de Aceitunas Negras Variedad Arauco al Malbec 200g",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Conservas & Ahumados",
     "bodega": "Olivícola Laur",
     "price": 9800,
@@ -1445,7 +1445,7 @@ module.exports = {
   {
     "id": "prod-deli-new-5",
     "name": "Caja Bombones de Chocolate Belga al Whisky & Malbec",
-    "category": "delicatessen",
+    "category": "promos",
     "subcategory": "Chocolates & Dulces Finos",
     "bodega": "Chocolatería Gouleyant",
     "price": 32000,

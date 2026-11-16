@@ -196,12 +196,10 @@
           <div class="form-group">
             <label class="form-label">Categoría *</label>
             <select id="pFormCategory" required class="form-select">
-              <option value="vinos">Vinos</option>
-              <option value="espumantes">Espumantes</option>
-              <option value="whiskys">Whiskys</option>
-              <option value="aperitivos">Aperitivos</option>
-              <option value="delicatessen">Delicatessen</option>
-              <option value="promos">Promos</option>
+              <option value="vinos">Vinos (Pre-venta)</option>
+              <option value="espumantes">Espumantes y Sidras (Pre-venta)</option>
+              <option value="aperitivos">Aperitivos (Pre-venta)</option>
+              <option value="promos">Promociones Exclusivas</option>
             </select>
           </div>
 
@@ -277,9 +275,9 @@
             <input type="text" id="pFormBadge" class="form-input" placeholder="Ej: PROMO 20% OFF, ÍCONO, 94 PTS PARKER" />
           </div>
 
-          <!-- Imagen con Carga desde Dispositivo o Drag & Drop (Sin URL ni imágenes de prueba) -->
+          <!-- Imagen con Carga desde Dispositivo o Drag & Drop con Ajuste Proporcional Completo -->
           <div class="form-group" style="grid-column: 1 / -1; background: rgba(255,255,255,0.02); padding: 1.15rem; border-radius: 10px; border: 1px solid var(--admin-border);">
-            <label class="form-label" style="color: var(--gold-champagne); font-weight: 600; margin-bottom: 0.65rem;">Fotografía del Producto (Carga desde dispositivo o arrastrar) *</label>
+            <label class="form-label" style="color: var(--gold-champagne); font-weight: 600; margin-bottom: 0.65rem;">Fotografía del Producto (Carga desde dispositivo, arrastrar o link) *</label>
             <div style="display: grid; grid-template-columns: 1fr auto; gap: 1.25rem; align-items: center;">
               <div id="pImageDropzone" class="admin-image-dropzone" tabindex="0" role="button" aria-label="Cargar o arrastrar imagen del producto">
                 <input type="file" id="pFormImageFile" accept="image/*" hidden />
@@ -292,12 +290,16 @@
                   </svg>
                 </div>
                 <div class="dropzone-title">Arrastrá y soltá la imagen acá o <span>hacé clic para subir desde tu dispositivo</span></div>
-                <div id="pDropzoneStatusText" class="dropzone-sub">Formatos aceptados: JPG, PNG, WebP • Se optimiza automáticamente a proporción 4:5 (800×1000)</div>
+                <div id="pDropzoneStatusText" class="dropzone-sub">La imagen se adapta completa y centrada (sin cortes ni partes recortadas) en proporción 4:5</div>
               </div>
               <div style="text-align: center;">
-                <span style="font-size: 0.72rem; color: #888; display: block; margin-bottom: 0.35rem;">Vista previa (4:5):</span>
-                <img id="pFormImagePreview" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp" alt="Preview" style="width: 92px; height: 115px; object-fit: cover; border-radius: 8px; border: 1.5px solid var(--gold-primary); box-shadow: 0 6px 18px rgba(0,0,0,0.5);" />
+                <span style="font-size: 0.72rem; color: #888; display: block; margin-bottom: 0.35rem;">Vista previa (4:5 completa):</span>
+                <img id="pFormImagePreview" src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp" alt="Preview" style="width: 105px; height: 135px; object-fit: contain; background: #141217; padding: 6px; border-radius: 8px; border: 1.5px solid var(--gold-primary); box-shadow: 0 6px 18px rgba(0,0,0,0.5);" />
               </div>
+            </div>
+            <div style="margin-top: 0.85rem; display: flex; align-items: center; gap: 0.65rem;">
+              <span style="font-size: 0.75rem; color: #888; white-space: nowrap;">O si tenés link web:</span>
+              <input type="url" id="pFormImageUrl" class="form-input" style="font-size: 0.78rem; padding: 0.45rem 0.75rem;" placeholder="https://ejemplo.com/botella.webp (opcional)" />
             </div>
           </div>
 
