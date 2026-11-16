@@ -211,7 +211,6 @@ function renderProducts() {
       if (prod) openProductModal(prod);
     });
   });
-});
 }
 
 // ================= MODAL FICHA TÉCNICA =================

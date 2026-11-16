@@ -1169,7 +1169,6 @@ function setupContactInquiryForm() {
 
 // ================= INITIALIZATION =================
 
-async 
 // ================= MENÚ MÓVIL (DRAWER HAMBURGUESA) =================
 function initMobileMenu() {
   const toggleBtn = document.getElementById('mobileMenuToggleBtn');
@@ -1209,7 +1208,7 @@ function initMobileMenu() {
   });
 }
 
-function init() {
+async function init() {
   initMobileMenu();
   auth.init();
   cart.init();
