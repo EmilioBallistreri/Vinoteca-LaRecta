@@ -64,7 +64,7 @@
       "minStock": 3,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
-      "image": "/public/products/pommery-brut-750.jpeg",
+      "image": "/public/products/pommery-brut-750.png",
       "description": "Champagne francés de prestigio mundial originario de Reims. Presentación con estuche oficial de lujo. Burbujas delicadas, armonía, vivacidad y una finura excepcional en boca.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     },
@@ -81,7 +81,7 @@
       "minStock": 3,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
-      "image": "/public/products/rosell-boher-rose-750.jpeg",
+      "image": "/public/products/rosell-boher-rose-750.png",
       "description": "100% Pinot Noir elaborado bajo el exigente método tradicional Champenoise. Espuma persistente, aromas a frambuesas frescas, pan tostado y un final untuoso y elegante.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     },
@@ -98,7 +98,7 @@
       "minStock": 4,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
-      "image": "/public/products/nieto-senetiner-brut-nature-750.jpeg",
+      "image": "/public/products/nieto-senetiner-brut-nature-750.png",
       "description": "Corte refinado de uvas Pinot Noir y Chardonnay de Luján de Cuyo. Muy seco, fresco y equilibrado, con notas a manzana verde, damascos y flores blancas.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     },
@@ -115,7 +115,7 @@
       "minStock": 4,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
-      "image": "/public/products/las-perdices-champenoise.jpeg",
+      "image": "/public/products/las-perdices-champenoise.png",
       "description": "Elaboración artesanal bajo método tradicional champenoise con prolongada guarda sobre lías. Selección disponible en variedades Extra Brut, Brut Nature o Brut Rosé.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     },
@@ -132,7 +132,7 @@
       "minStock": 4,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
-      "image": "/public/products/dv-catena-malbec-malbec.jpeg",
+      "image": "/public/products/dv-catena-malbec-malbec.png",
       "description": "Blend histórico de viñedos de altura Angélica (Lunlunta) y La Pirámide (Agrelo). Crianza de 18 meses en barricas de roble francés. Ciruelas maduras, pimienta negra y taninos dulces.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     },
@@ -149,7 +149,7 @@
       "minStock": 3,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
-      "image": "/public/products/septima-gran-reserva-blend.jpeg",
+      "image": "/public/products/septima-gran-reserva-blend.png",
       "description": "Corte de guarda superior compuesto por Malbec, Cabernet Sauvignon y Tannat de Agrelo. Crianza en roble que aporta notas a chocolate amargo, vainilla, tabaco y frutos negros confitados.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     },
@@ -166,7 +166,7 @@
       "minStock": 5,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
-      "image": "/public/products/salentein-reserva-malbec.jpeg",
+      "image": "/public/products/salentein-reserva-malbec.png",
       "description": "Nacido en las terrazas de Valle de Uco a más de 1.100 metros de altitud. Intenso color violáceo, aromas a moras, guindas y un sutil fondo floral con roble perfectamente ensamblado.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     },
@@ -183,7 +183,7 @@
       "minStock": 4,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
-      "image": "/public/products/callejon-del-crimen-reserva.jpeg",
+      "image": "/public/products/callejon-del-crimen-reserva.png",
       "description": "Cosecha de terroir pedregoso en Vista Flores, Valle de Uco. Partida disponible a elección en variedades Malbec o Cabernet Franc Reserva de gran tipicidad y frescura.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     },
@@ -200,7 +200,7 @@
       "minStock": 6,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
-      "image": "/public/products/fernet-branca-750.jpeg",
+      "image": "/public/products/fernet-branca-750.png",
       "description": "El aperitivo e ícono tradicional por excelencia. Madurado durante 12 meses en cubas de roble de Eslavonia con infusión secreta de 27 hierbas botánicas de los cinco continentes.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     },
@@ -217,7 +217,7 @@
       "minStock": 5,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
-      "image": "/public/products/campari-750.jpeg",
+      "image": "/public/products/campari-750.png",
       "description": "Legendaria receta creada en Milán en 1860 a partir de hierbas aromáticas, cortezas y frutas en alcohol. El corazón de la coctelería clásica para Campari Tonic, Negroni y Americano.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     },
@@ -234,7 +234,7 @@
       "minStock": 5,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
-      "image": "/public/products/aperol-750.jpeg",
+      "image": "/public/products/aperol-750.png",
       "description": "La esencia del aperitivo italiano y del Aperol Spritz. Receta inalterada con naranja amarga, genciana, ruibarbo y hierbas selectas. Color naranja brillante y graduación alcohólica ligera.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     },
@@ -251,7 +251,7 @@
       "minStock": 6,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
-      "image": "/public/products/cinzano-rosso-1l.jpeg",
+      "image": "/public/products/cinzano-rosso-1l.png",
       "description": "Auténtica fórmula italiana nacida en Turín en 1757. Infusión de más de 35 extractos botánicos con armónicas notas especiadas y dulces. Presentación tradicional de 1 Litro.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     }
