@@ -1165,7 +1165,48 @@ function setupContactInquiryForm() {
 
 // ================= INITIALIZATION =================
 
-async function init() {
+async 
+// ================= MENÚ MÓVIL (DRAWER HAMBURGUESA) =================
+function initMobileMenu() {
+  const toggleBtn = document.getElementById('mobileMenuToggleBtn');
+  const drawer = document.getElementById('mobileMenuDrawer');
+  const closeBtn = document.getElementById('mobileMenuCloseBtn');
+  if (!toggleBtn || !drawer) return;
+
+  const openMenu = () => {
+    drawer.classList.add('active');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeMenu = () => {
+    drawer.classList.remove('active');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openMenu();
+  });
+
+  closeBtn?.addEventListener('click', closeMenu);
+
+  drawer.addEventListener('click', (e) => {
+    if (e.target === drawer || e.target.closest('.mobile-nav-link') || e.target.closest('.mobile-wsp-link') || e.target.closest('.mobile-ig-link')) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer.classList.contains('active')) {
+      closeMenu();
+    }
+  });
+}
+
+function init() {
+  initMobileMenu();
   auth.init();
   cart.init();
   setupEventListeners();

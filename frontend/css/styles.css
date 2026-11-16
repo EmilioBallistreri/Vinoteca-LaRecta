@@ -2418,7 +2418,183 @@ img {
   pointer-events: auto;
 }
 
-/* Adaptación Responsiva */
+/* ================= BOTÓN HAMBURGUESA Y DRAWER MÓVIL ================= */
+.mobile-menu-toggle-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  background: rgba(197, 160, 89, 0.12);
+  border: 1px solid var(--gold-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.mobile-menu-toggle-btn:hover,
+.mobile-menu-toggle-btn:active {
+  background: rgba(197, 160, 89, 0.24);
+  border-color: var(--gold-light);
+}
+
+.mobile-menu-toggle-btn .hamburger-bar {
+  width: 20px;
+  height: 2px;
+  background-color: var(--gold-champagne);
+  border-radius: 2px;
+  transition: all 0.25s ease;
+}
+
+.mobile-menu-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1200;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-menu-drawer.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 82%;
+  max-width: 330px;
+  height: 100%;
+  background: linear-gradient(180deg, #151217 0%, #0e0c10 100%);
+  border-left: 1px solid var(--gold-border);
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -15px 0 45px rgba(0, 0, 0, 0.85);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow-y: auto;
+}
+
+.mobile-menu-drawer.active .mobile-menu-content {
+  transform: translateX(0);
+}
+
+.mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+.mobile-menu-brand {
+  font-family: var(--font-brand);
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+
+.mobile-menu-close {
+  background: none;
+  border: none;
+  color: var(--gold-champagne);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.1rem 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.mobile-menu-close:hover {
+  color: #fff;
+}
+
+.mobile-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  color: #ffffff;
+  font-family: var(--font-brand);
+  font-size: 0.88rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-link:hover, .mobile-nav-link:active {
+  background: rgba(197, 160, 89, 0.15);
+  border-color: var(--gold-border);
+  color: var(--gold-light);
+  transform: translateX(4px);
+}
+
+.mobile-menu-footer {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(197, 160, 89, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mobile-wsp-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #25d366;
+  color: #0b090c;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.mobile-ig-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(197, 160, 89, 0.1);
+  border: 1px solid var(--gold-border);
+  color: var(--gold-champagne);
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+/* ================= ADAPTACIÓN RESPONSIVA COMPLETA (MOBILE-FIRST POLISH) ================= */
 @media (max-width: 1200px) {
   .products-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -2440,46 +2616,329 @@ img {
   }
   .footer-top {
     grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 560px) {
-  .products-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-}
-  .footer-top {
-    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
   }
 }
 
 @media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* Contenedores con padding cómodo para celular */
+  .container {
+    padding: 0 1.15rem;
+  }
+
+  /* Header y Navbar */
   .top-announcement-bar {
     display: none;
   }
-  .nav-menu {
-    display: none;
+  .main-header {
+    padding: 0.65rem 0;
+  }
+  .navbar {
+    gap: 0.5rem;
+  }
+  .brand-logo-img {
+    width: 36px;
+    height: 36px;
+  }
+  .brand-title {
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+  }
+  .desktop-nav, .nav-menu {
+    display: none !important;
+  }
+  .nav-instagram-link {
+    display: none !important;
+  }
+  .mobile-menu-toggle-btn {
+    display: flex;
+  }
+  .nav-actions {
+    gap: 0.5rem;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding: 3.5rem 0 3rem;
+    min-height: auto;
+  }
+  .hero-tag {
+    font-size: 0.72rem;
+    padding: 0.35rem 0.75rem;
+    margin-bottom: 1rem;
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
   }
   .hero-title {
-    font-size: 2.8rem;
+    font-size: 2.15rem;
+    line-height: 1.18;
+    margin-bottom: 1rem;
   }
-  .categories-grid {
-    grid-template-columns: 1fr;
+  .hero-description {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
   }
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
   }
-  .product-modal-grid {
-    grid-template-columns: 1fr;
-  }
-  .footer-top {
-    grid-template-columns: 1fr;
+  .hero-actions .btn-primary,
+  .hero-actions .btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.88rem;
+    min-height: 48px;
   }
   .hero-features-bar {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
+    align-items: stretch;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1.15rem;
+  }
+  .hero-feat-item {
+    padding: 0.5rem 0;
+  }
+  .hero-feat-text h4 {
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+  .hero-feat-text p {
+    font-size: 0.75rem;
+  }
+
+  /* Sección Pre-venta */
+  .preventa-section {
+    padding: 3.5rem 0;
+  }
+  .section-title {
+    font-size: 1.85rem;
+    line-height: 1.25;
+  }
+  .section-subtitle {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    padding: 0 0.5rem;
+  }
+  .preventa-categories-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    max-width: 100%;
+  }
+  .preventa-card {
+    padding: 1.5rem 1.25rem;
+    border-radius: 14px;
+  }
+  .preventa-card-title {
+    font-size: 1.4rem;
+  }
+  .preventa-card-desc {
+    font-size: 0.84rem;
+    margin-bottom: 1.25rem;
+  }
+  .preventa-products-wrapper {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+  }
+  .preventa-products-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .preventa-selected-title {
+    font-size: 1.45rem;
+  }
+  .preventa-filter-pills {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    padding-bottom: 0.4rem;
+    gap: 0.5rem;
+    scrollbar-width: none;
+  }
+  .preventa-filter-pills::-webkit-scrollbar {
+    display: none;
+  }
+  .preventa-pill-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.9rem;
+  }
+
+  /* Sección Promociones */
+  .promos-section {
+    padding: 3.5rem 0;
+  }
+
+  /* Grilla de Productos en Celulares */
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 1.35rem;
+    max-width: 440px;
+    margin: 1.75rem auto 0;
+  }
+  .product-card {
+    border-radius: 12px;
+  }
+  .card-img-wrap {
+    height: 240px;
+    padding: 1.15rem 0.75rem;
+  }
+  .card-img-wrap img {
+    max-height: 205px;
+  }
+  .card-body {
+    padding: 1.15rem 1rem 1.25rem;
+  }
+  .card-title {
+    font-size: 1.05rem;
+    min-height: unset;
+    margin-bottom: 0.65rem;
+  }
+  .card-current-price {
+    font-size: 1.3rem;
+  }
+  .card-sale-note {
+    padding: 0.5rem 0.65rem;
+  }
+  .card-sale-note .note-main {
+    font-size: 0.7rem;
+  }
+  .card-sale-note .note-sub {
+    font-size: 0.62rem;
+  }
+  .card-add-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.84rem;
+    min-height: 48px;
+  }
+
+  /* Catálogo (productos.html) */
+  .catalog-refined-header {
+    padding: 2.5rem 0 1.5rem;
+  }
+  .catalog-refined-header .section-title {
+    font-size: 1.85rem;
+  }
+  .catalog-pills-nav {
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    padding-bottom: 0.5rem;
+    margin-top: 1.25rem;
+    gap: 0.5rem;
+    scrollbar-width: none;
+  }
+  .catalog-pills-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .catalog-pill-item {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 0.55rem 1.05rem;
+    font-size: 0.8rem;
+  }
+  .catalog-controls-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .catalog-search-wrap {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100%;
+  }
+  .catalog-sort-wrap {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .catalog-sort-select {
+    flex: 1;
+  }
+
+  /* Modal de Ficha Técnica */
+  .modal-overlay {
+    padding: 0.75rem;
+  }
+  .modal-card {
+    padding: 2.25rem 1.15rem 1.5rem;
+    border-radius: 12px;
+    max-height: 92vh;
+  }
+  .product-modal-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .product-modal-img {
+    height: 230px;
+    max-height: 230px;
+    padding: 0.65rem;
+  }
+  .product-modal-details h2 {
+    font-size: 1.45rem !important;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .modal-sale-conditions {
+    padding: 0.85rem 0.95rem;
+    margin: 1rem 0;
+  }
+  .modal-conditions-title {
+    font-size: 0.74rem;
+  }
+  .modal-conditions-list li {
+    font-size: 0.82rem;
+  }
+  .modal-whatsapp-consult-btn {
+    min-height: 46px;
+    padding: 0.7rem;
+    font-size: 0.78rem;
+  }
+  #modalAddCartBtn {
+    min-height: 48px;
+    font-size: 0.88rem;
+  }
+
+  /* Carrito Drawer */
+  .cart-drawer {
+    max-width: 100% !important;
+    border-radius: 0;
+  }
+  .cart-drawer-header {
+    padding: 0.75rem 1rem !important;
+  }
+  .cart-drawer-title {
+    font-size: 1.15rem !important;
+  }
+  .cart-drawer-footer {
+    padding: 1rem 1rem 1.25rem !important;
+  }
+  .cart-drawer-footer .btn-checkout,
+  .cart-drawer-footer .btn-whatsapp-order {
+    min-height: 48px;
+    font-size: 0.85rem;
+  }
+
+  /* Botones Flotantes */
+  .floating-actions-container {
+    bottom: 1.15rem;
+    right: 1.15rem;
+    gap: 0.65rem;
   }
   .floating-sommelier-btn span {
     display: none;
@@ -2487,6 +2946,34 @@ img {
   .floating-sommelier-btn {
     padding: 0.5rem;
     border-radius: 50%;
+  }
+  .floating-wsp-btn {
+    width: 50px;
+    height: 50px;
+  }
+
+  /* Footer */
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+}
+
+/* Teléfonos muy pequeños (iPhone SE / 360px o menos) */
+@media (max-width: 380px) {
+  .hero-title {
+    font-size: 1.9rem;
+  }
+  .brand-title {
+    font-size: 0.8rem;
+  }
+  .card-current-price {
+    font-size: 1.18rem;
   }
 }
 
