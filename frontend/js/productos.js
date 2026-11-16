@@ -130,14 +130,14 @@ function renderProducts() {
   grid.innerHTML = state.filteredProducts.map(product => {
     const isOutOfStock = product.stock <= 0;
     const isLowStock = product.stock > 0 && product.stock <= (product.minStock || 3);
-    const cuotasAmount = Math.round(product.price / 3);
-    const transferPrice = Math.round(product.price * 0.90);
-    const isPromo = product.category === 'promos' || (product.discount && product.discount > 0);
+    const discountPercent = product.originalPrice && product.price < product.originalPrice
+      ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+      : null;
 
     return `
-      <article class="product-card" data-id="${product.id}">
+      <article class="product-card" data-id="${product.id}" title="Hacer clic para ver ficha técnica y descripción de ${product.name}">
         <div class="card-img-wrap">
-          ${product.badge ? `<span class="card-badge ${product.badge.includes('PROMO') ? 'promo' : ''}">${product.badge}</span>` : ''}
+          ${discountPercent ? `<span class="card-badge promo">-${discountPercent}% OFF</span>` : (product.badge ? `<span class="card-badge">${product.badge}</span>` : '')}
           <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp';" />
           <button class="card-quick-view-btn" data-action="quickview" data-id="${product.id}">Ver Ficha Técnica</button>
         </div>
@@ -150,10 +150,10 @@ function renderProducts() {
               <span class="card-current-price">${formatCurrency(product.price)}</span>
               ${product.originalPrice ? `<span class="card-original-price">${formatCurrency(product.originalPrice)}</span>` : ''}
             </div>
-            <div class="card-perks-info">
-    <div style="color: var(--gold-light); font-weight: 600;">💵 Válido en efectivo o transferencia</div>
-    <div style="font-size: 0.62rem; color: #aaa;">🏬 Retiro local • 💬 Consulta previa por chat</div>
-  </div>
+            <div class="card-sale-note">
+              <div class="note-main">💵 Efectivo o Transferencia</div>
+              <div class="note-sub">🏬 Retiro en local • 💬 Consulta previa por chat</div>
+            </div>
           </div>
 
           <div class="card-stock-status">
@@ -177,7 +177,7 @@ function renderProducts() {
         </div>
       </article>
     `;
-  }).join('');
+}).join('');
 
   // Eventos de botones de cada card
   grid.querySelectorAll('[data-action="add-cart"]').forEach(btn => {
@@ -301,7 +301,11 @@ function applyFilters() {
 
   // 1. Categoría
   if (state.activeCategory !== 'todos') {
-    list = list.filter(p => p.category.toLowerCase() === state.activeCategory.toLowerCase());
+    if (state.activeCategory.toLowerCase() === 'promos') {
+      list = list.filter(p => p.category === 'promos' || (p.discount && p.discount > 0) || (p.originalPrice && p.originalPrice > p.price));
+    } else {
+      list = list.filter(p => p.category.toLowerCase() === state.activeCategory.toLowerCase());
+    }
   }
 
   // 2. Subcategoría

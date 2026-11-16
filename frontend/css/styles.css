@@ -1161,114 +1161,120 @@ img {
   pointer-events: none;
 }
 
-/* Grilla de Productos: 6 por línea en pantallas de escritorio */
+/* Grilla de Productos: 4 por línea en pantallas de escritorio */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1.1rem;
-  margin-top: 1.75rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
-/* Tarjeta de Producto Compacta y Sofisticada (6 por línea) */
+/* Tarjeta de Producto Premium & Prolija (4 por línea) */
 .product-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--gold-border);
-  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(26, 21, 29, 0.95) 0%, rgba(14, 11, 16, 0.98) 100%);
+  border: 1px solid rgba(197, 160, 89, 0.22);
+  border-radius: 12px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: all var(--transition-smooth);
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
   cursor: pointer;
   position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--gold-border-bright);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75), var(--gold-subtle-glow);
+  transform: translateY(-6px);
+  border-color: rgba(229, 199, 134, 0.65);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), 0 0 22px rgba(197, 160, 89, 0.22);
 }
 
 .card-img-wrap {
   position: relative;
-  height: 180px;
-  background: radial-gradient(circle at center, #241f27 0%, #110e13 100%);
+  height: 250px;
+  background: radial-gradient(circle at center, rgba(46, 36, 50, 0.6) 0%, rgba(16, 12, 18, 0.95) 100%);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem;
-  border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.14);
 }
 
 .card-img-wrap img {
   width: 100%;
   height: 100%;
-  max-height: 165px;
+  max-height: 215px;
   object-fit: contain;
   object-position: center;
-  transition: transform 0.4s ease;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.65));
 }
 
 .product-card:hover .card-img-wrap img {
-  transform: scale(1.04);
+  transform: scale(1.06);
 }
 
 /* Distintivos elegantes de Cava */
 .card-badge {
   position: absolute;
-  top: 8px;
-  left: 8px;
-  background: rgba(9, 9, 10, 0.88);
-  border: 1px solid var(--gold-primary);
+  top: 10px;
+  left: 10px;
+  background: rgba(14, 11, 16, 0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(197, 160, 89, 0.5);
   color: var(--gold-champagne);
   font-family: var(--font-brand);
-  font-size: 0.58rem;
+  font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  padding: 0.2rem 0.45rem;
+  padding: 0.25rem 0.55rem;
   border-radius: 4px;
   text-transform: uppercase;
   z-index: 2;
 }
 
 .card-badge.promo {
-  background: var(--burgundy-gradient);
-  border-color: var(--gold-primary);
-  color: var(--gold-champagne);
+  background: linear-gradient(135deg, rgba(140, 26, 54, 0.92) 0%, rgba(85, 12, 32, 0.96) 100%);
+  border-color: var(--gold-light);
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
 }
 
 .card-quick-view-btn {
   position: absolute;
-  bottom: -40px;
+  bottom: -45px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(9, 9, 10, 0.92);
+  background: rgba(14, 11, 16, 0.94);
   backdrop-filter: blur(8px);
-  border: 1px solid var(--gold-border-bright);
+  border: 1px solid var(--gold-primary);
   color: var(--gold-champagne);
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 0.35rem 0.65rem;
-  border-radius: 4px;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
   white-space: nowrap;
-  transition: all var(--transition-fast);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
   z-index: 3;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
 }
 
 .product-card:hover .card-quick-view-btn {
-  bottom: 8px;
+  bottom: 12px;
 }
 
 .card-quick-view-btn:hover {
   background: var(--gold-primary);
-  color: #0b0b0b;
+  color: #0b090c;
+  box-shadow: 0 0 16px rgba(197, 160, 89, 0.5);
 }
 
 /* Cuerpo de la tarjeta */
 .card-body {
-  padding: 0.85rem 0.75rem;
+  padding: 1.15rem 1.15rem 1.25rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -1279,9 +1285,9 @@ img {
   font-size: 0.65rem;
   color: var(--gold-primary);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   font-weight: 700;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.35rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1290,12 +1296,12 @@ img {
 
 .card-title {
   font-family: var(--font-serif);
-  font-size: 0.86rem;
-  font-weight: 600;
-  color: var(--text-white);
-  line-height: 1.25;
-  margin-bottom: 0.45rem;
-  min-height: 2.15rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+  min-height: 2.7rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -1303,63 +1309,79 @@ img {
 }
 
 .card-pricing {
-  margin-bottom: 0.45rem;
-  padding-bottom: 0.45rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .card-price-row {
   display: flex;
   align-items: baseline;
-  gap: 0.45rem;
+  gap: 0.65rem;
   flex-wrap: wrap;
+  margin-bottom: 0.35rem;
 }
 
 .card-current-price {
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 1.35rem;
+  font-weight: 800;
   color: var(--gold-light);
   font-family: var(--font-sans);
+  letter-spacing: -0.01em;
 }
 
 .card-original-price {
-  font-size: 0.72rem;
-  color: var(--text-dim);
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.45);
   text-decoration: line-through;
+  font-weight: 400;
 }
 
-.card-perks-info {
-  font-size: 0.63rem;
-  line-height: 1.35;
-  color: var(--text-muted);
-  margin-top: 0.25rem;
+.card-sale-note {
+  background: rgba(197, 160, 89, 0.07);
+  border: 1px solid rgba(197, 160, 89, 0.2);
+  border-radius: 6px;
+  padding: 0.5rem 0.65rem;
+  margin-top: 0.45rem;
 }
 
-.card-perks-info strong {
-  color: var(--gold-light);
+.card-sale-note .note-main {
+  color: var(--gold-champagne);
+  font-weight: 700;
+  font-size: 0.72rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.card-sale-note .note-sub {
+  color: #b5b0ba;
+  font-size: 0.64rem;
+  margin-top: 0.2rem;
+  padding-left: 1.15rem;
 }
 
 .card-stock-status {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.64rem;
+  gap: 0.4rem;
+  font-size: 0.68rem;
   font-weight: 600;
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.85rem;
 }
 
 .stock-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   display: inline-block;
 }
 
 .stock-in { color: var(--status-available); }
-.stock-in .stock-dot { background: var(--status-available); }
+.stock-in .stock-dot { background: var(--status-available); box-shadow: 0 0 6px rgba(78, 203, 113, 0.4); }
 
 .stock-low { color: var(--status-low); }
-.stock-low .stock-dot { background: var(--status-low); }
+.stock-low .stock-dot { background: var(--status-low); box-shadow: 0 0 6px rgba(230, 161, 74, 0.4); }
 
 .stock-out { color: var(--status-out); }
 .stock-out .stock-dot { background: var(--status-out); }
@@ -1370,27 +1392,28 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
-  background: rgba(197, 160, 89, 0.12);
-  border: 1px solid var(--gold-border);
-  color: var(--gold-champagne);
-  font-size: 0.74rem;
-  font-weight: 600;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, rgba(197, 160, 89, 0.18) 0%, rgba(197, 160, 89, 0.08) 100%);
+  border: 1px solid var(--gold-border-bright);
+  color: var(--gold-light);
+  font-size: 0.82rem;
+  font-weight: 700;
   letter-spacing: 0.04em;
-  padding: 0.5rem 0.55rem;
-  border-radius: 6px;
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all 0.25s ease;
 }
 
 .card-add-btn:hover {
-  background: var(--gold-primary);
-  color: #0b0b0b;
-  border-color: var(--gold-primary);
+  background: var(--gold-gradient);
+  color: #0b090c;
+  border-color: var(--gold-light);
+  box-shadow: 0 4px 18px rgba(197, 160, 89, 0.35);
 }
 
 .card-add-btn:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
   border-color: rgba(255, 255, 255, 0.1);
   color: var(--text-dim);
@@ -2396,17 +2419,36 @@ img {
 }
 
 /* Adaptación Responsiva */
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 1024px) {
   .categories-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .products-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.15rem;
   }
   .community-content, .contact-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
   .footer-top {
     grid-template-columns: 1fr 1fr;
   }
