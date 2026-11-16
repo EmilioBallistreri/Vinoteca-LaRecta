@@ -95,7 +95,7 @@ function renderPreventaCategories() {
   grid.innerHTML = categories.map(cat => {
     const count = state.products.filter(p => p.category === cat.id).length;
     return `
-      <article class="preventa-card" data-category="${cat.id}" role="button" tabindex="0" title="Ver preventa de ${cat.title}">
+      <article class="preventa-card" data-category="${cat.id}" role="button" tabindex="0" title="Ver directamente los productos de ${cat.title}">
         <div class="preventa-card-badge">PRE-VENTA</div>
         <div class="preventa-icon-wrap">${cat.iconSvg}</div>
         <div class="preventa-card-info">
@@ -104,7 +104,7 @@ function renderPreventaCategories() {
           <p class="preventa-card-desc">${cat.desc}</p>
         </div>
         <div class="preventa-card-footer">
-          <span class="preventa-count">${count > 0 ? `${count} botellas disponibles` : 'Ver colección'}</span>
+          <span class="preventa-count">${count > 0 ? `${count} productos disponibles` : 'Ver colección'}</span>
           <span class="preventa-link">
             Ver Productos
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -118,16 +118,185 @@ function renderPreventaCategories() {
   }).join('');
 
   grid.querySelectorAll('.preventa-card').forEach(card => {
-    const navigate = () => {
+    const handleSelect = () => {
       const catId = card.getAttribute('data-category');
-      window.location.href = `/productos.html?categoria=${catId}`;
+      selectPreventaCategory(catId, true);
     };
-    card.addEventListener('click', navigate);
+    card.addEventListener('click', handleSelect);
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        navigate();
+        handleSelect();
       }
+    });
+  });
+
+  // Pills de filtro directo debajo de las 3 cards
+  document.querySelectorAll('.preventa-pill-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const catId = btn.getAttribute('data-category');
+      selectPreventaCategory(catId, true);
+    });
+  });
+}
+
+const PREVENTA_TITLES = {
+  espumantes: {
+    tag: 'Burbujas Finas, Cuvées & Sidras',
+    title: 'Espumantes y Sidras de Colección'
+  },
+  vinos: {
+    tag: 'Añadas Históricas & Terroirs de Autor',
+    title: 'Vinos de Autor & Colección'
+  },
+  aperitivos: {
+    tag: 'Botánicos Nobles & Coctelería Fina',
+    title: 'Aperitivos, Gins & Vermuts Finos'
+  }
+};
+
+let activePreventaCategory = 'vinos';
+
+function selectPreventaCategory(catId, shouldScroll = false) {
+  if (!catId) catId = 'vinos';
+  activePreventaCategory = catId;
+
+  // Actualizar tarjetas superiores
+  document.querySelectorAll('.preventa-card').forEach(card => {
+    if (card.getAttribute('data-category') === catId) {
+      card.classList.add('active');
+    } else {
+      card.classList.remove('active');
+    }
+  });
+
+  // Actualizar pills de filtro
+  document.querySelectorAll('.preventa-pill-btn').forEach(btn => {
+    if (btn.getAttribute('data-category') === catId) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+
+  // Actualizar títulos
+  const info = PREVENTA_TITLES[catId] || PREVENTA_TITLES.vinos;
+  const tagEl = document.getElementById('preventaSelectedTag');
+  const titleEl = document.getElementById('preventaSelectedTitle');
+  if (tagEl) tagEl.textContent = info.tag;
+  if (titleEl) titleEl.textContent = info.title;
+
+  // Renderizar la grilla de productos
+  renderPreventaProductsGrid(catId);
+
+  // Scroll directo a los productos si el usuario hizo clic
+  if (shouldScroll) {
+    const wrapper = document.getElementById('preventaProductsWrapper');
+    if (wrapper) {
+      wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+}
+
+function renderPreventaProductsGrid(catId) {
+  const grid = document.getElementById('preventaProductsGrid');
+  if (!grid) return;
+
+  const prods = state.products.filter(p => p.category === catId);
+
+  if (prods.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--text-muted); background: var(--bg-surface); border: 1px solid var(--gold-border); border-radius: 12px;">
+        <h4 style="color: #fff; font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 0.5rem;">Cargando partidas de cava...</h4>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = prods.map(product => {
+    const isOutOfStock = product.stock <= 0;
+    const isLowStock = product.stock > 0 && product.stock <= (product.minStock || 3);
+    const cuotasAmount = Math.round(product.price / 3);
+    const transferPrice = Math.round(product.price * 0.90);
+    const isPromo = product.category === 'promos' || (product.discount && product.discount > 0);
+
+    return `
+      <article class="product-card" data-id="${product.id}" style="cursor: pointer;" title="Hacer clic para ver ficha técnica y descripción de ${product.name}">
+        <div class="card-img-wrap">
+          ${product.badge ? `<span class="card-badge ${product.badge.includes('PROMO') ? 'promo' : ''}">${product.badge}</span>` : ''}
+          <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp';" />
+          <button class="card-quick-view-btn" data-action="quickview" data-id="${product.id}">Ver Ficha Técnica</button>
+        </div>
+        <div class="card-body">
+          <span class="card-bodega">${product.bodega ? product.bodega + ' • ' : ''}${product.subcategory || product.category.toUpperCase()}</span>
+          <h3 class="card-title">${product.name}</h3>
+          
+          <div class="card-pricing">
+            <div class="card-price-row">
+              <span class="card-current-price">${formatCurrency(product.price)}</span>
+              ${product.originalPrice ? `<span class="card-original-price">${formatCurrency(product.originalPrice)}</span>` : ''}
+            </div>
+            ${!isPromo ? `
+            <div class="card-perks-info">
+              <div>💳 <strong>3 pagos fijos sin interés</strong> de ${formatCurrency(cuotasAmount)}</div>
+              <div>⚡ <strong>${formatCurrency(transferPrice)}</strong> por Transferencia (10% OFF)</div>
+            </div>
+            ` : ''}
+          </div>
+
+          <div class="card-stock-status">
+            ${isOutOfStock ? `
+              <span class="stock-out"><span class="stock-dot"></span> Agotado en Cava</span>
+            ` : isLowStock ? `
+              <span class="stock-low"><span class="stock-dot"></span> Partida Limitada: Últimas ${product.stock} botellas</span>
+            ` : `
+              <span class="stock-in"><span class="stock-dot"></span> Disponible en Cava</span>
+            `}
+          </div>
+
+          <button class="card-add-btn" data-action="add-cart" data-id="${product.id}" ${isOutOfStock ? 'disabled' : ''}>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            ${isOutOfStock ? 'Partida Agotada' : 'Agregar al Carrito'}
+          </button>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  // Eventos de botones de cada card
+  grid.querySelectorAll('[data-action="add-cart"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      const prod = state.products.find(p => p.id === id);
+      if (prod) {
+        cart.addItem(prod, 1);
+        openCartDrawer();
+        showToast(`"${prod.name}" agregado a tu carrito.`);
+      }
+    });
+  });
+
+  grid.querySelectorAll('[data-action="quickview"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      const prod = state.products.find(p => p.id === id);
+      if (prod) openProductModal(prod);
+    });
+  });
+
+  // Clic en la card completa para ver descripción más detallada
+  grid.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('[data-action="add-cart"]')) return;
+      const id = card.getAttribute('data-id');
+      const prod = state.products.find(p => p.id === id);
+      if (prod) openProductModal(prod);
     });
   });
 }
@@ -997,6 +1166,8 @@ async function init() {
     state.products = products;
     state.filteredProducts = products;
     renderPreventaCategories();
+    const urlCat = new URLSearchParams(window.location.search).get('categoria');
+    selectPreventaCategory(urlCat || 'vinos', Boolean(urlCat));
     renderPromosGrid();
     renderProducts();
   } catch (err) {

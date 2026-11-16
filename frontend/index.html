@@ -164,12 +164,30 @@
         <h2 class="section-title">Pre-venta de Productos</h2>
         <div class="section-ornament">❖</div>
         <p class="section-subtitle">
-          Reserve de forma anticipada las etiquetas más codiciadas de nuestra bodega con beneficios exclusivos. Seleccione una categoría para explorar las partidas disponibles.
+          Reserve de forma anticipada las etiquetas más codiciadas de nuestra bodega con beneficios exclusivos. Seleccione una categoría para ver directamente sus productos.
         </p>
       </div>
 
       <!-- Tres cards simples de categorías: Espumantes y Sidras, Vinos, Aperitivos -->
       <div id="preventaCategoriesGrid" class="preventa-categories-grid"></div>
+
+      <!-- Contenedor dinámico de Productos de la Categoría Seleccionada -->
+      <div id="preventaProductsWrapper" class="preventa-products-wrapper">
+        <div class="preventa-products-header">
+          <div class="preventa-header-left">
+            <span id="preventaSelectedTag" class="section-tag">Colección Seleccionada</span>
+            <h3 id="preventaSelectedTitle" class="preventa-selected-title">Vinos de Colección</h3>
+          </div>
+          <div id="preventaFilterPills" class="preventa-filter-pills">
+            <button class="preventa-pill-btn" data-category="espumantes">🍾 Espumantes y Sidras</button>
+            <button class="preventa-pill-btn active" data-category="vinos">🍷 Vinos</button>
+            <button class="preventa-pill-btn" data-category="aperitivos">🍸 Aperitivos</button>
+          </div>
+        </div>
+
+        <!-- Grilla de Productos de la Categoría Elegida -->
+        <div id="preventaProductsGrid" class="products-grid"></div>
+      </div>
     </div>
   </section>
 

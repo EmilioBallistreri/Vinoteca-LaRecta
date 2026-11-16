@@ -583,6 +583,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     state.products = products;
     setCategory(state.activeCategory);
     if (subParam) setSubcategory(subParam);
+    if (catParam) {
+      setTimeout(() => {
+        const grid = document.getElementById('productsGrid');
+        if (grid) {
+          const topOffset = grid.getBoundingClientRect().top + window.pageYOffset - 110;
+          window.scrollTo({ top: topOffset, behavior: 'smooth' });
+        }
+      }, 150);
+    }
   } catch (err) {
     console.error('Error cargando catálogo:', err);
     showToast('Error de conexión al cargar etiquetas.');
