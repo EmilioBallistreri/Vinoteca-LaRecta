@@ -150,12 +150,10 @@ function renderProducts() {
               <span class="card-current-price">${formatCurrency(product.price)}</span>
               ${product.originalPrice ? `<span class="card-original-price">${formatCurrency(product.originalPrice)}</span>` : ''}
             </div>
-            ${!isPromo ? `
             <div class="card-perks-info">
-              <div>💳 <strong>3 pagos fijos sin interés</strong> de ${formatCurrency(cuotasAmount)}</div>
-              <div>⚡ <strong>${formatCurrency(transferPrice)}</strong> por Transferencia Bancaria (10% OFF)</div>
-            </div>
-            ` : ''}
+    <div style="color: var(--gold-light); font-weight: 600;">💵 Válido en efectivo o transferencia</div>
+    <div style="font-size: 0.62rem; color: #aaa;">🏬 Retiro local • 💬 Consulta previa por chat</div>
+  </div>
           </div>
 
           <div class="card-stock-status">
@@ -223,10 +221,8 @@ function openProductModal(product) {
   const body = document.getElementById('productModalBody');
   if (!modal || !body) return;
 
-  const cuotasAmount = Math.round(product.price / 3);
-  const transferPrice = Math.round(product.price * 0.90);
   const isOutOfStock = product.stock <= 0;
-  const isPromo = product.category === 'promos' || (product.discount && product.discount > 0);
+  const whatsappUrl = `https://wa.me/5493512460017?text=${encodeURIComponent('Hola Vinoteca La Recta! Quisiera consultar disponibilidad para retirar ' + product.name + ' con pago en efectivo/transferencia.')}`;
 
   body.innerHTML = `
     <div class="product-modal-grid">
@@ -236,19 +232,40 @@ function openProductModal(product) {
       <div class="modal-info-col">
         <span class="modal-bodega">${product.bodega ? product.bodega + ' • ' : ''}${product.category.toUpperCase()} • ${product.subcategory || ''}</span>
         <h2 class="modal-title">${product.name}</h2>
-        ${product.badge ? `<span class="card-badge ${product.badge.includes('PROMO') ? 'promo' : ''}" style="position: static; display: inline-block; margin-bottom: 1rem;">${product.badge}</span>` : ''}
+        ${product.badge ? `<span class="card-badge promo" style="position: static; display: inline-block; margin-bottom: 0.85rem;">${product.badge}</span>` : ''}
 
         <div class="modal-price-box">
-          <div class="modal-price">${formatCurrency(product.price)}</div>
-          ${product.originalPrice ? `<span class="card-original-price" style="font-size: 1.1rem;">${formatCurrency(product.originalPrice)}</span>` : ''}
-          ${!isPromo ? `
-          <div class="modal-cuotas-notice">
-            💳 <strong>3 Cuotas fijas sin interés</strong> de ${formatCurrency(cuotasAmount)} con todas las tarjetas
+          <div style="display: flex; align-items: baseline; gap: 0.85rem; flex-wrap: wrap;">
+            <span class="modal-price" style="color: var(--gold-light);">${formatCurrency(product.price)}</span>
+            ${product.originalPrice ? `<span class="card-original-price" style="font-size: 1.2rem; color: #888; text-decoration: line-through;">${formatCurrency(product.originalPrice)}</span>` : ''}
           </div>
-          <div class="modal-cuotas-notice" style="color: var(--status-available);">
-            ⚡ <strong>${formatCurrency(transferPrice)}</strong> con Bonificación por Transferencia Bancaria (10% OFF)
+        </div>
+
+        <!-- Metodología de Venta & Retiro -->
+        <div class="modal-sale-conditions">
+          <div class="modal-conditions-title">
+            <span>❖</span> Metodología de Venta &amp; Retiro
           </div>
-          ` : ''}
+          <ul class="modal-conditions-list">
+            <li>
+              <span class="cond-icon">💵</span>
+              <div><strong>Compra válida solo con pago en efectivo o transferencia</strong></div>
+            </li>
+            <li>
+              <span class="cond-icon">🏬</span>
+              <div><strong>Retiro en el local</strong> (Av. Recta Martinolli 8255, Argüello • Córdoba)</div>
+            </li>
+            <li>
+              <span class="cond-icon">💬</span>
+              <div><strong>Consulta previa por chat con el local</strong></div>
+            </li>
+          </ul>
+          <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="modal-whatsapp-consult-btn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.072.043.419-.101.824z"/>
+            </svg>
+            Consultar Disponibilidad por WhatsApp
+          </a>
         </div>
 
         <div class="modal-desc-block">
@@ -258,17 +275,12 @@ function openProductModal(product) {
 
         <div style="margin: 1.5rem 0;">
           <span style="font-size: 0.85rem; color: var(--text-muted);">
-            Disponibilidad en Cava: <strong style="color: ${isOutOfStock ? '#ff6b6b' : 'var(--gold-champagne)'}">${isOutOfStock ? 'Sin stock momentáneo' : product.stock + ' botellas'}</strong>
+            ${isOutOfStock ? 'Sin stock' : `Disponible en local: ${product.stock} botellas`}
           </span>
         </div>
 
-        <button id="modalAddToCartBtn" class="btn-primary" style="width: 100%; justify-content: center; padding: 1rem;" ${isOutOfStock ? 'disabled' : ''}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <path d="M16 10a4 4 0 0 1-8 0"></path>
-          </svg>
-          ${isOutOfStock ? 'Partida Agotada' : 'Agregar al Carrito'}
+        <button class="btn-primary" id="modalAddToCartBtn" style="width: 100%; justify-content: center;" ${isOutOfStock ? 'disabled' : ''}>
+          ${isOutOfStock ? 'Agotado' : 'Agregar al Carrito'}
         </button>
       </div>
     </div>

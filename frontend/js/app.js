@@ -236,12 +236,10 @@ function renderPreventaProductsGrid(catId) {
               <span class="card-current-price">${formatCurrency(product.price)}</span>
               ${product.originalPrice ? `<span class="card-original-price">${formatCurrency(product.originalPrice)}</span>` : ''}
             </div>
-            ${!isPromo ? `
             <div class="card-perks-info">
-              <div>💳 <strong>3 pagos fijos sin interés</strong> de ${formatCurrency(cuotasAmount)}</div>
-              <div>⚡ <strong>${formatCurrency(transferPrice)}</strong> por Transferencia (10% OFF)</div>
-            </div>
-            ` : ''}
+    <div style="color: var(--gold-light); font-weight: 600;">💵 Válido en efectivo o transferencia</div>
+    <div style="font-size: 0.62rem; color: #aaa;">🏬 Retiro local • 💬 Consulta previa por chat</div>
+  </div>
           </div>
 
           <div class="card-stock-status">
@@ -589,45 +587,68 @@ function openProductModal(product) {
   const body = document.getElementById('productModalBody');
   if (!modal || !body) return;
 
-  const cuotas = Math.round(product.price / 3);
-  const transfer = Math.round(product.price * 0.90);
   const isOutOfStock = product.stock <= 0;
-  const isPromo = product.category === 'promos' || (product.discount && product.discount > 0);
+  const whatsappUrl = `https://wa.me/5493512460017?text=${encodeURIComponent('Hola Vinoteca La Recta! Quisiera consultar disponibilidad para retirar ' + product.name + ' con pago en efectivo/transferencia.')}`;
 
   body.innerHTML = `
     <div class="product-modal-grid">
       <img src="${product.image}" alt="${product.name}" class="product-modal-img" />
       <div class="product-modal-details">
-        <span class="card-bodega">${product.bodega ? product.bodega + ' • ' : ''}${product.category.toUpperCase()}</span>
-        <h2 style="font-family: var(--font-serif); font-size: 2.3rem; color: #fff; line-height: 1.15; margin-bottom: 0.9rem;">${product.name}</h2>
+        <span class="card-bodega">${product.bodega ? product.bodega + ' • ' : ''}${product.category.toUpperCase()}${product.subcategory ? ' • ' + product.subcategory : ''}</span>
+        <h2 style="font-family: var(--font-serif); font-size: 2.1rem; color: #fff; line-height: 1.15; margin-bottom: 0.75rem;">${product.name}</h2>
+        ${product.badge ? `<span class="card-badge promo" style="position: static; display: inline-block; margin-bottom: 0.85rem;">${product.badge}</span>` : ''}
         
-        <div style="margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--gold-border);">
-          <div style="font-size: 2rem; font-weight: 700; color: #fff;">${formatCurrency(product.price)}</div>
-          ${!isPromo ? `
-          <div style="font-size: 0.9rem; color: var(--gold-champagne); margin-top: 0.45rem; line-height: 1.6;">
-            💳 3 pagos fijos de ${formatCurrency(cuotas)} sin interés con todas las tarjetas<br>
-            ⚡ ${formatCurrency(transfer)} abonando por Transferencia Bancaria (10% de bonificación)
+        <div style="margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gold-border);">
+          <div style="font-size: 2rem; font-weight: 700; color: #fff; display: flex; align-items: baseline; gap: 0.85rem; flex-wrap: wrap;">
+            <span style="color: var(--gold-light);">${formatCurrency(product.price)}</span>
+            ${product.originalPrice ? `<span style="font-size: 1.2rem; color: #888; text-decoration: line-through; font-weight: 400;">${formatCurrency(product.originalPrice)}</span>` : ''}
           </div>
-          ` : ''}
         </div>
 
-        <h4 style="font-family: var(--font-brand); font-size: 0.85rem; color: var(--gold-primary); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.5rem;">Notas de Cata & Guarda:</h4>
-        <p style="font-size: 0.98rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem;">
-          ${product.description || 'Etiqueta de jerarquía seleccionada rigurosamente por el equipo de sommeliers de Vinoteca La Recta. Mantenida bajo condiciones controladas de cava para salvaguardar su bouquet, taninos y potencial de evolución.'}
+        <!-- Metodología de Venta & Retiro -->
+        <div class="modal-sale-conditions">
+          <div class="modal-conditions-title">
+            <span>❖</span> Metodología de Venta &amp; Retiro
+          </div>
+          <ul class="modal-conditions-list">
+            <li>
+              <span class="cond-icon">💵</span>
+              <div><strong>Compra válida solo con pago en efectivo o transferencia</strong></div>
+            </li>
+            <li>
+              <span class="cond-icon">🏬</span>
+              <div><strong>Retiro en el local</strong> (Av. Recta Martinolli 8255, Argüello • Córdoba)</div>
+            </li>
+            <li>
+              <span class="cond-icon">💬</span>
+              <div><strong>Consulta previa por chat con el local</strong></div>
+            </li>
+          </ul>
+          <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="modal-whatsapp-consult-btn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.072.043.419-.101.824z"/>
+            </svg>
+            Consultar Disponibilidad por WhatsApp
+          </a>
+        </div>
+
+        <h4 style="font-family: var(--font-brand); font-size: 0.82rem; color: var(--gold-primary); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem;">Descripción Enológica:</h4>
+        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.5rem;">
+          ${product.description || 'Etiqueta de jerarquía seleccionada rigurosamente por el equipo de Vinoteca La Recta. Conservada en cava para salvaguardar su bouquet y notas originales.'}
         </p>
 
-        <div style="margin-bottom: 2rem; display: flex; align-items: center; gap: 1.5rem;">
+        <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.25rem;">
           <div class="qty-stepper" style="padding: 0.35rem;">
-            <button id="modalQtyDec" class="qty-btn" style="width: 36px; height: 36px; font-size: 1.1rem;">-</button>
-            <span id="modalQtyVal" class="qty-val" style="min-width: 44px; font-size: 1.05rem;">1</span>
-            <button id="modalQtyInc" class="qty-btn" style="width: 36px; height: 36px; font-size: 1.1rem;">+</button>
+            <button id="modalQtyDec" class="qty-btn" style="width: 34px; height: 34px; font-size: 1.1rem;">-</button>
+            <span id="modalQtyVal" class="qty-val" style="min-width: 40px; font-size: 1rem;">1</span>
+            <button id="modalQtyInc" class="qty-btn" style="width: 34px; height: 34px; font-size: 1.1rem;">+</button>
           </div>
-          <span style="font-size: 0.88rem; color: var(--text-muted);">
-            ${isOutOfStock ? 'Sin existencias en cava' : `${product.stock} botellas disponibles en bodega`}
+          <span style="font-size: 0.82rem; color: var(--text-muted);">
+            ${isOutOfStock ? 'Sin existencias en cava' : `${product.stock} unidades disponibles en local`}
           </span>
         </div>
 
-        <button id="modalAddCartBtn" class="btn-primary" style="width: 100%; justify-content: center; font-size: 0.95rem;" ${isOutOfStock ? 'disabled' : ''}>
+        <button id="modalAddCartBtn" class="btn-primary" style="width: 100%; justify-content: center; font-size: 0.92rem;" ${isOutOfStock ? 'disabled' : ''}>
           ${isOutOfStock ? 'Partida Agotada' : 'Agregar al Carrito'}
         </button>
       </div>
