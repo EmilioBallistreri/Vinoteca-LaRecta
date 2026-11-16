@@ -141,24 +141,28 @@ function renderPreventaCategories() {
 }
 
 const PREVENTA_TITLES = {
+  todos: {
+    tag: 'Colección Completa de Cava • Pre-venta',
+    title: 'Todos los Productos de Colección (12)'
+  },
   espumantes: {
     tag: 'Burbujas Finas, Cuvées & Sidras',
-    title: 'Espumantes y Sidras de Colección'
+    title: 'Espumantes y Sidras de Colección (4)'
   },
   vinos: {
     tag: 'Añadas Históricas & Terroirs de Autor',
-    title: 'Vinos de Autor & Colección'
+    title: 'Vinos de Autor & Colección (4)'
   },
   aperitivos: {
     tag: 'Botánicos Nobles & Coctelería Fina',
-    title: 'Aperitivos, Gins & Vermuts Finos'
+    title: 'Aperitivos, Gins & Vermuts Finos (4)'
   }
 };
 
-let activePreventaCategory = 'vinos';
+let activePreventaCategory = 'todos';
 
 function selectPreventaCategory(catId, shouldScroll = false) {
-  if (!catId) catId = 'vinos';
+  if (!catId) catId = 'todos';
   activePreventaCategory = catId;
 
   // Actualizar tarjetas superiores
@@ -202,7 +206,7 @@ function renderPreventaProductsGrid(catId) {
   const grid = document.getElementById('preventaProductsGrid');
   if (!grid) return;
 
-  const prods = state.products.filter(p => p.category === catId);
+  const prods = (!catId || catId === 'todos') ? state.products : state.products.filter(p => p.category === catId);
 
   if (prods.length === 0) {
     grid.innerHTML = `
@@ -1226,7 +1230,7 @@ function init() {
     state.filteredProducts = products;
     renderPreventaCategories();
     const urlCat = new URLSearchParams(window.location.search).get('categoria');
-    selectPreventaCategory(urlCat || 'vinos', Boolean(urlCat));
+    selectPreventaCategory(urlCat || 'todos', Boolean(urlCat));
     renderPromosGrid();
     renderProducts();
   } catch (err) {
