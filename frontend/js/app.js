@@ -437,20 +437,11 @@ function updateCartDrawerUI(detail) {
   const shippingFill = document.getElementById('shippingProgressFill');
   const shippingText = document.getElementById('shippingNoticeText');
 
-  // Shipping progress calculation
-  const diff = cart.getFreeShippingDifference();
-  const subtotal = cart.getSubtotal();
-  const percent = Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100));
-
-  if (shippingFill) shippingFill.style.width = `${percent}%`;
+  // Aviso de retiro en local
+  if (shippingFill) shippingFill.style.display = 'none';
   if (shippingText) {
-    if (cart.isFreeShipping()) {
-      shippingText.innerHTML = `🚚 <strong>Despacho bonificado sin cargo a su domicilio en Córdoba</strong>`;
-      shippingText.style.color = 'var(--status-available)';
-    } else {
-      shippingText.innerHTML = `🚚 Falta sumar <strong>${formatCurrency(diff)}</strong> para acceder al Envío Sin Cargo`;
-      shippingText.style.color = 'var(--gold-champagne)';
-    }
+    shippingText.innerHTML = `🏬 Retiro exclusivo en el local: <strong>Av. Recta Martinolli 8255</strong>`;
+    shippingText.style.color = 'var(--gold-champagne)';
   }
 
   if (detail.items.length === 0) {
@@ -910,11 +901,11 @@ function showOrderConfirmationModal(order) {
     `*Número de Pedido:* #${order.id}\n` +
     `*Cliente:* ${order.customer.name}\n` +
     `*Teléfono:* ${order.customer.phone}\n` +
-    `*Dirección de Entrega:* ${order.customer.address}\n` +
+    `*Modalidad:* Retiro en el local (Av. Recta Martinolli 8255)\n` +
     `*Forma de Pago:* ${order.paymentMethod}\n\n` +
     `*Detalle de Botellas:*\n${itemsList}\n\n` +
     `*TOTAL A ABONAR:* ${formatCurrency(order.total)}\n\n` +
-    `_Estimados Vinoteca La Recta, confirmo el despacho de este pedido realizado desde su cava online._`
+    `_Estimados Vinoteca La Recta, confirmo mi pedido para retirar por el local._`
   );
 
   detailsEl.innerHTML = `
@@ -927,7 +918,7 @@ function showOrderConfirmationModal(order) {
       <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: #fff; margin-bottom: 0.5rem;">Pedido Registrado con Éxito</h2>
       <span style="font-family: var(--font-brand); font-size: 0.95rem; color: var(--gold-champagne); letter-spacing: 0.15em;">NÚMERO DE ORDEN: #${order.id}</span>
       <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.85rem; line-height: 1.7;">
-        Estimado/a <strong>${order.customer.name}</strong>, hemos asentado su pedido. A la brevedad nuestro personal se pondrá en contacto para coordinar la entrega y verificar los datos de embalaje.
+        Estimado/a <strong>${order.customer.name}</strong>, hemos asentado su pedido. A la brevedad nuestro personal preparará sus botellas para que pueda pasar a retirarlas por nuestro local en <strong>Av. Recta Martinolli 8255</strong>.
       </p>
     </div>
 
@@ -937,8 +928,8 @@ function showOrderConfirmationModal(order) {
         <strong style="color: #fff;">${order.paymentMethod}</strong>
       </div>
       <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem; color: var(--text-muted);">
-        <span>Domicilio de Entrega:</span>
-        <strong style="color: #fff;">${order.customer.address}</strong>
+        <span>Punto de Retiro:</span>
+        <strong style="color: #fff;">Av. Recta Martinolli 8255, Argüello</strong>
       </div>
       <div style="display: flex; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 1.25rem; color: #fff;">
         <strong>Importe Total:</strong>

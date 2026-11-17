@@ -57,13 +57,13 @@ export const cart = {
     if (user && user.name) {
       message += `*Cliente:* ${user.name}\n`;
       if (user.phone) message += `*Teléfono:* ${user.phone}\n`;
-      if (user.address) message += `*Dirección:* ${user.address}\n`;
       message += `\n`;
     }
+    message += `*Modalidad:* Retiro en el local (Av. Recta Martinolli 8255)\n\n`;
     message += `*Detalle del Pedido:*\n${itemsList}\n\n`;
     message += `*Total:* ${formatCurrency(subtotal)}\n`;
     message += `*Abonando por Transferencia (10% OFF):* ${formatCurrency(transferTotal)}\n\n`;
-    message += `_Hola! Quiero realizar este pedido desde la tienda online._`;
+    message += `_Hola! Quiero realizar este pedido desde la tienda online para retirar en el local._`;
 
     return `https://wa.me/5493512460017?text=${encodeURIComponent(message)}`;
   },

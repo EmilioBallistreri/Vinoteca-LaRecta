@@ -228,7 +228,7 @@
             <div class="full-span">
               <select id="bizPayment" class="wholesale-select">
                 <option value="Transferencia Bancaria Mayorista">Transferencia Bancaria Mayorista</option>
-                <option value="Efectivo Contra Entrega">Efectivo Contra Entrega en Local</option>
+                <option value="Efectivo al Retirar en Local">Efectivo al Retirar en Local</option>
                 <option value="Echeq / Cuenta Corriente Comercial">Echeq / Cuenta Corriente Comercial</option>
               </select>
             </div>
@@ -269,10 +269,10 @@
           </svg>
         </button>
       </div>
-      <div class="cart-shipping-notice">
-        <div id="shippingNoticeText" class="shipping-text">🚚 Envíos a domicilio en Córdoba</div>
-        <div class="shipping-progress-bar">
-          <div id="shippingProgressFill" class="shipping-progress-fill" style="width: 0%;"></div>
+      <!-- Modalidad de Retiro en Local -->
+      <div class="cart-shipping-notice" style="background: rgba(200, 169, 106, 0.08); border-left: 3px solid var(--gold-champagne); padding: 0.85rem 1rem;">
+        <div id="shippingNoticeText" class="shipping-text" style="color: var(--gold-champagne); font-weight: 600; font-size: 0.88rem;">
+          🏬 Retiro en el local: <strong>Av. Recta Martinolli 8255</strong>
         </div>
       </div>
       <div id="cartDrawerItems" class="cart-items-body"></div>
@@ -356,8 +356,8 @@
               <input type="tel" id="regPhone" class="form-input" required placeholder="351 000 0000" />
             </div>
             <div class="form-group">
-              <label class="form-label">Domicilio en Córdoba</label>
-              <input type="text" id="regAddress" class="form-input" placeholder="Calle y Número, Barrio" />
+              <label class="form-label">Barrio o Localidad</label>
+              <input type="text" id="regAddress" class="form-input" placeholder="Barrio o Localidad en Córdoba" />
             </div>
           </div>
           <div class="form-group">

@@ -428,16 +428,10 @@ function updateCartDrawerUI(cartData) {
     wspBtn.href = cart.getWhatsAppOrderUrl(auth.getUser());
   }
 
-  if (progressFill && progressText) {
-    const remaining = FREE_SHIPPING_THRESHOLD - cartData.total;
-    if (remaining <= 0) {
-      progressFill.style.width = '100%';
-      progressText.innerHTML = '🎉 ¡Felicitaciones! Su envío es <strong>100% BONIFICADO</strong> en Córdoba.';
-    } else {
-      const pct = Math.min(100, Math.round((cartData.total / FREE_SHIPPING_THRESHOLD) * 100));
-      progressFill.style.width = `${pct}%`;
-      progressText.innerHTML = `Faltan <strong>${formatCurrency(remaining)}</strong> para Despacho Gratuito en Córdoba.`;
-    }
+  if (progressFill) progressFill.style.display = 'none';
+  if (progressText) {
+    progressText.innerHTML = `🏬 Retiro exclusivo en el local: <strong>Av. Recta Martinolli 8255</strong>`;
+    progressText.style.color = 'var(--gold-champagne)';
   }
 
   if (!itemsContainer) return;
@@ -754,7 +748,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           `Cliente: ${order.customer.name}\n` +
           `Total: ${formatCurrency(order.total)}\n` +
           `Pago: ${order.paymentMethod}\n` +
-          `Entrega: ${order.customer.address}`
+          `Modalidad: Retiro en el local (Av. Recta Martinolli 8255)`
         );
         wspBtn.href = `https://wa.me/5493512460017?text=${textMsg}`;
       }
