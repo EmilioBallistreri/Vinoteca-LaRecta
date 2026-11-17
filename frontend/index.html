@@ -16,6 +16,38 @@
 </head>
 <body>
 
+  <!-- ================= PANTALLA DE BIENVENIDA / SPLASH SCREEN MÓVIL ================= -->
+  <div id="mobileSplashScreen" class="mobile-splash-screen" aria-hidden="true">
+    <div class="splash-inner">
+      <div class="splash-logo-wrap">
+        <img src="/public/logo-vinoteca.jpg" alt="Vinoteca La Recta" class="splash-logo-img" />
+        <div class="splash-logo-ring"></div>
+      </div>
+      <h1 class="splash-brand-title">VINOTECA LA RECTA</h1>
+      <div class="splash-divider">❖</div>
+      <span class="splash-brand-subtitle">Cava Privada &amp; Selección</span>
+    </div>
+  </div>
+  <script>
+    (function() {
+      if (window.innerWidth <= 768) {
+        var splash = document.getElementById('mobileSplashScreen');
+        if (splash) {
+          var dismiss = function() {
+            if (splash.classList.contains('fade-out')) return;
+            splash.classList.add('fade-out');
+            setTimeout(function() { splash.style.display = 'none'; }, 550);
+          };
+          var t = setTimeout(dismiss, 1400);
+          splash.addEventListener('click', function() { clearTimeout(t); dismiss(); }, { once: true });
+        }
+      } else {
+        var s = document.getElementById('mobileSplashScreen');
+        if (s) s.style.display = 'none';
+      }
+    })();
+  </script>
+
   <!-- ================= ENCABEZADO Y NAVBAR ================= -->
   <header class="main-header">
     <div class="container navbar">
@@ -173,12 +205,14 @@
           <div class="hero-feat-item">
             <div class="hero-feat-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                <circle cx="12" cy="12" r="2"></circle>
+                <path d="M6 12h.01M18 12h.01"></path>
               </svg>
             </div>
             <div class="hero-feat-text">
-              <h4>DESCUENTOS POR TRANSFERENCIA</h4>
-              <p>10% OFF en todos los medios de pago bancarios</p>
+              <h4>ÚNICO MEDIO DE PAGO</h4>
+              <p>Para estas promociones y descuentos especiales: efectivo y transferencia</p>
             </div>
           </div>
         </div>
