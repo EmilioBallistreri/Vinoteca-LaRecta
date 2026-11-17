@@ -1309,9 +1309,7 @@ img {
 }
 
 .card-pricing {
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 0.95rem;
 }
 
 .card-price-row {
@@ -1319,7 +1317,6 @@ img {
   align-items: baseline;
   gap: 0.65rem;
   flex-wrap: wrap;
-  margin-bottom: 0.35rem;
 }
 
 .card-current-price {
@@ -3172,7 +3169,7 @@ img {
 
 .promo-img-wrap {
   position: relative;
-  height: 290px;
+  height: 220px;
   overflow: hidden;
   background: radial-gradient(circle at center, #231920 0%, #0d0a0c 100%);
   display: flex;
@@ -3195,7 +3192,7 @@ img {
 }
 
 .promo-body {
-  padding: 1.6rem 1.75rem 1.75rem;
+  padding: 1.25rem 1.35rem 1.35rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -3213,12 +3210,12 @@ img {
 
 .promo-title {
   font-family: var(--font-serif);
-  font-size: 1.45rem;
+  font-size: 1.22rem;
   font-weight: 700;
   color: #fff;
   line-height: 1.25;
-  margin-bottom: 0.65rem;
-  min-height: 3.4rem;
+  margin-bottom: 0.5rem;
+  min-height: unset;
 }
 
 .promo-desc {
@@ -3230,10 +3227,8 @@ img {
 }
 
 .promo-pricing {
-  padding: 1rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  margin-bottom: 1.25rem;
+  padding: 0.5rem 0 0.85rem;
+  margin-bottom: 0.95rem;
 }
 
 .promo-price-main {
@@ -5058,9 +5053,9 @@ body[data-festivity="dia_del_amigo"] .main-header {
 
 /* Grilla para exactamente dos cards de promociones exclusivas */
 .promos-grid.promos-grid-two {
-  grid-template-columns: repeat(2, minmax(320px, 480px));
+  grid-template-columns: repeat(2, minmax(280px, 340px));
   justify-content: center;
-  max-width: 1040px;
+  max-width: 740px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -5198,9 +5193,10 @@ body[data-festivity="dia_del_amigo"] .main-header {
     margin-left: auto;
     margin-right: auto;
   }
-  .promos-grid.promos-grid-two {
+    .promos-grid.promos-grid-two {
     grid-template-columns: 1fr;
-    max-width: 500px;
+    max-width: 360px;
+    gap: 1.5rem;
   }
 }
 

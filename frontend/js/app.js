@@ -240,20 +240,6 @@ function renderPreventaProductsGrid(catId) {
               <span class="card-current-price">${formatCurrency(product.price)}</span>
               ${product.originalPrice ? `<span class="card-original-price">${formatCurrency(product.originalPrice)}</span>` : ''}
             </div>
-            <div class="card-sale-note">
-              <div class="note-main">💵 Efectivo o Transferencia</div>
-              <div class="note-sub">🏬 Retiro en local • 💬 Consulta previa por chat</div>
-            </div>
-          </div>
-
-          <div class="card-stock-status">
-            ${isOutOfStock ? `
-              <span class="stock-out"><span class="stock-dot"></span> Agotado en Cava</span>
-            ` : isLowStock ? `
-              <span class="stock-low"><span class="stock-dot"></span> Partida Limitada: Últimas ${product.stock} botellas</span>
-            ` : `
-              <span class="stock-in"><span class="stock-dot"></span> Disponible en Cava</span>
-            `}
           </div>
 
           <button class="card-add-btn" data-action="add-cart" data-id="${product.id}" ${isOutOfStock ? 'disabled' : ''}>
@@ -348,20 +334,6 @@ function renderProducts() {
               <span class="card-current-price">${formatCurrency(product.price)}</span>
               ${product.originalPrice ? `<span class="card-original-price">${formatCurrency(product.originalPrice)}</span>` : ''}
             </div>
-            <div class="card-sale-note">
-              <div class="note-main">💵 Efectivo o Transferencia</div>
-              <div class="note-sub">🏬 Retiro en local • 💬 Consulta previa por chat</div>
-            </div>
-          </div>
-
-          <div class="card-stock-status">
-            ${isOutOfStock ? `
-              <span class="stock-out"><span class="stock-dot"></span> Agotado en Cava</span>
-            ` : isLowStock ? `
-              <span class="stock-low"><span class="stock-dot"></span> Partida Limitada: Últimas ${product.stock} botellas</span>
-            ` : `
-              <span class="stock-in"><span class="stock-dot"></span> Disponible en Cava</span>
-            `}
           </div>
 
           <button class="card-add-btn" data-action="add-cart" data-id="${product.id}" ${isOutOfStock ? 'disabled' : ''}>
@@ -1061,7 +1033,6 @@ function renderPromosGrid() {
         <div class="promo-body">
           <span class="promo-category">${promo.bodega ? promo.bodega + ' • ' : ''}${promo.subcategory || promo.category.toUpperCase()}</span>
           <h3 class="promo-title">${promo.name}</h3>
-          <p class="promo-desc">${promo.description ? promo.description.slice(0, 115) + '...' : 'Partida exclusiva con precio bonificado de cava.'}</p>
           
           <div class="promo-pricing">
             <div class="promo-price-main">
