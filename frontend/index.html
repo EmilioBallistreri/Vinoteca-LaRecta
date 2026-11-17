@@ -16,8 +16,8 @@
 </head>
 <body>
 
-  <!-- ================= PANTALLA DE BIENVENIDA / SPLASH SCREEN MÓVIL ================= -->
-  <div id="mobileSplashScreen" class="mobile-splash-screen" aria-hidden="true">
+  <!-- ================= PANTALLA DE BIENVENIDA FIJA (PC & MÓVIL) ================= -->
+  <div id="welcomeSplashScreen" class="welcome-splash-screen" role="dialog" aria-modal="true" aria-label="Bienvenida a Vinoteca La Recta">
     <div class="splash-inner">
       <div class="splash-logo-wrap">
         <img src="/public/logo-vinoteca.jpg" alt="Vinoteca La Recta" class="splash-logo-img" />
@@ -27,24 +27,71 @@
       <div class="splash-divider">❖</div>
       <span class="splash-brand-subtitle">Cava Privada &amp; Selección</span>
     </div>
+
+    <!-- Indicador inferior para deslizar o hacer clic -->
+    <div class="splash-scroll-prompt">
+      <span class="splash-scroll-text">Desliza para continuar</span>
+      <div class="splash-scroll-arrow">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+    </div>
   </div>
   <script>
     (function() {
-      if (window.innerWidth <= 768) {
-        var splash = document.getElementById('mobileSplashScreen');
-        if (splash) {
-          var dismiss = function() {
-            if (splash.classList.contains('fade-out')) return;
-            splash.classList.add('fade-out');
-            setTimeout(function() { splash.style.display = 'none'; }, 550);
-          };
-          var t = setTimeout(dismiss, 1400);
-          splash.addEventListener('click', function() { clearTimeout(t); dismiss(); }, { once: true });
-        }
-      } else {
-        var s = document.getElementById('mobileSplashScreen');
-        if (s) s.style.display = 'none';
+      var splash = document.getElementById('welcomeSplashScreen');
+      if (!splash) return;
+
+      // Bloquear scroll de la página mientras la pantalla de bienvenida esté fija
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+
+      var isDismissed = false;
+      function dismiss() {
+        if (isDismissed) return;
+        isDismissed = true;
+        splash.classList.add('slide-up');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        setTimeout(function() {
+          splash.style.display = 'none';
+        }, 850);
       }
+
+      // 1. Rueda del ratón o scroll trackpad (PC)
+      window.addEventListener('wheel', function(e) {
+        if (!isDismissed && (e.deltaY > 3 || e.deltaY < -3)) {
+          dismiss();
+        }
+      }, { passive: true });
+
+      // 2. Gesto táctil de deslizamiento (Celulares)
+      var touchStartY = 0;
+      window.addEventListener('touchstart', function(e) {
+        if (e.touches && e.touches[0]) {
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchmove', function(e) {
+        if (!isDismissed && e.touches && e.touches[0]) {
+          var diffY = touchStartY - e.touches[0].clientY;
+          if (Math.abs(diffY) > 15) {
+            dismiss();
+          }
+        }
+      }, { passive: true });
+
+      // 3. Clic o toque directo en cualquier parte de la pantalla
+      splash.addEventListener('click', dismiss);
+
+      // 4. Teclas de desplazamiento
+      window.addEventListener('keydown', function(e) {
+        if (!isDismissed && (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ' || e.key === 'Enter')) {
+          dismiss();
+        }
+      });
     })();
   </script>
 

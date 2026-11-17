@@ -2415,121 +2415,190 @@ img {
   pointer-events: auto;
 }
 
-/* ================= PANTALLA DE BIENVENIDA / SPLASH SCREEN MÓVIL ================= */
+/* ================= PANTALLA DE BIENVENIDA FIJA (PC Y CELULAR) ================= */
+.welcome-splash-screen,
 .mobile-splash-screen {
-  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: #000000;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease, visibility 0.8s ease;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-@media (max-width: 768px) {
-  .mobile-splash-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    background: #000000;
-    z-index: 999999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s ease;
-    overflow: hidden;
-  }
+.welcome-splash-screen.slide-up,
+.mobile-splash-screen.slide-up {
+  transform: translateY(-100%);
+  opacity: 0.95;
+  visibility: hidden;
+  pointer-events: none;
+}
 
-  .mobile-splash-screen.fade-out {
+.splash-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  animation: splashFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.splash-logo-wrap {
+  position: relative;
+  width: 135px;
+  height: 135px;
+  margin-bottom: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-logo-img {
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2.5px solid var(--gold-primary);
+  box-shadow: 0 0 35px rgba(197, 160, 89, 0.45), 0 14px 40px rgba(0, 0, 0, 0.95);
+  position: relative;
+  z-index: 2;
+}
+
+.splash-logo-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(197, 160, 89, 0.45);
+  animation: splashRingRotate 14s linear infinite;
+}
+
+.splash-brand-title {
+  font-family: var(--font-brand);
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.22em;
+  margin: 0 0 0.65rem 0;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #ffffff 20%, var(--gold-light) 65%, var(--gold-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.splash-divider {
+  color: var(--gold-primary);
+  font-size: 1rem;
+  margin-bottom: 0.65rem;
+  opacity: 0.85;
+}
+
+.splash-brand-subtitle {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--gold-champagne);
+  letter-spacing: 0.08em;
+}
+
+/* Indicador inferior de deslizamiento */
+.splash-scroll-prompt {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--gold-champagne);
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.splash-scroll-text {
+  font-family: var(--font-brand);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+.splash-scroll-arrow {
+  color: var(--gold-primary);
+  animation: splashBounce 1.8s ease-in-out infinite;
+}
+
+@keyframes splashFadeUp {
+  0% {
     opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+    transform: translateY(22px) scale(0.96);
   }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
+@keyframes splashRingRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes splashBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+/* Adaptación de pantalla de bienvenida para Celulares */
+@media (max-width: 768px) {
   .splash-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 2rem 1.5rem;
-    animation: splashFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    padding: 1.5rem 1rem;
   }
-
   .splash-logo-wrap {
-    position: relative;
-    width: 110px;
-    height: 110px;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 105px;
+    height: 105px;
+    margin-bottom: 1.25rem;
   }
-
   .splash-logo-img {
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--gold-primary);
-    box-shadow: 0 0 30px rgba(197, 160, 89, 0.45), 0 10px 30px rgba(0, 0, 0, 0.95);
-    position: relative;
-    z-index: 2;
+    width: 90px;
+    height: 90px;
+    border-width: 2px;
   }
-
-  .splash-logo-ring {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 1.5px dashed rgba(197, 160, 89, 0.4);
-    animation: splashRingRotate 12s linear infinite;
-  }
-
   .splash-brand-title {
-    font-family: var(--font-brand);
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 0.18em;
-    margin: 0 0 0.5rem 0;
-    text-transform: uppercase;
-    background: linear-gradient(135deg, #ffffff 20%, var(--gold-light) 60%, var(--gold-primary) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 1.35rem;
+    letter-spacing: 0.16em;
   }
-
-  .splash-divider {
-    color: var(--gold-primary);
-    font-size: 0.85rem;
-    margin-bottom: 0.5rem;
-    opacity: 0.85;
-  }
-
   .splash-brand-subtitle {
-    font-family: var(--font-serif);
-    font-size: 0.98rem;
-    font-style: italic;
-    color: var(--gold-champagne);
-    letter-spacing: 0.08em;
+    font-size: 0.92rem;
   }
-
-  @keyframes splashFadeUp {
-    0% {
-      opacity: 0;
-      transform: translateY(20px) scale(0.95);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
+  .splash-scroll-prompt {
+    bottom: 2.25rem;
   }
-
-  @keyframes splashRingRotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  .splash-scroll-text {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
   }
 }
 
@@ -2742,38 +2811,137 @@ img {
 
   /* Contenedores con padding cómodo para celular */
   .container {
-    padding: 0 1.15rem;
+    padding: 0 0.85rem;
   }
 
-  /* Header y Navbar */
+  /* Header y Navbar para Celulares - Sin cortes de carrito ni menú */
   .top-announcement-bar {
     display: none;
   }
+
   .main-header {
-    padding: 0.65rem 0;
+    padding-top: max(0.6rem, env(safe-area-inset-top));
+    padding-bottom: 0.6rem;
+    overflow: visible;
   }
+
   .navbar {
-    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.35rem;
+    flex-wrap: nowrap;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+  }
+
   .brand-logo-img {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    flex-shrink: 0;
   }
+
+  .brand-text-block {
+    min-width: 0;
+    overflow: hidden;
+  }
+
   .brand-title {
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.1;
   }
+
   .desktop-nav, .nav-menu {
     display: none !important;
   }
+
   .nav-instagram-link {
     display: none !important;
   }
-  .mobile-menu-toggle-btn {
-    display: flex;
-  }
+
   .nav-actions {
-    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .nav-btn {
+    height: 38px;
+    min-width: 38px;
+    padding: 0;
+    border-radius: 6px;
+  }
+
+  .nav-icon-btn,
+  .nav-cart-btn {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .mobile-menu-toggle-btn {
+    display: flex !important;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .cart-badge-count {
+    top: -2px;
+    right: -2px;
+    min-width: 16px;
+    height: 16px;
+    font-size: 0.62rem;
+  }
+
+  /* Registrarse botón compacto en móvil */
+  .register-nav-btn {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    padding: 0;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .register-nav-btn .btn-text {
+    display: none !important;
+  }
+
+  .user-btn {
+    height: 38px;
+    padding: 0 0.35rem;
+    flex-shrink: 0;
+  }
+
+  .user-name-label,
+  .user-role-pill,
+  .user-chevron-icon {
+    display: none !important;
   }
 
   /* Hero Section */
