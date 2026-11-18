@@ -10,7 +10,7 @@ const state = {
   activeCategory: 'todos',
   searchQuery: '',
   selectedProduct: null,
-  selectedPaymentMethod: 'Transferencia Bancaria (10% OFF)'
+  selectedPaymentMethod: 'Transferencia Bancaria (Alias)'
 };
 
 // Utilities
@@ -681,24 +681,46 @@ function closeProductModal() {
 // ================= CHECKOUT MODAL =================
 
 function openCheckoutModal() {
+  const user = auth.getUser();
+  if (!user) {
+    closeCartDrawer();
+    sessionStorage.setItem('vlr_pending_checkout', 'true');
+    showToast('Para continuar con tu compra, por favor regístrate o inicia sesión.');
+    auth.openModal('register');
+    return;
+  }
+
   closeCartDrawer();
   const modal = document.getElementById('checkoutModal');
   if (!modal) return;
 
-  const user = auth.getUser();
-  if (user) {
-    const nameIn = document.getElementById('checkoutName');
-    const emailIn = document.getElementById('checkoutEmail');
-    const phoneIn = document.getElementById('checkoutPhone');
-    const addressIn = document.getElementById('checkoutAddress');
-    if (nameIn) nameIn.value = user.name || '';
-    if (emailIn) emailIn.value = user.email || '';
-    if (phoneIn && user.phone) phoneIn.value = user.phone;
-    if (addressIn && user.address) addressIn.value = user.address;
-  }
+  const nameIn = document.getElementById('checkoutName');
+  const emailIn = document.getElementById('checkoutEmail');
+  const phoneIn = document.getElementById('checkoutPhone');
+  const addressIn = document.getElementById('checkoutAddress');
+  if (nameIn) nameIn.value = user.name || '';
+  if (emailIn) emailIn.value = user.email || '';
+  if (phoneIn && user.phone) phoneIn.value = user.phone;
+  if (addressIn && user.address) addressIn.value = user.address;
 
+  updatePaymentMethodUI();
   updateCheckoutSummary();
   modal.classList.add('active');
+}
+
+function updatePaymentMethodUI() {
+  const isTransfer = (state.selectedPaymentMethod || '').toLowerCase().includes('transferencia');
+  const transferBox = document.getElementById('transferDetailsBox');
+  const submitBtn = document.getElementById('checkoutSubmitBtn') || document.querySelector('#checkoutForm button[type="submit"]');
+
+  if (transferBox) {
+    transferBox.style.display = isTransfer ? 'block' : 'none';
+  }
+  if (submitBtn) {
+    submitBtn.textContent = isTransfer
+      ? 'Ya he realizado la transferencia'
+      : 'Finalizar Pedido (Abonar en el Local)';
+  }
 }
 
 function closeCheckoutModal() {
@@ -707,13 +729,7 @@ function closeCheckoutModal() {
 
 function updateCheckoutSummary() {
   const subtotal = cart.getSubtotal();
-  let total = subtotal;
-  let discount = 0;
-
-  if (state.selectedPaymentMethod.includes('10% OFF')) {
-    discount = Math.round(subtotal * 0.10);
-    total = subtotal - discount;
-  }
+  const total = subtotal;
 
   const subEl = document.getElementById('checkoutSubtotal');
   const discEl = document.getElementById('checkoutDiscount');
@@ -722,7 +738,7 @@ function updateCheckoutSummary() {
 
   if (itemsCountEl) itemsCountEl.textContent = cart.getCount();
   if (subEl) subEl.textContent = formatCurrency(subtotal);
-  if (discEl) discEl.textContent = discount > 0 ? `-${formatCurrency(discount)}` : '$0';
+  if (discEl) discEl.textContent = '$0';
   if (totEl) totEl.textContent = formatCurrency(total);
 }
 
@@ -789,8 +805,37 @@ function setupEventListeners() {
       if (radio) {
         radio.checked = true;
         state.selectedPaymentMethod = radio.value;
+        updatePaymentMethodUI();
         updateCheckoutSummary();
       }
+    });
+  });
+
+  // Copiar datos bancarios al portapapeles
+  document.querySelectorAll('.btn-copy-data').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const val = btn.getAttribute('data-copy');
+      if (!val) return;
+      try {
+        await navigator.clipboard.writeText(val);
+      } catch {
+        const temp = document.createElement('input');
+        temp.value = val;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+      }
+      const prevHtml = btn.innerHTML;
+      btn.classList.add('copied');
+      btn.innerHTML = `✓ Copiado`;
+      showToast(`Copiado: ${val}`);
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = prevHtml;
+      }, 2000);
     });
   });
 
@@ -799,24 +844,39 @@ function setupEventListeners() {
   if (checkoutForm) {
     checkoutForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const submitBtn = checkoutForm.querySelector('button[type="submit"]');
+
+      const currentUser = auth.getUser();
+      if (!currentUser) {
+        closeCheckoutModal();
+        sessionStorage.setItem('vlr_pending_checkout', 'true');
+        showToast('Para finalizar tu compra debes registrarte o iniciar sesión.');
+        auth.openModal('register');
+        return;
+      }
+
+      if (cart.items.length === 0) {
+        showToast('El carrito está vacío.');
+        return;
+      }
+
+      const submitBtn = document.getElementById('checkoutSubmitBtn') || checkoutForm.querySelector('button[type="submit"]');
+      const prevBtnText = submitBtn ? submitBtn.textContent : '';
       if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Procesando Registro de Pedido...';
+        submitBtn.textContent = 'Registrando Pedido...';
       }
 
       try {
         const subtotal = cart.getSubtotal();
-        const isTransfer = state.selectedPaymentMethod.includes('10% OFF');
-        const discount = isTransfer ? Math.round(subtotal * 0.10) : 0;
-        const total = subtotal - discount;
+        const total = subtotal;
 
         const orderData = {
           customer: {
-            name: document.getElementById('checkoutName').value,
-            email: document.getElementById('checkoutEmail').value,
-            phone: document.getElementById('checkoutPhone').value,
-            address: document.getElementById('checkoutAddress').value
+            userId: currentUser.id,
+            name: document.getElementById('checkoutName').value.trim() || currentUser.name,
+            email: document.getElementById('checkoutEmail').value.trim() || currentUser.email,
+            phone: document.getElementById('checkoutPhone').value.trim() || currentUser.phone || '',
+            address: document.getElementById('checkoutAddress').value.trim()
           },
           items: cart.items.map(i => ({
             id: i.id,
@@ -826,7 +886,7 @@ function setupEventListeners() {
           })),
           paymentMethod: state.selectedPaymentMethod,
           subtotal,
-          discount,
+          discount: 0,
           shippingCost: 0,
           total,
           notes: document.getElementById('checkoutNotes')?.value || ''
@@ -843,10 +903,21 @@ function setupEventListeners() {
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Confirmar y Formalizar Pedido';
+          submitBtn.textContent = prevBtnText;
         }
       }
     });
+  }
+
+  // Listener para reanudar compra luego del registro/login
+  window.addEventListener('vlr:auth-changed', (e) => {
+    if (e.detail?.user && sessionStorage.getItem('vlr_pending_checkout') === 'true') {
+      sessionStorage.removeItem('vlr_pending_checkout');
+      setTimeout(() => {
+        openCheckoutModal();
+      }, 350);
+    }
+  });
   }
 
   // Auth Tabs
@@ -922,52 +993,93 @@ function showOrderConfirmationModal(order) {
   const wspBtn = document.getElementById('orderSuccessWspBtn');
   if (!modal || !detailsEl) return;
 
-  const itemsList = order.items.map(i => `• ${i.quantity}x ${i.name} (${formatCurrency(i.price)})`).join('\n');
-  const wspMessage = encodeURIComponent(
-    `🍷 *PEDIDO FORMALIZADO EN VINOTECA LA RECTA*\n` +
-    `*Número de Pedido:* #${order.id}\n` +
-    `*Cliente:* ${order.customer.name}\n` +
-    `*Teléfono:* ${order.customer.phone}\n` +
-    `*Modalidad:* Retiro en el local (Av. Recta Martinolli 8255)\n` +
-    `*Forma de Pago:* ${order.paymentMethod}\n\n` +
-    `*Detalle de Botellas:*\n${itemsList}\n\n` +
-    `*TOTAL A ABONAR:* ${formatCurrency(order.total)}\n\n` +
-    `_Estimados Vinoteca La Recta, confirmo mi pedido para retirar por el local._`
-  );
+  const isTransfer = (order.paymentMethod || '').toLowerCase().includes('transferencia');
+
+  // Items en formato lista: cantidad, nombre, precio unitario y subtotal
+  const itemsListWhatsApp = order.items.map(i =>
+    `• ${i.quantity}x ${i.name} — ${formatCurrency(i.price)} c/u (${formatCurrency(i.price * i.quantity)})`
+  ).join('\n');
+
+  let wspMessage = '';
+  if (isTransfer) {
+    wspMessage = encodeURIComponent(
+      `Hola Vinoteca La Recta! He realizado un pedido por la web.\n\n` +
+      `*Número de Pedido:* #${order.id}\n` +
+      `*Cliente:* ${order.customer.name}\n` +
+      `*Teléfono:* ${order.customer.phone}\n` +
+      `*Punto de Retiro:* Av. Recta Martinolli 8255, Argüello\n\n` +
+      `*Productos comprados:*\n${itemsListWhatsApp}\n\n` +
+      `*TOTAL:* ${formatCurrency(order.total)}\n` +
+      `*Medio de pago efectuado:* Transferencia bancaria (Banco Macro - Alias: vinotecamartinolli.)\n\n` +
+      `Adjunto el comprobante de la transferencia realizada.`
+    );
+  } else {
+    wspMessage = encodeURIComponent(
+      `Hola Vinoteca La Recta! He realizado una compra por la web.\n\n` +
+      `*Número de Pedido:* #${order.id}\n` +
+      `*Cliente:* ${order.customer.name}\n` +
+      `*Teléfono:* ${order.customer.phone}\n` +
+      `*Punto de Retiro:* Av. Recta Martinolli 8255, Argüello\n\n` +
+      `*Pedido realizado:*\n${itemsListWhatsApp}\n\n` +
+      `*TOTAL A ABONAR:* ${formatCurrency(order.total)}\n` +
+      `*Medio de pago efectuado:* Efectivo en el local al momento de retirar\n\n` +
+      `_Aviso al comercio para coordinar el retiro de mi compra. Muchas gracias!_`
+    );
+  }
+
+  if (wspBtn) {
+    wspBtn.href = `https://wa.me/5493512460017?text=${wspMessage}`;
+    wspBtn.innerHTML = isTransfer
+      ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Compartir Comprobante por WhatsApp`
+      : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Avisar a la Vinoteca por WhatsApp`;
+  }
 
   detailsEl.innerHTML = `
-    <div style="text-align: center; margin-bottom: 2rem;">
+    <div style="text-align: center; margin-bottom: 1.75rem;">
       <div style="width: 72px; height: 72px; border-radius: 50%; background: rgba(197, 160, 89, 0.12); border: 2px solid var(--gold-primary); display: inline-flex; align-items: center; justify-content: center; color: var(--gold-light); margin-bottom: 1.25rem;">
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
       </div>
-      <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: #fff; margin-bottom: 0.5rem;">Pedido Registrado con Éxito</h2>
+      <h2 style="font-family: var(--font-serif); font-size: 2.1rem; color: #fff; margin-bottom: 0.4rem;">
+        ${isTransfer ? '¡Transferencia Registrada!' : '¡Compra Finalizada con Éxito!'}
+      </h2>
       <span style="font-family: var(--font-brand); font-size: 0.95rem; color: var(--gold-champagne); letter-spacing: 0.15em;">NÚMERO DE ORDEN: #${order.id}</span>
-      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.85rem; line-height: 1.7;">
-        Estimado/a <strong>${order.customer.name}</strong>, hemos asentado su pedido. A la brevedad nuestro personal preparará sus botellas para que pueda pasar a retirarlas por nuestro local en <strong>Av. Recta Martinolli 8255</strong>.
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.85rem; line-height: 1.6;">
+        Estimado/a <strong>${order.customer.name}</strong>, hemos asentado tu pedido en el sistema.
+        ${isTransfer
+          ? '<br><span style="color: var(--gold-champagne); font-weight: 600;">Comparte el comprobante de la misma por WhatsApp</span> para validar la transferencia y alistar tu pedido para retiro.'
+          : '<br>Tus botellas quedarán listas para retirar y abonar en efectivo en nuestro local de <strong>Av. Recta Martinolli 8255</strong>.'}
       </p>
     </div>
 
-    <div style="background: var(--bg-surface); border: 1px solid var(--gold-border); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem; font-size: 0.9rem;">
+    ${isTransfer ? `
+    <div style="background: rgba(197, 160, 89, 0.08); border: 1px dashed var(--gold-primary); border-radius: 6px; padding: 1.1rem; margin-bottom: 1.25rem; font-size: 0.88rem; text-align: center;">
+      <div style="color: var(--gold-champagne); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">Datos de Transferencia Bancaria</div>
+      <div style="color: #fff; font-size: 0.95rem;"><strong>Banco Macro SA</strong> · Titular: <strong>Maria Florencia Almada</strong></div>
+      <div style="color: var(--gold-light); font-family: monospace; font-size: 1rem; margin-top: 3px;">Alias: <strong>vinotecamartinolli.</strong></div>
+      <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">CBU: 2850322430094253760801</div>
+    </div>
+    ` : ''}
+
+    <div style="background: var(--bg-surface); border: 1px solid var(--gold-border); border-radius: 6px; padding: 1.35rem; margin-bottom: 1.5rem; font-size: 0.9rem;">
       <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem; color: var(--text-muted);">
-        <span>Modalidad de Pago:</span>
-        <strong style="color: #fff;">${order.paymentMethod}</strong>
+        <span>Medio de Pago:</span>
+        <strong style="color: ${isTransfer ? 'var(--gold-champagne)' : '#fff'};">${order.paymentMethod}</strong>
       </div>
       <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem; color: var(--text-muted);">
         <span>Punto de Retiro:</span>
         <strong style="color: #fff;">Av. Recta Martinolli 8255, Argüello</strong>
       </div>
-      <div style="display: flex; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 1.25rem; color: #fff;">
-        <strong>Importe Total:</strong>
+      <div style="display: flex; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 1.2rem; color: #fff;">
+        <strong>Total del Pedido:</strong>
         <strong style="color: var(--gold-champagne);">${formatCurrency(order.total)}</strong>
       </div>
     </div>
   `;
 
-  if (wspBtn) {
-    wspBtn.href = `https://wa.me/5493512460017?text=${wspMessage}`;
-  }
+  modal.classList.add('active');
+}
 
   modal.classList.add('active');
 }

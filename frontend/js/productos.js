@@ -28,7 +28,7 @@ const state = {
   searchQuery: '',
   sortBy: 'featured',
   selectedProduct: null,
-  selectedPaymentMethod: 'Transferencia Bancaria (10% OFF)'
+  selectedPaymentMethod: 'Transferencia Bancaria (Alias)'
 };
 
 const formatCurrency = (amount) => {
@@ -521,6 +521,16 @@ function updateCartDrawerUI(cartData) {
 }
 
 function openCheckoutModal() {
+  const user = auth.getUser();
+  if (!user) {
+    const drawer = document.getElementById('cartDrawerOverlay');
+    if (drawer) drawer.classList.remove('active');
+    sessionStorage.setItem('vlr_pending_checkout', 'true');
+    showToast('Para continuar con tu compra, por favor regístrate o inicia sesión.');
+    auth.openModal('register');
+    return;
+  }
+
   const modal = document.getElementById('checkoutModal');
   const drawer = document.getElementById('cartDrawerOverlay');
   if (drawer) drawer.classList.remove('active');
@@ -532,20 +542,33 @@ function openCheckoutModal() {
     return;
   }
 
-  const user = auth.getUser();
-  if (user) {
-    const nameInput = document.getElementById('checkoutName');
-    const emailInput = document.getElementById('checkoutEmail');
-    const phoneInput = document.getElementById('checkoutPhone');
-    const addrInput = document.getElementById('checkoutAddress');
-    if (nameInput) nameInput.value = user.name || '';
-    if (emailInput) emailInput.value = user.email || '';
-    if (phoneInput && user.phone) phoneInput.value = user.phone;
-    if (addrInput && user.address) addrInput.value = user.address;
-  }
+  const nameInput = document.getElementById('checkoutName');
+  const emailInput = document.getElementById('checkoutEmail');
+  const phoneInput = document.getElementById('checkoutPhone');
+  const addrInput = document.getElementById('checkoutAddress');
+  if (nameInput) nameInput.value = user.name || '';
+  if (emailInput) emailInput.value = user.email || '';
+  if (phoneInput && user.phone) phoneInput.value = user.phone;
+  if (addrInput && user.address) addrInput.value = user.address;
 
+  updatePaymentMethodUI();
   updateCheckoutSummary();
   modal.classList.add('active');
+}
+
+function updatePaymentMethodUI() {
+  const isTransfer = (state.selectedPaymentMethod || '').toLowerCase().includes('transferencia');
+  const transferBox = document.getElementById('transferDetailsBox');
+  const submitBtn = document.getElementById('checkoutSubmitBtn') || document.querySelector('#checkoutForm button[type="submit"]');
+
+  if (transferBox) {
+    transferBox.style.display = isTransfer ? 'block' : 'none';
+  }
+  if (submitBtn) {
+    submitBtn.textContent = isTransfer
+      ? 'Ya he realizado la transferencia'
+      : 'Finalizar Pedido (Abonar en el Local)';
+  }
 }
 
 function updateCheckoutSummary() {
@@ -555,14 +578,10 @@ function updateCheckoutSummary() {
   const totalEl = document.getElementById('checkoutTotal');
   const countEl = document.getElementById('checkoutItemsCount');
 
-  const isTransfer = state.selectedPaymentMethod.includes('Transferencia');
-  const discount = isTransfer ? cartData.transferDiscount : 0;
-  const finalTotal = isTransfer ? Math.round(cartData.subtotal * 0.90) : cartData.subtotal;
-
   if (countEl) countEl.textContent = cartData.totalQuantity;
   if (subtotalEl) subtotalEl.textContent = formatCurrency(cartData.subtotal);
-  if (discountEl) discountEl.textContent = isTransfer ? `-${formatCurrency(discount)}` : '$0';
-  if (totalEl) totalEl.textContent = formatCurrency(finalTotal);
+  if (discountEl) discountEl.textContent = '$0';
+  if (totalEl) totalEl.textContent = formatCurrency(cartData.subtotal);
 }
 
 // ================= INICIALIZACIÓN =================
@@ -717,12 +736,45 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Formas de pago en checkout
-  document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      state.selectedPaymentMethod = e.target.value;
-      document.querySelectorAll('.payment-radio-card').forEach(card => card.classList.remove('selected'));
-      e.target.closest('.payment-radio-card')?.classList.add('selected');
-      updateCheckoutSummary();
+  document.querySelectorAll('.payment-radio-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.payment-radio-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      const radio = card.querySelector('input[type="radio"]');
+      if (radio) {
+        radio.checked = true;
+        state.selectedPaymentMethod = radio.value;
+        updatePaymentMethodUI();
+        updateCheckoutSummary();
+      }
+    });
+  });
+
+  // Copiar datos bancarios al portapapeles
+  document.querySelectorAll('.btn-copy-data').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const val = btn.getAttribute('data-copy');
+      if (!val) return;
+      try {
+        await navigator.clipboard.writeText(val);
+      } catch {
+        const temp = document.createElement('input');
+        temp.value = val;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+      }
+      const prevHtml = btn.innerHTML;
+      btn.classList.add('copied');
+      btn.innerHTML = `✓ Copiado`;
+      showToast(`Copiado: ${val}`);
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = prevHtml;
+      }, 2000);
     });
   });
 
@@ -735,18 +787,36 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Finalizar Compra Form
   document.getElementById('checkoutForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const cartData = cart.getCartData();
-    if (cartData.items.length === 0) return;
 
-    const isTransfer = state.selectedPaymentMethod.includes('Transferencia');
-    const finalTotal = isTransfer ? Math.round(cartData.subtotal * 0.90) : cartData.subtotal;
+    const currentUser = auth.getUser();
+    if (!currentUser) {
+      document.getElementById('checkoutModal')?.classList.remove('active');
+      sessionStorage.setItem('vlr_pending_checkout', 'true');
+      showToast('Para finalizar tu compra debes registrarte o iniciar sesión.');
+      auth.openModal('register');
+      return;
+    }
+
+    const cartData = cart.getCartData();
+    if (cartData.items.length === 0) {
+      showToast('El carrito está vacío.');
+      return;
+    }
+
+    const submitBtn = document.getElementById('checkoutSubmitBtn') || document.querySelector('#checkoutForm button[type="submit"]');
+    const prevBtnText = submitBtn ? submitBtn.textContent : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Registrando Pedido...';
+    }
 
     const orderData = {
       customer: {
-        name: document.getElementById('checkoutName').value,
-        email: document.getElementById('checkoutEmail').value,
-        phone: document.getElementById('checkoutPhone').value,
-        address: document.getElementById('checkoutAddress').value
+        userId: currentUser.id,
+        name: document.getElementById('checkoutName').value.trim() || currentUser.name,
+        email: document.getElementById('checkoutEmail').value.trim() || currentUser.email,
+        phone: document.getElementById('checkoutPhone').value.trim() || currentUser.phone || '',
+        address: document.getElementById('checkoutAddress').value.trim()
       },
       items: cartData.items.map(it => ({
         id: it.id,
@@ -756,10 +826,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       })),
       paymentMethod: state.selectedPaymentMethod,
       subtotal: cartData.subtotal,
-      discount: isTransfer ? cartData.transferDiscount : 0,
+      discount: 0,
       shippingCost: 0,
-      total: finalTotal,
-      notes: document.getElementById('checkoutNotes').value
+      total: cartData.subtotal,
+      notes: document.getElementById('checkoutNotes')?.value || ''
     };
 
     try {
@@ -772,35 +842,111 @@ document.addEventListener('DOMContentLoaded', async () => {
       const detailsEl = document.getElementById('orderSuccessDetails');
       const wspBtn = document.getElementById('orderSuccessWspBtn');
 
+      const isTransfer = (order.paymentMethod || '').toLowerCase().includes('transferencia');
+
+      // Formato de lista de productos con cantidad, nombre y precio
+      const itemsListWhatsApp = order.items.map(i =>
+        `• ${i.quantity}x ${i.name} — ${formatCurrency(i.price)} c/u (${formatCurrency(i.price * i.quantity)})`
+      ).join('\n');
+
+      let wspMessage = '';
+      if (isTransfer) {
+        wspMessage = encodeURIComponent(
+          `Hola Vinoteca La Recta! He realizado un pedido por la web.\n\n` +
+          `*Número de Pedido:* #${order.id}\n` +
+          `*Cliente:* ${order.customer.name}\n` +
+          `*Teléfono:* ${order.customer.phone}\n` +
+          `*Punto de Retiro:* Av. Recta Martinolli 8255, Argüello\n\n` +
+          `*Productos comprados:*\n${itemsListWhatsApp}\n\n` +
+          `*TOTAL:* ${formatCurrency(order.total)}\n` +
+          `*Medio de pago efectuado:* Transferencia bancaria (Banco Macro - Alias: vinotecamartinolli.)\n\n` +
+          `Adjunto el comprobante de la transferencia realizada.`
+        );
+      } else {
+        wspMessage = encodeURIComponent(
+          `Hola Vinoteca La Recta! He realizado una compra por la web.\n\n` +
+          `*Número de Pedido:* #${order.id}\n` +
+          `*Cliente:* ${order.customer.name}\n` +
+          `*Teléfono:* ${order.customer.phone}\n` +
+          `*Punto de Retiro:* Av. Recta Martinolli 8255, Argüello\n\n` +
+          `*Pedido realizado:*\n${itemsListWhatsApp}\n\n` +
+          `*TOTAL A ABONAR:* ${formatCurrency(order.total)}\n` +
+          `*Medio de pago efectuado:* Efectivo en el local al momento de retirar\n\n` +
+          `_Aviso al comercio para coordinar el retiro de mi compra. Muchas gracias!_`
+        );
+      }
+
       if (detailsEl) {
         detailsEl.innerHTML = `
-          <div style="text-align: center; margin-bottom: 1.5rem;">
-            <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(197, 160, 89, 0.15); border: 2px solid var(--gold-primary); display: inline-flex; align-items: center; justify-content: center; color: var(--gold-champagne); margin-bottom: 0.8rem;">
-              ✓
+          <div style="text-align: center; margin-bottom: 1.75rem;">
+            <div style="width: 72px; height: 72px; border-radius: 50%; background: rgba(197, 160, 89, 0.12); border: 2px solid var(--gold-primary); display: inline-flex; align-items: center; justify-content: center; color: var(--gold-light); margin-bottom: 1.25rem;">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
             </div>
-            <h3 style="font-family: var(--font-serif); font-size: 2rem; color: #fff;">Pedido Formalizado</h3>
-            <span style="color: var(--gold-champagne); font-weight: 700;">Código de Reserva: #${order.id}</span>
+            <h2 style="font-family: var(--font-serif); font-size: 2.1rem; color: #fff; margin-bottom: 0.4rem;">
+              ${isTransfer ? '¡Transferencia Registrada!' : '¡Compra Finalizada con Éxito!'}
+            </h2>
+            <span style="font-family: var(--font-brand); font-size: 0.95rem; color: var(--gold-champagne); letter-spacing: 0.15em;">NÚMERO DE ORDEN: #${order.id}</span>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.85rem; line-height: 1.6;">
+              Estimado/a <strong>${order.customer.name}</strong>, hemos asentado tu pedido en el sistema.
+              ${isTransfer
+                ? '<br><span style="color: var(--gold-champagne); font-weight: 600;">Comparte el comprobante de la misma por WhatsApp</span> para validar la transferencia y alistar tu pedido para retiro.'
+                : '<br>Tus botellas quedarán listas para retirar y abonar en efectivo en nuestro local de <strong>Av. Recta Martinolli 8255</strong>.'}
+            </p>
           </div>
-          <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; text-align: center;">
-            Estimado/a <strong>${order.customer.name}</strong>, su pedido por <strong>${formatCurrency(order.total)}</strong> ha sido registrado en nuestra cava.
-          </p>
+
+          ${isTransfer ? `
+          <div style="background: rgba(197, 160, 89, 0.08); border: 1px dashed var(--gold-primary); border-radius: 6px; padding: 1.1rem; margin-bottom: 1.25rem; font-size: 0.88rem; text-align: center;">
+            <div style="color: var(--gold-champagne); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">Datos de Transferencia Bancaria</div>
+            <div style="color: #fff; font-size: 0.95rem;"><strong>Banco Macro SA</strong> · Titular: <strong>Maria Florencia Almada</strong></div>
+            <div style="color: var(--gold-light); font-family: monospace; font-size: 1rem; margin-top: 3px;">Alias: <strong>vinotecamartinolli.</strong></div>
+            <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">CBU: 2850322430094253760801</div>
+          </div>
+          ` : ''}
+
+          <div style="background: var(--bg-surface); border: 1px solid var(--gold-border); border-radius: 6px; padding: 1.35rem; margin-bottom: 1.5rem; font-size: 0.9rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem; color: var(--text-muted);">
+              <span>Medio de Pago:</span>
+              <strong style="color: ${isTransfer ? 'var(--gold-champagne)' : '#fff'};">${order.paymentMethod}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem; color: var(--text-muted);">
+              <span>Punto de Retiro:</span>
+              <strong style="color: #fff;">Av. Recta Martinolli 8255, Argüello</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 1.2rem; color: #fff;">
+              <strong>Total del Pedido:</strong>
+              <strong style="color: var(--gold-champagne);">${formatCurrency(order.total)}</strong>
+            </div>
+          </div>
         `;
       }
 
       if (wspBtn) {
-        const textMsg = encodeURIComponent(
-          `Hola Vinoteca La Recta! Deseo confirmar mi pedido #${order.id}.\n` +
-          `Cliente: ${order.customer.name}\n` +
-          `Total: ${formatCurrency(order.total)}\n` +
-          `Pago: ${order.paymentMethod}\n` +
-          `Modalidad: Retiro en el local (Av. Recta Martinolli 8255)`
-        );
-        wspBtn.href = `https://wa.me/5493512460017?text=${textMsg}`;
+        wspBtn.href = `https://wa.me/5493512460017?text=${wspMessage}`;
+        wspBtn.innerHTML = isTransfer
+          ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Compartir Comprobante por WhatsApp`
+          : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Avisar a la Vinoteca por WhatsApp`;
       }
 
       successModal?.classList.add('active');
     } catch (err) {
       alert('Error formalizando pedido: ' + err.message);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = prevBtnText;
+      }
+    }
+  });
+
+  // Reanudar checkout tras login/registro
+  window.addEventListener('vlr:auth-changed', (e) => {
+    if (e.detail?.user && sessionStorage.getItem('vlr_pending_checkout') === 'true') {
+      sessionStorage.removeItem('vlr_pending_checkout');
+      setTimeout(() => {
+        openCheckoutModal();
+      }, 350);
     }
   });
 

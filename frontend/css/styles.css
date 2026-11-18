@@ -2432,6 +2432,128 @@ img {
   height: 18px;
 }
 
+/* Box de Datos Bancarios */
+.transfer-details-box {
+  background: rgba(197, 160, 89, 0.08);
+  border: 1px solid var(--gold-primary);
+  border-radius: 8px;
+  padding: 1.25rem 1.4rem;
+  margin: 1.25rem 0;
+  display: block;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+.transfer-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(200, 169, 106, 0.25);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.transfer-box-subtitle {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--gold-champagne);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.transfer-box-title {
+  margin: 0.15rem 0 0 0;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+.transfer-badge {
+  background: rgba(197, 160, 89, 0.2);
+  color: var(--gold-light);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.transfer-data-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.transfer-data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  padding: 0.35rem 0;
+  color: var(--text-muted);
+}
+
+.transfer-data-row.highlight-row {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px dashed rgba(200, 169, 106, 0.35);
+  border-radius: 6px;
+  padding: 0.6rem 0.85rem;
+  margin: 0.2rem 0;
+}
+
+.transfer-data-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--gold-champagne);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.transfer-data-val {
+  color: #fff;
+  font-family: monospace;
+  font-size: 0.95rem;
+  word-break: break-all;
+}
+
+.btn-copy-data {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(197, 160, 89, 0.2);
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-light);
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-copy-data:hover {
+  background: var(--gold-primary);
+  color: #000;
+}
+
+.btn-copy-data.copied {
+  background: #25d366;
+  border-color: #25d366;
+  color: #000;
+}
+
+.transfer-box-notice {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.82rem;
+  color: #e0d0b0;
+  line-height: 1.5;
+}
+
 /* Toast Notifications */
 .toast-container {
   position: fixed;

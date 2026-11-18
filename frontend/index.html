@@ -506,8 +506,8 @@
           <span>Total:</span>
           <strong id="cartDrawerTotal" style="color: var(--gold-champagne);">$0</strong>
         </div>
-        <div id="cartDrawerCuotas" class="cart-cuotas-notice">
-          o 3 pagos fijos sin interés
+        <div id="cartDrawerCuotas" class="cart-cuotas-notice" style="color: var(--text-muted); font-size: 0.78rem;">
+          Medios de pago: Efectivo al retirar o Transferencia con Alias
         </div>
 
         <div class="cart-checkout-actions">
@@ -634,31 +634,85 @@
         </div>
 
         <!-- Forma de Pago -->
-        <label class="form-label" style="margin-top: 1.25rem;">Modalidad de Pago Preferida</label>
+        <label class="form-label" style="margin-top: 1.25rem;">Seleccionar Medio de Pago *</label>
         <div class="checkout-payment-options">
-          <label class="payment-radio-card selected">
-            <input type="radio" name="paymentMethod" value="Transferencia Bancaria (10% OFF)" checked />
-            <div>
-              <strong style="color: var(--gold-champagne);">⚡ Transferencia Bancaria (10% de Bonificación Especial)</strong>
-              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Descuento directo deducido del total</div>
+          <label class="payment-radio-card selected" id="cardTransferOption">
+            <input type="radio" name="paymentMethod" value="Transferencia Bancaria (Alias)" checked />
+            <div style="flex: 1;">
+              <strong style="color: var(--gold-champagne); display: flex; align-items: center; gap: 0.5rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v4M12 14v4M16 14v4"/>
+                </svg>
+                Transferencia Bancaria (con Alias)
+              </strong>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3px;">Transfiera a nuestro Alias de Banco Macro y comparta el comprobante</div>
             </div>
           </label>
 
-          <label class="payment-radio-card">
-            <input type="radio" name="paymentMethod" value="3 Cuotas Sin Interés" />
-            <div>
-              <strong style="color: #fff;">💳 Tarjeta de Crédito (3 Pagos Fijos Sin Interés)</strong>
-              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Visa, Mastercard, American Express bancarizadas</div>
+          <label class="payment-radio-card" id="cardCashOption">
+            <input type="radio" name="paymentMethod" value="Efectivo en el local" />
+            <div style="flex: 1;">
+              <strong style="color: #fff; display: flex; align-items: center; gap: 0.5rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="6" width="20" height="12" rx="2"/>
+                  <circle cx="12" cy="12" r="2"/>
+                  <path d="M6 12h.01M18 12h.01"/>
+                </svg>
+                Efectivo en el Local
+              </strong>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3px;">Abona personalmente al momento de retirar su compra en Av. Recta Martinolli 8255</div>
             </div>
           </label>
+        </div>
 
-          <label class="payment-radio-card">
-            <input type="radio" name="paymentMethod" value="Efectivo al retirar en local" />
+        <!-- Box de Datos Bancarios (para Transferencia Bancaria) -->
+        <div id="transferDetailsBox" class="transfer-details-box">
+          <div class="transfer-box-header">
             <div>
-              <strong style="color: #fff;">💵 Efectivo al Retirar en Local</strong>
-              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Abona personalmente al momento de retirar su compra</div>
+              <span class="transfer-box-subtitle">DATOS OFICIALES PARA TRANSFERENCIA</span>
+              <h4 class="transfer-box-title">Banco Macro SA</h4>
             </div>
-          </label>
+            <span class="transfer-badge">Cta Corriente</span>
+          </div>
+
+          <div class="transfer-data-list">
+            <div class="transfer-data-row">
+              <span class="transfer-data-label">Titular de la Cuenta:</span>
+              <strong class="transfer-data-val">Maria Florencia Almada</strong>
+            </div>
+            <div class="transfer-data-row">
+              <span class="transfer-data-label">CUIT / CUIL:</span>
+              <strong class="transfer-data-val">27288526953</strong>
+            </div>
+            <div class="transfer-data-row highlight-row">
+              <div>
+                <span class="transfer-data-label">Alias:</span>
+                <strong class="transfer-data-val" id="textBankAlias">vinotecamartinolli.</strong>
+              </div>
+              <button type="button" class="btn-copy-data" data-copy="vinotecamartinolli." title="Copiar Alias">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copiar Alias
+              </button>
+            </div>
+            <div class="transfer-data-row highlight-row">
+              <div>
+                <span class="transfer-data-label">CBU:</span>
+                <strong class="transfer-data-val" id="textBankCBU">2850322430094253760801</strong>
+              </div>
+              <button type="button" class="btn-copy-data" data-copy="2850322430094253760801" title="Copiar CBU">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copiar CBU
+              </button>
+            </div>
+            <div class="transfer-data-row">
+              <span class="transfer-data-label">Tipo y N° de Cuenta:</span>
+              <strong class="transfer-data-val">CC ARS 332209425376080</strong>
+            </div>
+          </div>
+
+          <p class="transfer-box-notice">
+            💡 Realice la transferencia desde su banco o billetera virtual. Luego pulse <strong>"Ya he realizado la transferencia"</strong> para registrar el pedido y enviar su comprobante por WhatsApp.
+          </p>
         </div>
 
         <div class="form-group">
@@ -672,10 +726,6 @@
             <span>Subtotal (<span id="checkoutItemsCount">0</span> botellas):</span>
             <strong id="checkoutSubtotal" style="color: #fff;">$0</strong>
           </div>
-          <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--status-available); margin-bottom: 0.45rem;">
-            <span>Bonificación Transferencia (10%):</span>
-            <strong id="checkoutDiscount">-$0</strong>
-          </div>
           <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--gold-champagne); margin-bottom: 0.75rem;">
             <span>Modalidad de Entrega:</span>
             <strong>Retiro en Local (Sin Costo)</strong>
@@ -686,8 +736,8 @@
           </div>
         </div>
 
-        <button type="submit" class="auth-submit-btn" style="margin-top: 1.5rem;">
-          Confirmar y Formalizar Pedido
+        <button type="submit" id="checkoutSubmitBtn" class="auth-submit-btn" style="margin-top: 1.5rem;">
+          Ya he realizado la transferencia
         </button>
       </form>
     </div>
