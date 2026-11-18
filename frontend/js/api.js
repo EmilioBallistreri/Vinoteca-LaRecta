@@ -672,11 +672,19 @@ export const api = {
       const res = await fetch('/api/site-config');
       const serverCfg = await safeParseJson(res);
       if (res.ok && serverCfg && !serverCfg.__nonJsonError) {
+        // Purgar cualquier caché local obsoleta que contenga imágenes de Unsplash
         const localCfgRaw = localStorage.getItem(LOCAL_SITE_CONFIG_KEY);
         if (localCfgRaw) {
-          const localCfg = JSON.parse(localCfgRaw);
-          if (localCfg.updatedAt && (!serverCfg.updatedAt || new Date(localCfg.updatedAt) > new Date(serverCfg.updatedAt))) {
-            return localCfg;
+          try {
+            const localCfg = JSON.parse(localCfgRaw);
+            const hasUnsplash = Array.isArray(localCfg.heroSlides) && localCfg.heroSlides.some(s => s.image && s.image.includes('unsplash.com'));
+            if (hasUnsplash) {
+              localStorage.removeItem(LOCAL_SITE_CONFIG_KEY);
+            } else if (localCfg.updatedAt && serverCfg.updatedAt && new Date(localCfg.updatedAt) > new Date(serverCfg.updatedAt)) {
+              return localCfg;
+            }
+          } catch (_) {
+            localStorage.removeItem(LOCAL_SITE_CONFIG_KEY);
           }
         }
         return serverCfg;
@@ -684,7 +692,18 @@ export const api = {
     } catch (_) {}
 
     const localCfgRaw = localStorage.getItem(LOCAL_SITE_CONFIG_KEY);
-    return localCfgRaw ? JSON.parse(localCfgRaw) : null;
+    if (!localCfgRaw) return null;
+    try {
+      const parsed = JSON.parse(localCfgRaw);
+      if (Array.isArray(parsed.heroSlides) && parsed.heroSlides.some(s => s.image && s.image.includes('unsplash.com'))) {
+        localStorage.removeItem(LOCAL_SITE_CONFIG_KEY);
+        return null;
+      }
+      return parsed;
+    } catch (_) {
+      localStorage.removeItem(LOCAL_SITE_CONFIG_KEY);
+      return null;
+    }
   },
 
   async updateSiteConfig(configData) {

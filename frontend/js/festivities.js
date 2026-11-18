@@ -372,14 +372,24 @@ export function applySiteCustomization(siteConfig) {
   // 5. Update Hero Carousel Slides if on Home Page
   const heroCarousel = document.getElementById('heroCarousel');
   const heroDotsContainer = document.getElementById('heroDotsContainer');
-  if (heroCarousel && Array.isArray(siteConfig.heroSlides) && siteConfig.heroSlides.length > 0) {
-    const slidesHtml = siteConfig.heroSlides.map((slide, idx) => `
+  const defaultHeroSlides = [
+    { id: 'slide-1', image: '/public/hero/hero-1.jpg', label: 'Fachada & Marquesina' },
+    { id: 'slide-2', image: '/public/hero/hero-2.jpg', label: 'Cava & Barricas' },
+    { id: 'slide-3', image: '/public/hero/hero-3.jpg', label: 'Colección de Vinos' }
+  ];
+
+  const validSlides = (Array.isArray(siteConfig.heroSlides) && siteConfig.heroSlides.length > 0 && !siteConfig.heroSlides.some(s => s.image && s.image.includes('unsplash.com')))
+    ? siteConfig.heroSlides
+    : defaultHeroSlides;
+
+  if (heroCarousel) {
+    const slidesHtml = validSlides.map((slide, idx) => `
       <div class="hero-slide ${idx === 0 ? 'active' : ''}" style="background-image: url('${slide.image}');"></div>
     `).join('') + `<div class="hero-overlay"></div>`;
     heroCarousel.innerHTML = slidesHtml;
 
     if (heroDotsContainer) {
-      heroDotsContainer.innerHTML = siteConfig.heroSlides.map((slide, idx) => `
+      heroDotsContainer.innerHTML = validSlides.map((slide, idx) => `
         <span class="hero-dot ${idx === 0 ? 'active' : ''}" data-index="${idx}" title="${slide.label || `Imagen ${idx + 1}`}"></span>
       `).join('');
     }

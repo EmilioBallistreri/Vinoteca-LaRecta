@@ -743,7 +743,9 @@ module.exports = {
 
   // SITE CUSTOMIZATION & FESTIVITIES
   getDefaultSiteConfig() {
+    const now = '2026-11-18T13:00:00.000Z';
     return {
+      updatedAt: now,
       heroSlides: [
         {
           id: 'slide-1',
@@ -787,7 +789,7 @@ module.exports = {
     return {
       ...defaults,
       ...store.siteConfig,
-      heroSlides: Array.isArray(store.siteConfig.heroSlides) && store.siteConfig.heroSlides.length > 0
+      heroSlides: Array.isArray(store.siteConfig.heroSlides) && store.siteConfig.heroSlides.length > 0 && !store.siteConfig.heroSlides.some(s => s.image && s.image.includes('unsplash.com'))
         ? store.siteConfig.heroSlides
         : defaults.heroSlides,
       banner: {

@@ -727,8 +727,8 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 65% 45%, rgba(197, 160, 89, 0.14) 0%, transparent 60%),
-              linear-gradient(180deg, rgba(9, 9, 10, 0.72) 0%, rgba(9, 9, 10, 0.94) 100%);
+  background: radial-gradient(circle at 50% 40%, rgba(197, 160, 89, 0.08) 0%, transparent 60%),
+              linear-gradient(180deg, rgba(9, 9, 10, 0.42) 0%, rgba(9, 9, 10, 0.68) 100%);
   z-index: 2;
 }
 
@@ -787,6 +787,7 @@ img {
   color: var(--text-white);
   margin-bottom: 1.5rem;
   letter-spacing: -0.01em;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.85);
 }
 
 .hero-title .gold-text {
@@ -800,10 +801,11 @@ img {
 
 .hero-description {
   font-size: 1.15rem;
-  color: var(--text-muted);
+  color: #e2dcd2;
   line-height: 1.8;
   margin-bottom: 2.75rem;
   max-width: 650px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
 }
 
 .hero-actions {
@@ -4258,7 +4260,13 @@ img {
     opacity: 0.65 !important;
   }
   .hero-dots {
-    display: none !important;
+    display: flex !important;
+    position: absolute !important;
+    bottom: 1.25rem !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    z-index: 5 !important;
   }
 }
 
