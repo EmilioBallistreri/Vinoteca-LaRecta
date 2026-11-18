@@ -591,10 +591,30 @@ function initMobileMenu() {
     openMenu();
   });
 
-  closeBtn?.addEventListener('click', closeMenu);
+  closeBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeMenu();
+  });
 
   drawer.addEventListener('click', (e) => {
-    if (e.target === drawer || e.target.closest('.mobile-nav-link') || e.target.closest('.mobile-wsp-link') || e.target.closest('.mobile-ig-link')) {
+    const navLink = e.target.closest('.mobile-nav-link');
+    if (navLink) {
+      closeMenu();
+      const href = navLink.getAttribute('href');
+      if (href && (href.startsWith('#') || href.startsWith('/#'))) {
+        const hash = href.replace('/', '');
+        const targetEl = document.querySelector(hash);
+        if (targetEl) {
+          e.preventDefault();
+          setTimeout(() => {
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          }, 150);
+        }
+      }
+      return;
+    }
+
+    if (e.target === drawer || e.target.closest('.mobile-wsp-link') || e.target.closest('.mobile-ig-link')) {
       closeMenu();
     }
   });
