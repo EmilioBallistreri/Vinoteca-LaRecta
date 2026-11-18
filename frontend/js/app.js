@@ -918,7 +918,6 @@ function setupEventListeners() {
       }, 350);
     }
   });
-  }
 
   // Auth Tabs
   document.getElementById('tabLoginBtn')?.addEventListener('click', () => auth.switchTab('login'));
@@ -1077,9 +1076,6 @@ function showOrderConfirmationModal(order) {
       </div>
     </div>
   `;
-
-  modal.classList.add('active');
-}
 
   modal.classList.add('active');
 }
