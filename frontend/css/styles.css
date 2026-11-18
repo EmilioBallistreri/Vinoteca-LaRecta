@@ -2349,6 +2349,47 @@ img {
   border: 1px solid var(--gold-border);
 }
 
+.modal-thumbs-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+  scrollbar-width: thin;
+}
+
+.modal-thumb-btn {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: rgba(20, 16, 22, 0.9);
+  border: 1.5px solid rgba(197, 160, 89, 0.25);
+  cursor: pointer;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modal-thumb-btn:hover {
+  border-color: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+.modal-thumb-btn.active {
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 10px rgba(197, 160, 89, 0.5);
+}
+
+.modal-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .product-modal-details {
   display: flex;
   flex-direction: column;
@@ -5433,13 +5474,184 @@ body[data-festivity="dia_del_amigo"] .main-header {
   gap: 0.65rem;
 }
 
-/* Grilla para exactamente dos cards de promociones exclusivas */
+/* Grilla para tarjetas de promociones exclusivas */
 .promos-grid.promos-grid-two {
   grid-template-columns: repeat(2, minmax(280px, 340px));
   justify-content: center;
   max-width: 740px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.promos-grid.promos-grid-three {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(290px, 360px));
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2.75rem;
+}
+
+@media (max-width: 1100px) {
+  .promos-grid.promos-grid-three {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 340px));
+    max-width: 760px;
+  }
+}
+
+/* ================= CARRUSEL DE IMÁGENES DE PROMOCIÓN ================= */
+.promo-carousel {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #261c24 0%, #0c090c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.18);
+}
+
+.promo-carousel-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.promo-carousel-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 2.25rem;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.5s ease-in-out, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+.promo-carousel-slide.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.promo-carousel-slide img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.65));
+  transition: transform 0.35s ease;
+}
+
+.promo-card-item:hover .promo-carousel-slide.active img {
+  transform: scale(1.04);
+}
+
+/* Flechas manuales del carrusel */
+.promo-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(16, 13, 18, 0.82);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  color: var(--gold-light);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 7;
+  opacity: 0.85;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+  padding: 0;
+}
+
+.promo-carousel-arrow:hover {
+  opacity: 1;
+  background: rgba(197, 160, 89, 0.25);
+  border-color: var(--gold-primary);
+  color: #fff;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.promo-carousel-arrow.prev {
+  left: 10px;
+}
+
+.promo-carousel-arrow.next {
+  right: 10px;
+}
+
+/* Indicadores de puntos (Dots) */
+.promo-carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 7;
+  background: rgba(10, 8, 12, 0.72);
+  backdrop-filter: blur(6px);
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(197, 160, 89, 0.22);
+}
+
+.promo-carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.promo-carousel-dot:hover {
+  background: var(--gold-light);
+  transform: scale(1.2);
+}
+
+.promo-carousel-dot.active {
+  width: 18px;
+  border-radius: 999px;
+  background: var(--gold-primary);
+  box-shadow: 0 0 8px rgba(197, 160, 89, 0.7);
+}
+
+/* Contador de fotos arriba a la derecha */
+.promo-photo-counter {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(12, 10, 14, 0.85);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  color: var(--gold-champagne);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  z-index: 6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .promo-quick-hint {
@@ -5575,10 +5787,13 @@ body[data-festivity="dia_del_amigo"] .main-header {
     margin-left: auto;
     margin-right: auto;
   }
-    .promos-grid.promos-grid-two {
+    .promos-grid.promos-grid-two,
+    .promos-grid.promos-grid-three {
     grid-template-columns: 1fr;
     max-width: 360px;
     gap: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 

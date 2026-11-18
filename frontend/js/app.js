@@ -558,9 +558,24 @@ function openProductModal(product) {
   const isOutOfStock = product.stock <= 0;
   const whatsappUrl = `https://wa.me/5493512460017?text=${encodeURIComponent('Hola Vinoteca La Recta! Quisiera consultar disponibilidad para retirar ' + product.name + ' con pago en efectivo/transferencia.')}`;
 
+  const images = (Array.isArray(product.images) && product.images.length > 0)
+    ? product.images
+    : [product.image];
+
   body.innerHTML = `
     <div class="product-modal-grid">
-      <img src="${product.image}" alt="${product.name}" class="product-modal-img" />
+      <div class="product-modal-media-wrap">
+        <img id="modalProductMainImg" src="${images[0]}" alt="${product.name}" class="product-modal-img" />
+        ${images.length > 1 ? `
+          <div class="modal-thumbs-row">
+            ${images.map((imgUrl, i) => `
+              <button type="button" class="modal-thumb-btn ${i === 0 ? 'active' : ''}" data-src="${imgUrl}" aria-label="Ver foto ${i + 1}">
+                <img src="${imgUrl}" alt="Miniatura ${i + 1}" />
+              </button>
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
       <div class="product-modal-details">
         <span class="card-bodega">${product.bodega ? product.bodega + ' • ' : ''}${product.category.toUpperCase()}${product.subcategory ? ' • ' + product.subcategory : ''}</span>
         <h2 style="font-family: var(--font-serif); font-size: 2.1rem; color: #fff; line-height: 1.15; margin-bottom: 0.75rem;">${product.name}</h2>
@@ -622,6 +637,18 @@ function openProductModal(product) {
       </div>
     </div>
   `;
+
+  // Attach thumbnail clicks
+  const mainImgEl = document.getElementById('modalProductMainImg');
+  const thumbBtns = body.querySelectorAll('.modal-thumb-btn');
+  thumbBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      thumbBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const src = btn.getAttribute('data-src');
+      if (mainImgEl && src) mainImgEl.src = src;
+    });
+  });
 
   let qty = 1;
   const qtyVal = document.getElementById('modalQtyVal');
@@ -988,12 +1015,126 @@ function initHeroCarousel() {
   });
 }
 
-// ================= PROMOS EN INICIO =================
+// ================= PROMOS EN INICIO CON CARRUSEL =================
+const promoCarouselTimers = new Map();
+
+function initPromoCarousels() {
+  // Limpiar temporizadores anteriores si los hubiera
+  promoCarouselTimers.forEach(timer => clearInterval(timer));
+  promoCarouselTimers.clear();
+
+  const carousels = document.querySelectorAll('.promo-carousel');
+  carousels.forEach(carousel => {
+    const promoId = carousel.getAttribute('data-promo-id');
+    const slides = carousel.querySelectorAll('.promo-carousel-slide');
+    const dots = carousel.querySelectorAll('.promo-carousel-dot');
+    const counterEl = carousel.parentElement?.querySelector('.promo-counter-num');
+    const prevBtn = carousel.querySelector('[data-action="prev-slide"]');
+    const nextBtn = carousel.querySelector('[data-action="next-slide"]');
+    if (!slides.length) return;
+
+    let currentIndex = 0;
+
+    function goToSlide(index) {
+      currentIndex = (index + slides.length) % slides.length;
+      slides.forEach((slide, idx) => {
+        if (idx === currentIndex) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+      dots.forEach((dot, idx) => {
+        if (idx === currentIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+      if (counterEl) {
+        counterEl.textContent = `${currentIndex + 1} / ${slides.length}`;
+      }
+    }
+
+    function startAutoTimer() {
+      stopAutoTimer();
+      // Cambio automático suave cada 3.5 segundos
+      const timer = setInterval(() => {
+        goToSlide(currentIndex + 1);
+      }, 3500);
+      promoCarouselTimers.set(promoId, timer);
+    }
+
+    function stopAutoTimer() {
+      if (promoCarouselTimers.has(promoId)) {
+        clearInterval(promoCarouselTimers.get(promoId));
+        promoCarouselTimers.delete(promoId);
+      }
+    }
+
+    // Navegación manual: Flecha Anterior
+    prevBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goToSlide(currentIndex - 1);
+      startAutoTimer();
+    });
+
+    // Navegación manual: Flecha Siguiente
+    nextBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goToSlide(currentIndex + 1);
+      startAutoTimer();
+    });
+
+    // Navegación manual: Puntos / Dots
+    dots.forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(dot.getAttribute('data-index'), 10);
+        if (!isNaN(idx)) {
+          goToSlide(idx);
+          startAutoTimer();
+        }
+      });
+    });
+
+    // Pausar en hover para inspección minuciosa
+    carousel.addEventListener('mouseenter', stopAutoTimer);
+    carousel.addEventListener('mouseleave', startAutoTimer);
+
+    // Soporte táctil móvil (Swipe izquierda / derecha)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    carousel.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].screenX;
+      const touchEndY = e.changedTouches[0].screenY;
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+      if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX < 0) {
+          goToSlide(currentIndex + 1);
+        } else {
+          goToSlide(currentIndex - 1);
+        }
+        startAutoTimer();
+      }
+    }, { passive: true });
+
+    // Iniciar temporizador automático
+    startAutoTimer();
+  });
+}
+
 function renderPromosGrid() {
   const container = document.getElementById('promosGrid');
   if (!container) return;
 
-  const promos = state.products.filter(p => p.category === 'promos' || (p.discount && p.discount > 0));
+  const promos = state.products.filter(p => p.category === 'promos');
 
   if (!promos.length) {
     container.innerHTML = `
@@ -1004,15 +1145,49 @@ function renderPromosGrid() {
     return;
   }
 
-  // Exactamente dos cards de promociones exclusivas
-  container.innerHTML = promos.slice(0, 2).map(promo => {
+  // Exactamente las 3 promociones exclusivas con carrusel multi-imagen
+  container.innerHTML = promos.map(promo => {
+    const images = (Array.isArray(promo.images) && promo.images.length > 0)
+      ? promo.images
+      : [promo.image];
     const discountTag = promo.badge || (promo.discount ? `${promo.discount}% OFF` : 'PROMO EXCLUSIVA');
 
     return `
-      <article class="promo-card-item" data-id="${promo.id}" style="cursor: pointer;" title="Hacer clic para ver detalles y descripción de ${promo.name}">
+      <article class="promo-card-item" data-id="${promo.id}" style="cursor: pointer;" title="Hacer clic para ver detalles y ficha técnica de ${promo.name}">
         <span class="promo-badge-tag">${discountTag}</span>
-        <div class="promo-img-wrap">
-          <img src="${promo.image}" alt="${promo.name}" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp';" />
+        <span class="promo-photo-counter">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+          <span class="promo-counter-num">1 / ${images.length}</span>
+        </span>
+
+        <div class="promo-carousel" data-promo-id="${promo.id}">
+          <div class="promo-carousel-track">
+            ${images.map((imgUrl, idx) => `
+              <div class="promo-carousel-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}">
+                <img src="${imgUrl}" alt="${promo.name} - Vista ${idx + 1}" loading="${idx === 0 ? 'eager' : 'lazy'}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp';" />
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Flechas de navegación manual -->
+          <button type="button" class="promo-carousel-arrow prev" data-action="prev-slide" aria-label="Foto anterior" title="Foto anterior">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button type="button" class="promo-carousel-arrow next" data-action="next-slide" aria-label="Siguiente foto" title="Siguiente foto">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+
+          <!-- Indicadores de puntos -->
+          <div class="promo-carousel-dots">
+            ${images.map((_, idx) => `
+              <button type="button" class="promo-carousel-dot ${idx === 0 ? 'active' : ''}" data-index="${idx}" aria-label="Ir a foto ${idx + 1}" title="Foto ${idx + 1}"></button>
+            `).join('')}
+          </div>
+
           <span class="promo-quick-hint">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -1021,8 +1196,9 @@ function renderPromosGrid() {
             Ver Ficha Técnica
           </span>
         </div>
+
         <div class="promo-body">
-          <span class="promo-category">${promo.bodega ? promo.bodega + ' • ' : ''}${promo.subcategory || promo.category.toUpperCase()}</span>
+          <span class="promo-category">${promo.bodega ? promo.bodega + ' • ' : ''}${promo.subcategory || 'PROMO EXCLUSIVA'}</span>
           <h3 class="promo-title">${promo.name}</h3>
           
           <div class="promo-pricing">
@@ -1045,6 +1221,9 @@ function renderPromosGrid() {
     `;
   }).join('');
 
+  // Inicializar carruseles interactivos
+  initPromoCarousels();
+
   // Evento agregar al carrito
   container.querySelectorAll('[data-action="add-promo"]').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -1063,6 +1242,8 @@ function renderPromosGrid() {
   container.querySelectorAll('.promo-card-item').forEach(card => {
     card.addEventListener('click', (e) => {
       if (e.target.closest('[data-action="add-promo"]')) return;
+      if (e.target.closest('.promo-carousel-arrow')) return;
+      if (e.target.closest('.promo-carousel-dot')) return;
       const id = card.getAttribute('data-id');
       const prod = state.products.find(p => p.id === id);
       if (prod) {

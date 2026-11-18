@@ -209,10 +209,23 @@ function openProductModal(product) {
   const isOutOfStock = product.stock <= 0;
   const whatsappUrl = `https://wa.me/5493512460017?text=${encodeURIComponent('Hola Vinoteca La Recta! Quisiera consultar disponibilidad para retirar ' + product.name + ' con pago en efectivo/transferencia.')}`;
 
+  const images = (Array.isArray(product.images) && product.images.length > 0)
+    ? product.images
+    : [product.image];
+
   body.innerHTML = `
     <div class="product-modal-grid">
       <div class="modal-img-col">
-        <img src="${product.image}" alt="${product.name}" />
+        <img id="modalProductMainImg" src="${images[0]}" alt="${product.name}" />
+        ${images.length > 1 ? `
+          <div class="modal-thumbs-row">
+            ${images.map((imgUrl, i) => `
+              <button type="button" class="modal-thumb-btn ${i === 0 ? 'active' : ''}" data-src="${imgUrl}" aria-label="Ver foto ${i + 1}">
+                <img src="${imgUrl}" alt="Miniatura ${i + 1}" />
+              </button>
+            `).join('')}
+          </div>
+        ` : ''}
       </div>
       <div class="modal-info-col">
         <span class="modal-bodega">${product.bodega ? product.bodega + ' • ' : ''}${product.category.toUpperCase()} • ${product.subcategory || ''}</span>
@@ -270,6 +283,18 @@ function openProductModal(product) {
       </div>
     </div>
   `;
+
+  // Miniaturas modal
+  const mainImgEl = document.getElementById('modalProductMainImg');
+  const thumbBtns = body.querySelectorAll('.modal-thumb-btn');
+  thumbBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      thumbBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const src = btn.getAttribute('data-src');
+      if (mainImgEl && src) mainImgEl.src = src;
+    });
+  });
 
   document.getElementById('modalAddToCartBtn')?.addEventListener('click', () => {
     cart.addItem(product, 1);
