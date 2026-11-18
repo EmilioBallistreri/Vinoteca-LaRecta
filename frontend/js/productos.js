@@ -445,8 +445,7 @@ function updateCartDrawerUI(cartData) {
   if (totalEl) totalEl.textContent = formatCurrency(cartData.total);
 
   if (cuotasEl) {
-    const cuota = Math.round(cartData.total / 3);
-    cuotasEl.textContent = `o 3 pagos fijos sin interés de ${formatCurrency(cuota)}`;
+    cuotasEl.textContent = 'Medios de pago: Efectivo al retirar o Transferencia con Alias';
   }
 
   if (wspBtn) {

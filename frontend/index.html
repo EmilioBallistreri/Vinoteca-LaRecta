@@ -104,19 +104,18 @@
         </div>
       </a>
 
-      <!-- Menú de Navegación Formal -->
+      <!-- Menú de Navegación Formal (Página única integral) -->
       <nav class="desktop-nav">
         <ul class="nav-menu">
-          <li><a href="/" class="nav-link active">INICIO</a></li>
-          <li><a href="/productos.html" class="nav-link">PRODUCTOS</a></li>
-          <li><a href="/#preventa" class="nav-link">PRE-VENTA</a></li>
+          <li><a href="#inicio" class="nav-link active">INICIO</a></li>
+          <li><a href="#preventa" class="nav-link">PRE-VENTA</a></li>
           <li>
-            <a href="/#promos" class="nav-link" id="navPromosAnchor">
+            <a href="#promos" class="nav-link" id="navPromosAnchor">
               PROMOS
               <span class="nav-badge-off">OFERTAS</span>
             </a>
           </li>
-          <li><a href="/#nosotros" class="nav-link">NOSOTROS</a></li>
+          <li><a href="#nosotros" class="nav-link">NOSOTROS</a></li>
         </ul>
       </nav>
 
@@ -201,8 +200,8 @@
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
           </a>
-          <a href="/productos.html" class="btn-secondary">
-            Ver Catálogo de Productos
+          <a href="#promos" class="btn-secondary">
+            Promociones Exclusivas
           </a>
         </div>
 
@@ -293,8 +292,8 @@
       <div id="promosGrid" class="promos-grid promos-grid-three"></div>
 
       <div style="text-align: center; margin-top: 2.75rem;">
-        <a href="/productos.html?categoria=promos" class="btn-secondary" style="font-size: 0.86rem; padding: 0.85rem 2rem;">
-          Ver Todas las Promociones en Catálogo &rarr;
+        <a href="#preventa" class="btn-secondary" style="font-size: 0.86rem; padding: 0.85rem 2rem;">
+          Ver Toda la Colección en Pre-venta &rarr;
         </a>
       </div>
     </div>
@@ -375,11 +374,9 @@
           <ul class="footer-nav-list">
             <li><a href="#preventa">Pre-venta de Productos</a></li>
             <li><a href="#promos">Promociones Exclusivas</a></li>
-            <li><a href="/productos.html?categoria=vinos">Vinos de Colección</a></li>
-            <li><a href="/productos.html?categoria=espumantes">Espumantes &amp; Champagnes</a></li>
-            <li><a href="/productos.html?categoria=whiskys">Whiskies &amp; Destilados</a></li>
-            <li><a href="/productos.html?categoria=aperitivos">Aperitivos &amp; Licores</a></li>
-            <li><a href="/productos.html?categoria=delicatessen">Delicatessen &amp; Maridajes</a></li>
+            <li><a href="#preventa" data-category="vinos">Vinos de Colección</a></li>
+            <li><a href="#preventa" data-category="espumantes">Espumantes &amp; Champagnes</a></li>
+            <li><a href="#preventa" data-category="aperitivos">Aperitivos &amp; Licores</a></li>
           </ul>
         </div>
 
@@ -387,10 +384,9 @@
           <h4>Navegación</h4>
           <ul class="footer-nav-list">
             <li><a href="#inicio">Portada Principal</a></li>
+            <li><a href="#preventa">Pre-venta de Cava</a></li>
             <li><a href="#promos">Promociones</a></li>
-            <li><a href="/productos.html">Catálogo Completo</a></li>
             <li><a href="#nosotros">Nuestra Historia</a></li>
-            
           </ul>
         </div>
 
@@ -769,11 +765,10 @@
         <button id="mobileMenuCloseBtn" class="mobile-menu-close" aria-label="Cerrar menú">&times;</button>
       </div>
       <ul class="mobile-nav-list">
-        <li><a href="/" class="mobile-nav-link">🏠 Inicio</a></li>
-        <li><a href="/productos.html" class="mobile-nav-link">🍷 Catálogo de Productos</a></li>
-        <li><a href="/#preventa" class="mobile-nav-link">🍾 Pre-venta de Productos</a></li>
-        <li><a href="/#promos" class="mobile-nav-link">🏷️ Promociones Exclusivas</a></li>
-        <li><a href="/#nosotros" class="mobile-nav-link">🏛️ Quiénes Somos</a></li>
+        <li><a href="#inicio" class="mobile-nav-link">🏠 Inicio</a></li>
+        <li><a href="#preventa" class="mobile-nav-link">🍾 Pre-venta de Productos</a></li>
+        <li><a href="#promos" class="mobile-nav-link">🏷️ Promociones Exclusivas</a></li>
+        <li><a href="#nosotros" class="mobile-nav-link">🏛️ Quiénes Somos</a></li>
       </ul>
       <div class="mobile-menu-footer">
         <a href="https://wa.me/5493512460017?text=Hola%20Vinoteca%20La%20Recta!" target="_blank" rel="noopener noreferrer" class="mobile-wsp-link">

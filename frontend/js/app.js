@@ -460,7 +460,8 @@ function updateCartDrawerUI(detail) {
       `;
       document.getElementById('cartExploreBtn')?.addEventListener('click', () => {
         closeCartDrawer();
-        window.location.href = '/productos.html';
+        const target = document.getElementById('preventaProductsWrapper') || document.getElementById('preventa');
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }
     if (drawerFooter) drawerFooter.style.display = 'none';
@@ -522,10 +523,11 @@ function updateCartDrawerUI(detail) {
     });
   }
 
-  if (subtotalEl) subtotalEl.textContent = formatCurrency(subtotal);
+  const currentSubtotal = (detail && detail.subtotal !== undefined) ? detail.subtotal : cart.getSubtotal();
+  if (subtotalEl) subtotalEl.textContent = formatCurrency(currentSubtotal);
   if (transferEl) transferEl.textContent = formatCurrency(cart.getTransferTotal());
-  if (totalEl) totalEl.textContent = formatCurrency(subtotal);
-  if (cuotasEl) cuotasEl.textContent = `o 3 pagos fijos sin interés de ${formatCurrency(cart.getCuotasAmount())}`;
+  if (totalEl) totalEl.textContent = formatCurrency(currentSubtotal);
+  if (cuotasEl) cuotasEl.textContent = 'Medios de pago: Efectivo al retirar o Transferencia con Alias';
 
   const wspBtn = document.getElementById('cartDrawerWspBtn');
   if (wspBtn) {
@@ -746,14 +748,36 @@ function updateCheckoutSummary() {
 
 function setupEventListeners() {
   // Navigation Links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  document.querySelectorAll('a[href^="#"], a[href*="/#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-      const targetId = this.getAttribute('href');
+      const rawHref = this.getAttribute('href');
+      const hashIndex = rawHref.indexOf('#');
+      if (hashIndex === -1) return;
+      const targetId = rawHref.substring(hashIndex);
       if (targetId === '#') return;
+
+      // Cerrar drawer de menú móvil si está desplegado
+      document.getElementById('mobileMenuDrawer')?.classList.remove('active');
+
+      if (targetId === '#preventa') {
+        e.preventDefault();
+        const cat = this.getAttribute('data-category');
+        if (cat) {
+          selectPreventaCategory(cat, true);
+        } else {
+          // Al tocar Pre-venta llevar directamente al usuario a ver los productos
+          const wrapper = document.getElementById('preventaProductsWrapper') || document.getElementById('preventa');
+          if (wrapper) {
+            wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+        return;
+      }
+
       const targetEl = document.querySelector(targetId);
       if (targetEl) {
         e.preventDefault();
-        targetEl.scrollIntoView({ behavior: 'smooth' });
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
   });
@@ -1503,6 +1527,13 @@ async function init() {
     selectPreventaCategory(urlCat || 'todos', Boolean(urlCat));
     renderPromosGrid();
     renderProducts();
+
+    if (window.location.hash === '#preventa') {
+      setTimeout(() => {
+        const wrapper = document.getElementById('preventaProductsWrapper') || document.getElementById('preventa');
+        if (wrapper) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 350);
+    }
   } catch (err) {
     console.error('Error loading products from backend:', err);
     showToast('Conectando con la cava online...');
