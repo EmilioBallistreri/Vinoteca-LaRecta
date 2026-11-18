@@ -747,18 +747,18 @@ module.exports = {
       heroSlides: [
         {
           id: 'slide-1',
-          image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1920&q=85',
-          label: 'Cava Principal'
+          image: '/public/hero/hero-1.jpg',
+          label: 'Fachada & Marquesina'
         },
         {
           id: 'slide-2',
-          image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=1920&q=85',
-          label: 'Degustación & Copas'
+          image: '/public/hero/hero-2.jpg',
+          label: 'Cava & Barricas'
         },
         {
           id: 'slide-3',
-          image: 'https://images.unsplash.com/photo-1527281400683-1aae777175f8?auto=format&fit=crop&w=1920&q=85',
-          label: 'Destilados & Barricas'
+          image: '/public/hero/hero-3.jpg',
+          label: 'Colección de Vinos'
         }
       ],
       heroTag: 'CAVA & EXPERIENCIA ENOLÓGICA — CÓRDOBA',
