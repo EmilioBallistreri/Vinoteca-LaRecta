@@ -716,6 +716,10 @@ img {
   pointer-events: none;
 }
 
+.hero-slide:nth-child(1) {
+  background-position: center 36%;
+}
+
 .hero-slide.active {
   opacity: 1;
   transform: scale(1);
