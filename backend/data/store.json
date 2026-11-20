@@ -273,8 +273,7 @@
         "/public/promotions/salentein-1-cover.png",
         "/public/promotions/salentein-2.png",
         "/public/promotions/salentein-3.png",
-        "/public/promotions/salentein-4.png",
-        "/public/promotions/salentein-5.png"
+        "/public/promotions/salentein-4.png"
       ],
       "description": "Combo exclusivo de Bodegas Salentein: incluye 1 botella Salentein Reserva Malbec de Valle de Uco, 1 botella Salentein Cuvée Exceptionnelle Extra Brut y una distinguida frapera metálica esmaltada con asas de cuero legítimo con logo grabado de la bodega.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
@@ -296,7 +295,8 @@
       "images": [
         "/public/promotions/lasperdices-1-cover.png",
         "/public/promotions/lasperdices-2.png",
-        "/public/promotions/lasperdices-3.png"
+        "/public/promotions/lasperdices-3.png",
+        "/public/promotions/lasperdices-4.png"
       ],
       "description": "Caja artesanal de madera craft de edición limitada Viña Las Perdices Exploración Valle de Uco - Gualtallary Malbec. Incluye 6 botellas de colección, 5 de ellas envueltas delicadamente en papel de seda negro con sello lacrado dorado de la bodega.",
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
