@@ -267,7 +267,7 @@ function openProductModal(product) {
         </div>
 
         <div class="modal-desc-block">
-          <h4>Descripción Enológica</h4>
+          <h4>Descripción</h4>
           <p>${product.description || 'Etiqueta de partida limitada seleccionada por Vinoteca La Recta. Conservada bajo estricto control higrométrico y de temperatura.'}</p>
         </div>
 

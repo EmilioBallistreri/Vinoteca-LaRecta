@@ -619,7 +619,7 @@ function openProductModal(product) {
           </a>
         </div>
 
-        <h4 style="font-family: var(--font-brand); font-size: 0.82rem; color: var(--gold-primary); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem;">Descripción Enológica:</h4>
+        <h4 style="font-family: var(--font-brand); font-size: 0.82rem; color: var(--gold-primary); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem;">Descripción:</h4>
         <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.5rem;">
           ${product.description || 'Etiqueta de jerarquía seleccionada rigurosamente por el equipo de Vinoteca La Recta. Conservada en cava para salvaguardar su bouquet y notas originales.'}
         </p>
@@ -1284,7 +1284,7 @@ function renderPromosGrid() {
     const images = (Array.isArray(promo.images) && promo.images.length > 0)
       ? promo.images
       : [promo.image];
-    const discountTag = promo.badge || (promo.discount ? `${promo.discount}% OFF` : 'PROMO EXCLUSIVA');
+    const discountTag = promo.badge || 'PROMO EXCLUSIVA';
 
     return `
       <article class="promo-card-item" data-id="${promo.id}" style="cursor: pointer;" title="Hacer clic para ver detalles y ficha técnica de ${promo.name}">
@@ -1332,13 +1332,12 @@ function renderPromosGrid() {
         </div>
 
         <div class="promo-body">
-          <span class="promo-category">${promo.bodega ? promo.bodega + ' • ' : ''}${promo.subcategory || 'PROMO EXCLUSIVA'}</span>
+          <span class="promo-category">${promo.subcategory && promo.subcategory !== 'Combos Degustación' ? (promo.bodega ? promo.bodega + ' • ' : '') + promo.subcategory : (promo.bodega || 'PROMO EXCLUSIVA')}</span>
           <h3 class="promo-title">${promo.name}</h3>
           
           <div class="promo-pricing">
             <div class="promo-price-main">
               <span class="promo-current-price">${formatCurrency(promo.price)}</span>
-              ${promo.originalPrice ? `<span class="promo-original-price">${formatCurrency(promo.originalPrice)}</span>` : ''}
             </div>
           </div>
 
