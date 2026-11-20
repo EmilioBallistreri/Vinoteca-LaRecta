@@ -206,7 +206,9 @@ function renderPreventaProductsGrid(catId) {
   const grid = document.getElementById('preventaProductsGrid');
   if (!grid) return;
 
-  const prods = (!catId || catId === 'todos') ? state.products : state.products.filter(p => p.category === catId);
+  const prods = (!catId || catId === 'todos')
+    ? state.products.filter(p => p.category !== 'promos')
+    : state.products.filter(p => p.category === catId);
 
   if (prods.length === 0) {
     grid.innerHTML = `
@@ -387,7 +389,7 @@ function setFilterCategory(category) {
 }
 
 function applyFilters() {
-  let list = [...state.products];
+  let list = state.products.filter(p => p.category !== 'promos');
 
   if (state.activeCategory !== 'todos') {
     list = list.filter(p => p.category.toLowerCase() === state.activeCategory.toLowerCase());
@@ -1521,7 +1523,7 @@ async function init() {
       initHeroCarousel();
     }
     state.products = products;
-    state.filteredProducts = products;
+    state.filteredProducts = products.filter(p => p.category !== 'promos');
     renderPreventaCategories();
     const urlCat = new URLSearchParams(window.location.search).get('categoria');
     selectPreventaCategory(urlCat || 'todos', Boolean(urlCat));
