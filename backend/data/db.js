@@ -763,10 +763,10 @@ module.exports = {
           label: 'Colección de Vinos'
         }
       ],
-      heroTag: 'CAVA & EXPERIENCIA ENOLÓGICA — CÓRDOBA',
-      heroTitle: 'Donde cada etiqueta cuenta una',
-      heroHighlight: 'gran historia',
-      heroDescription: 'Seleccionamos bodegas de autor, grandes reservas, destilados importados y habanos legítimos para transformar cada brindis en un momento inolvidable.',
+      heroTag: '',
+      heroTitle: 'Vinoteca La Recta',
+      heroHighlight: 'El mejor lugar para elegir tu bebida',
+      heroDescription: 'Encontrá en nuestro local, la mayor variedad de vinos, whiskys, aperitivos y todo lo que necesitas para que cada momento compartido, sea único.',
       activeFestivity: 'clasico',
       banner: {
         enabled: false,

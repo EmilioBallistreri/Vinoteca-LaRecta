@@ -359,12 +359,20 @@ export function applySiteCustomization(siteConfig) {
   }
 
   // 4. Update Hero Texts if on Home Page
+  const tagBadgeEl = document.getElementById('heroTagBadge');
   const tagTextEl = document.getElementById('heroTagText');
   const mainTitleEl = document.getElementById('heroMainTitle');
   const highlightEl = document.getElementById('heroHighlightText');
   const descEl = document.getElementById('heroDescriptionText');
 
-  if (tagTextEl && siteConfig.heroTag) tagTextEl.textContent = siteConfig.heroTag;
+  if (tagBadgeEl) {
+    if (siteConfig.heroTag && siteConfig.heroTag.trim()) {
+      tagBadgeEl.style.display = 'inline-flex';
+      if (tagTextEl) tagTextEl.textContent = siteConfig.heroTag;
+    } else {
+      tagBadgeEl.style.display = 'none';
+    }
+  }
   if (mainTitleEl && siteConfig.heroTitle) mainTitleEl.textContent = siteConfig.heroTitle;
   if (highlightEl && siteConfig.heroHighlight) highlightEl.textContent = siteConfig.heroHighlight;
   if (descEl && siteConfig.heroDescription) descEl.textContent = siteConfig.heroDescription;

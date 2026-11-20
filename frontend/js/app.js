@@ -54,9 +54,9 @@ function renderPreventaCategories() {
   const categories = [
     {
       id: 'espumantes',
-      title: 'Espumantes y Sidras',
-      tag: 'Cuvées, Método Tradicional & Sidras',
-      desc: 'Selección de espumantes, método Champenoise, Nature y sidras artesanales prémium.',
+      title: 'Espumantes y Champagne',
+      tag: 'Cuvées, Método Champenoise & Tradicional',
+      desc: 'selección especial de espumantes método champenoise y tradicional',
       iconSvg: `
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M7 21h10m-5-3v3m-3-9a3 3 0 0 1 6 0v2a2 2 0 0 1-2 2H11a2 2 0 0 1-2-2v-2z"></path>
@@ -81,7 +81,7 @@ function renderPreventaCategories() {
     {
       id: 'aperitivos',
       title: 'Aperitivos',
-      tag: 'Gins, Vermuts & Botánicos',
+      tag: 'Vermuts y Aperitivos',
       desc: 'Botánicos de alta gama, vermuts artesanales, aperitivos clásicos y destilados finos.',
       iconSvg: `
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -146,8 +146,8 @@ const PREVENTA_TITLES = {
     title: 'Todos los Productos de Colección (12)'
   },
   espumantes: {
-    tag: 'Burbujas Finas, Cuvées & Sidras',
-    title: 'Espumantes y Sidras de Colección (4)'
+    tag: 'Burbujas Finas, Cuvées & Champagne',
+    title: 'Espumantes y Champagne de Colección (4)'
   },
   vinos: {
     tag: 'Añadas Históricas & Terroirs de Autor',
@@ -155,7 +155,7 @@ const PREVENTA_TITLES = {
   },
   aperitivos: {
     tag: 'Botánicos Nobles & Coctelería Fina',
-    title: 'Aperitivos, Gins & Vermuts Finos (4)'
+    title: 'Aperitivos tradicionales (4)'
   }
 };
 
@@ -631,7 +631,7 @@ function openProductModal(product) {
             <button id="modalQtyInc" class="qty-btn" style="width: 34px; height: 34px; font-size: 1.1rem;">+</button>
           </div>
           <span style="font-size: 0.82rem; color: var(--text-muted);">
-            ${isOutOfStock ? 'Sin existencias en cava' : `${product.stock} unidades disponibles en local`}
+            ${isOutOfStock ? 'Partida Agotada' : 'Hasta agotar stock'}
           </span>
         </div>
 
