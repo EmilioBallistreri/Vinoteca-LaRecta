@@ -62,7 +62,7 @@ export const cart = {
     message += `*Modalidad:* Retiro en el local (Av. Recta Martinolli 8255)\n\n`;
     message += `*Detalle del Pedido:*\n${itemsList}\n\n`;
     message += `*Total:* ${formatCurrency(subtotal)}\n`;
-    message += `*Abonando por Transferencia (10% OFF):* ${formatCurrency(transferTotal)}\n\n`;
+    
     message += `_Hola! Quiero realizar este pedido desde la tienda online para retirar en el local._`;
 
     return `https://wa.me/5493512460017?text=${encodeURIComponent(message)}`;
@@ -117,10 +117,8 @@ export const cart = {
     return this.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   },
 
-  // 10% OFF on bank transfer
   getTransferTotal() {
-    const subtotal = this.getSubtotal();
-    return Math.round(subtotal * 0.90);
+    return this.getSubtotal();
   },
 
   // 3 cuotas sin interés

@@ -592,7 +592,13 @@ function openProductModal(product) {
           </div>
         </div>
 
-        <!-- Metodología de Venta & Retiro -->
+        <!-- Descripción (Primera) -->
+        <h4 style="font-family: var(--font-brand); font-size: 0.82rem; color: var(--gold-primary); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem;">Descripción:</h4>
+        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.25rem;">
+          ${product.description || 'Etiqueta de jerarquía seleccionada rigurosamente por el equipo de Vinoteca La Recta. Conservada en cava para salvaguardar su bouquet y notas originales.'}
+        </p>
+
+        <!-- Metodología de Venta & Retiro (Segunda) -->
         <div class="modal-sale-conditions">
           <div class="modal-conditions-title">
             <span>❖</span> Metodología de Venta &amp; Retiro
@@ -618,11 +624,6 @@ function openProductModal(product) {
             Consultar Disponibilidad por WhatsApp
           </a>
         </div>
-
-        <h4 style="font-family: var(--font-brand); font-size: 0.82rem; color: var(--gold-primary); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem;">Descripción:</h4>
-        <p style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.5rem;">
-          ${product.description || 'Etiqueta de jerarquía seleccionada rigurosamente por el equipo de Vinoteca La Recta. Conservada en cava para salvaguardar su bouquet y notas originales.'}
-        </p>
 
         <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.25rem;">
           <div class="qty-stepper" style="padding: 0.35rem;">
@@ -1338,6 +1339,7 @@ function renderPromosGrid() {
           <div class="promo-pricing">
             <div class="promo-price-main">
               <span class="promo-current-price">${formatCurrency(promo.price)}</span>
+              ${promo.originalPrice ? `<span class="promo-original-price">${formatCurrency(promo.originalPrice)}</span>` : ''}
             </div>
           </div>
 

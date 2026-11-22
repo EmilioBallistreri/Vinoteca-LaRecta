@@ -239,7 +239,13 @@ function openProductModal(product) {
           </div>
         </div>
 
-        <!-- Metodología de Venta & Retiro -->
+        <!-- Descripción (Primera) -->
+        <div class="modal-desc-block" style="margin-bottom: 1.25rem;">
+          <h4>Descripción</h4>
+          <p>${product.description || 'Etiqueta de partida limitada seleccionada por Vinoteca La Recta. Conservada bajo estricto control higrométrico y de temperatura.'}</p>
+        </div>
+
+        <!-- Metodología de Venta & Retiro (Segunda) -->
         <div class="modal-sale-conditions">
           <div class="modal-conditions-title">
             <span>❖</span> Metodología de Venta &amp; Retiro
@@ -266,14 +272,9 @@ function openProductModal(product) {
           </a>
         </div>
 
-        <div class="modal-desc-block">
-          <h4>Descripción</h4>
-          <p>${product.description || 'Etiqueta de partida limitada seleccionada por Vinoteca La Recta. Conservada bajo estricto control higrométrico y de temperatura.'}</p>
-        </div>
-
         <div style="margin: 1.5rem 0;">
           <span style="font-size: 0.85rem; color: var(--text-muted);">
-            ${isOutOfStock ? 'Sin stock' : `Disponible en local: ${product.stock} botellas`}
+            ${isOutOfStock ? 'Sin stock' : 'Hasta agotar stock'}
           </span>
         </div>
 

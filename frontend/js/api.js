@@ -484,7 +484,7 @@ export const api = {
         boxes: item.boxes || null,
         unitsPerBox: item.unitsPerBox || null
       })),
-      paymentMethod: orderData.paymentMethod || 'Transferencia Bancaria (10% OFF)',
+      paymentMethod: orderData.paymentMethod || 'Transferencia Bancaria (Alias)',
       subtotal: orderData.subtotal || 0,
       discount: orderData.discount || 0,
       shippingCost: orderData.shippingCost || 0,

@@ -295,7 +295,8 @@
         "/public/promotions/lasperdices-4.png"
       ],
       "description": "Comprando 5 botellas de Exploración Malbec la sexta botella va sin cargo.! Valor del combo $ 81.250",
-      "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
+      "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local.",
+      "originalPrice": 97000
     },
     {
       "id": "promo-don-nicanor-combo",
@@ -343,7 +344,7 @@
           "quantity": 1
         }
       ],
-      "paymentMethod": "Transferencia Bancaria (10% OFF)",
+      "paymentMethod": "Transferencia Bancaria (Alias)",
       "subtotal": 148200,
       "discount": 14820,
       "shippingCost": 0,
