@@ -59,6 +59,7 @@ html {
   font-size: 16px;
   background-color: var(--bg-deep);
   color: var(--text-primary);
+  overflow-x: clip;
 }
 
 body {
@@ -66,7 +67,7 @@ body {
   background-color: var(--bg-deep);
   color: var(--text-primary);
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
   line-height: 1.7;
   letter-spacing: 0.015em;
   -webkit-font-smoothing: antialiased;
@@ -170,6 +171,7 @@ img {
 
 /* ================= ENCABEZADO Y NAVBAR COMPACTO ================= */
 .main-header {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -2990,7 +2992,7 @@ img {
 
 @media (max-width: 768px) {
   html, body {
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   /* Contenedores con padding cómodo para celular */
@@ -2998,12 +3000,19 @@ img {
     padding: 0 0.85rem;
   }
 
-  /* Header y Navbar para Celulares - Sin cortes de carrito ni menú */
+  /* Header y Navbar para Celulares - Barra fija persistente al scrollear */
   .top-announcement-bar {
     display: none;
   }
 
   .main-header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
     padding-top: max(0.6rem, env(safe-area-inset-top));
     padding-bottom: 0.6rem;
     overflow: visible;
