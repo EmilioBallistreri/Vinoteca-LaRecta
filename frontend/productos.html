@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/css/styles.css?v=20261122_fixed" />
+  <link rel="stylesheet" href="/css/styles.css?v=20261124_postadd" />
   <style>
     /* Estilos específicos para la vista de Catálogo y Subcategorías */
     .catalog-hero-header {
@@ -587,6 +587,61 @@
     </aside>
   </div>
 
+  <!-- ================= MODAL: CONFIRMACIÓN POST-AGREGADO AL CARRITO ================= -->
+  <div id="addedToCartModal" class="modal-overlay post-add-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="postAddTitle">
+    <div class="modal-card post-add-card">
+      <button class="modal-close-btn post-add-close-btn" id="postAddCloseBtn" aria-label="Continuar comprando" title="Continuar comprando">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="post-add-header">
+        <div class="post-add-badge-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h3 id="postAddTitle" class="post-add-title">¡Producto agregado al pedido!</h3>
+        <p class="post-add-subtitle">Se sumó correctamente a tu selección.</p>
+      </div>
+
+      <div class="post-add-product-box">
+        <div class="post-add-img-wrap">
+          <img id="postAddProductImg" src="" alt="Producto" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp';" />
+        </div>
+        <div class="post-add-info">
+          <div id="postAddProductName" class="post-add-name">Vino de Cava</div>
+          <div class="post-add-meta">
+            <span id="postAddProductQty" class="post-add-qty">1 unidad</span>
+            <span class="post-add-sep">•</span>
+            <span id="postAddProductPrice" class="post-add-price">$0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-add-question">
+        ¿Deseas finalizar tu compra o continuar comprando?
+      </div>
+
+      <div class="post-add-actions">
+        <button type="button" id="postAddContinueBtn" class="btn-secondary post-add-btn-continue">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Continuar Comprando
+        </button>
+        <button type="button" id="postAddCheckoutBtn" class="btn-primary post-add-btn-checkout">
+          Finalizar Compra
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ================= MODAL: FICHA TÉCNICA DE PRODUCTO ================= -->
   <div id="productDetailModal" class="modal-overlay">
     <div class="modal-card modal-large">
@@ -843,6 +898,6 @@
   <div id="toastContainer" class="toast-container"></div>
 
   <!-- Script específico de la página de productos -->
-  <script type="module" src="/js/productos.js"></script>
+  <script type="module" src="/js/productos.js?v=20261124_postadd"></script>
 </body>
 </html>

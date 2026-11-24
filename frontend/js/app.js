@@ -265,8 +265,7 @@ function renderPreventaProductsGrid(catId) {
       const prod = state.products.find(p => p.id === id);
       if (prod) {
         cart.addItem(prod, 1);
-        openCartDrawer();
-        showToast(`"${prod.name}" agregado a tu carrito.`);
+        showAddedToCartModal(prod, 1);
       }
     });
   });
@@ -359,7 +358,7 @@ function renderProducts() {
       const prod = state.products.find(p => p.id === id);
       if (prod) {
         cart.addItem(prod, 1);
-        showToast(`Se ha incorporado "${prod.name}" a su selección de cava.`);
+        showAddedToCartModal(prod, 1);
       }
     });
   });
@@ -672,8 +671,8 @@ function openProductModal(product) {
 
   document.getElementById('modalAddCartBtn')?.addEventListener('click', () => {
     cart.addItem(product, qty);
-    showToast(`Se incorporaron ${qty} botellas de "${product.name}" a su pedido.`);
     closeProductModal();
+    showAddedToCartModal(product, qty);
   });
 
   modal.classList.add('active');
@@ -681,6 +680,58 @@ function openProductModal(product) {
 
 function closeProductModal() {
   document.getElementById('productDetailModal')?.classList.remove('active');
+}
+
+// ================= MODAL POST-AGREGADO AL CARRITO (CONTINUAR O FINALIZAR) =================
+
+function showAddedToCartModal(product, quantity = 1) {
+  closeProductModal();
+
+  const modal = document.getElementById('addedToCartModal');
+  if (!modal) return;
+
+  const imgEl = document.getElementById('postAddProductImg');
+  const nameEl = document.getElementById('postAddProductName');
+  const qtyEl = document.getElementById('postAddProductQty');
+  const priceEl = document.getElementById('postAddProductPrice');
+
+  if (imgEl) {
+    imgEl.src = product.image || 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp';
+    imgEl.alt = product.name || 'Producto agregado';
+  }
+  if (nameEl) nameEl.textContent = product.name || 'Vino de Cava';
+  if (qtyEl) qtyEl.textContent = `${quantity} ${quantity === 1 ? 'unidad' : 'unidades'}`;
+  if (priceEl) priceEl.textContent = formatCurrency((product.price || 0) * quantity);
+
+  modal.classList.add('active');
+}
+
+function closeAddedToCartModal() {
+  document.getElementById('addedToCartModal')?.classList.remove('active');
+}
+
+function initAddedToCartModal() {
+  const modal = document.getElementById('addedToCartModal');
+  if (!modal) return;
+
+  document.getElementById('postAddContinueBtn')?.addEventListener('click', () => {
+    closeAddedToCartModal();
+  });
+
+  document.getElementById('postAddCloseBtn')?.addEventListener('click', () => {
+    closeAddedToCartModal();
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeAddedToCartModal();
+    }
+  });
+
+  document.getElementById('postAddCheckoutBtn')?.addEventListener('click', () => {
+    closeAddedToCartModal();
+    openCartDrawer();
+  });
 }
 
 // ================= CHECKOUT MODAL =================
@@ -809,6 +860,9 @@ function setupEventListeners() {
   document.getElementById('cartDrawerOverlay')?.addEventListener('click', (e) => {
     if (e.target.id === 'cartDrawerOverlay') closeCartDrawer();
   });
+
+  // Modal Post-Agregado al Carrito
+  initAddedToCartModal();
 
   // Cart Drawer Checkout Button
   document.getElementById('cartDrawerCheckoutBtn')?.addEventListener('click', openCheckoutModal);
@@ -1367,8 +1421,7 @@ function renderPromosGrid() {
       const prod = state.products.find(p => p.id === id);
       if (prod) {
         cart.addItem(prod, 1);
-        openCartDrawer();
-        showToast(`"${prod.name}" agregado a tu carrito.`);
+        showAddedToCartModal(prod, 1);
       }
     });
   });

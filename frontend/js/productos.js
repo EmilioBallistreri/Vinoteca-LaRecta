@@ -173,7 +173,7 @@ function renderProducts() {
       const prod = state.products.find(p => p.id === id);
       if (prod) {
         cart.addItem(prod, 1);
-        showToast(`"${prod.name}" agregado a tu carrito.`);
+        showAddedToCartModal(prod, 1);
       }
     });
   });
@@ -299,11 +299,78 @@ function openProductModal(product) {
 
   document.getElementById('modalAddToCartBtn')?.addEventListener('click', () => {
     cart.addItem(product, 1);
-    showToast(`"${product.name}" agregado a tu carrito.`);
     modal.classList.remove('active');
+    showAddedToCartModal(product, 1);
   });
 
   modal.classList.add('active');
+}
+
+function closeProductModal() {
+  document.getElementById('productDetailModal')?.classList.remove('active');
+}
+
+// ================= DRAWER DE CARRITO =================
+function openCartDrawer() {
+  const cartDrawer = document.getElementById('cartDrawerOverlay');
+  updateCartDrawerUI(cart.getCartData());
+  cartDrawer?.classList.add('active');
+}
+
+function closeCartDrawer() {
+  const cartDrawer = document.getElementById('cartDrawerOverlay');
+  cartDrawer?.classList.remove('active');
+}
+
+// ================= MODAL POST-AGREGADO AL CARRITO (CONTINUAR O FINALIZAR) =================
+function showAddedToCartModal(product, quantity = 1) {
+  closeProductModal();
+
+  const modal = document.getElementById('addedToCartModal');
+  if (!modal) return;
+
+  const imgEl = document.getElementById('postAddProductImg');
+  const nameEl = document.getElementById('postAddProductName');
+  const qtyEl = document.getElementById('postAddProductQty');
+  const priceEl = document.getElementById('postAddProductPrice');
+
+  if (imgEl) {
+    imgEl.src = product.image || 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp';
+    imgEl.alt = product.name || 'Producto agregado';
+  }
+  if (nameEl) nameEl.textContent = product.name || 'Vino de Cava';
+  if (qtyEl) qtyEl.textContent = `${quantity} ${quantity === 1 ? 'unidad' : 'unidades'}`;
+  if (priceEl) priceEl.textContent = formatCurrency((product.price || 0) * quantity);
+
+  modal.classList.add('active');
+}
+
+function closeAddedToCartModal() {
+  document.getElementById('addedToCartModal')?.classList.remove('active');
+}
+
+function initAddedToCartModal() {
+  const modal = document.getElementById('addedToCartModal');
+  if (!modal) return;
+
+  document.getElementById('postAddContinueBtn')?.addEventListener('click', () => {
+    closeAddedToCartModal();
+  });
+
+  document.getElementById('postAddCloseBtn')?.addEventListener('click', () => {
+    closeAddedToCartModal();
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeAddedToCartModal();
+    }
+  });
+
+  document.getElementById('postAddCheckoutBtn')?.addEventListener('click', () => {
+    closeAddedToCartModal();
+    openCartDrawer();
+  });
 }
 
 // ================= FILTRADO & ORDENAMIENTO =================
@@ -717,16 +784,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Drawer de Carrito (siempre actualiza UI al abrir, incluso vacío)
-  const cartDrawer = document.getElementById('cartDrawerOverlay');
-  const openCart = () => {
-    updateCartDrawerUI(cart.getCartData());
-    cartDrawer?.classList.add('active');
-  };
-  const closeCart = () => cartDrawer?.classList.remove('active');
+  document.getElementById('navCartBtn')?.addEventListener('click', openCartDrawer);
+  document.getElementById('floatingCartBtn')?.addEventListener('click', openCartDrawer);
+  document.getElementById('cartCloseBtn')?.addEventListener('click', closeCartDrawer);
+  document.getElementById('cartDrawerOverlay')?.addEventListener('click', (e) => {
+    if (e.target.id === 'cartDrawerOverlay') closeCartDrawer();
+  });
 
-  document.getElementById('navCartBtn')?.addEventListener('click', openCart);
-  document.getElementById('floatingCartBtn')?.addEventListener('click', openCart);
-  document.getElementById('cartCloseBtn')?.addEventListener('click', closeCart);
+  // Modal Post-Agregado al Carrito
+  initAddedToCartModal();
 
   // Cerrar modales
   document.querySelectorAll('.modal-close-btn').forEach(btn => {
