@@ -244,18 +244,55 @@ function renderPreventaProductsGrid(catId) {
             </div>
           </div>
 
-          <button class="card-add-btn" data-action="add-cart" data-id="${product.id}" ${isOutOfStock ? 'disabled' : ''}>
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
-            ${isOutOfStock ? 'Partida Agotada' : 'Agregar al Carrito'}
-          </button>
+          <div class="card-purchase-row">
+            <div class="card-qty-stepper ${isOutOfStock ? 'disabled' : ''}">
+              <button type="button" class="card-qty-btn dec" data-action="card-qty-dec" data-id="${product.id}" aria-label="Disminuir cantidad" ${isOutOfStock ? 'disabled' : ''}>-</button>
+              <span class="card-qty-val" data-qty-id="${product.id}">1</span>
+              <button type="button" class="card-qty-btn inc" data-action="card-qty-inc" data-id="${product.id}" aria-label="Aumentar cantidad" ${isOutOfStock ? 'disabled' : ''}>+</button>
+            </div>
+            <button class="card-add-btn" data-action="add-cart" data-id="${product.id}" ${isOutOfStock ? 'disabled' : ''}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
+              <span class="card-add-text-desktop">${isOutOfStock ? 'Partida Agotada' : 'Agregar al Carrito'}</span>
+              <span class="card-add-text-mobile">${isOutOfStock ? 'Agotada' : 'Agregar'}</span>
+            </button>
+          </div>
         </div>
       </article>
     `;
 }).join('');
+
+  // Steppers de cantidad en cards
+  grid.querySelectorAll('[data-action="card-qty-inc"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      const valEl = grid.querySelector(`[data-qty-id="${id}"]`);
+      if (!valEl) return;
+      const prod = state.products.find(p => p.id === id);
+      const max = (prod && prod.stock > 0) ? prod.stock : 99;
+      let current = parseInt(valEl.textContent, 10) || 1;
+      if (current < max) {
+        valEl.textContent = current + 1;
+      }
+    });
+  });
+
+  grid.querySelectorAll('[data-action="card-qty-dec"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      const valEl = grid.querySelector(`[data-qty-id="${id}"]`);
+      if (!valEl) return;
+      let current = parseInt(valEl.textContent, 10) || 1;
+      if (current > 1) {
+        valEl.textContent = current - 1;
+      }
+    });
+  });
 
   // Eventos de botones de cada card
   grid.querySelectorAll('[data-action="add-cart"]').forEach(btn => {
@@ -264,8 +301,11 @@ function renderPreventaProductsGrid(catId) {
       const id = btn.getAttribute('data-id');
       const prod = state.products.find(p => p.id === id);
       if (prod) {
-        cart.addItem(prod, 1);
-        showAddedToCartModal(prod, 1);
+        const valEl = btn.closest('.card-purchase-row')?.querySelector(`[data-qty-id="${id}"]`);
+        const qty = parseInt(valEl?.textContent, 10) || 1;
+        cart.addItem(prod, qty);
+        showAddedToCartModal(prod, qty);
+        if (valEl) valEl.textContent = '1';
       }
     });
   });
@@ -282,7 +322,7 @@ function renderPreventaProductsGrid(catId) {
   // Clic en la card completa para ver descripción más detallada
   grid.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', (e) => {
-      if (e.target.closest('[data-action="add-cart"]')) return;
+      if (e.target.closest('.card-purchase-row') || e.target.closest('.card-qty-stepper') || e.target.closest('[data-action="add-cart"]')) return;
       const id = card.getAttribute('data-id');
       const prod = state.products.find(p => p.id === id);
       if (prod) openProductModal(prod);
@@ -337,18 +377,55 @@ function renderProducts() {
             </div>
           </div>
 
-          <button class="card-add-btn" data-action="add-cart" data-id="${product.id}" ${isOutOfStock ? 'disabled' : ''}>
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
-            ${isOutOfStock ? 'Partida Agotada' : 'Agregar al Carrito'}
-          </button>
+          <div class="card-purchase-row">
+            <div class="card-qty-stepper ${isOutOfStock ? 'disabled' : ''}">
+              <button type="button" class="card-qty-btn dec" data-action="card-qty-dec" data-id="${product.id}" aria-label="Disminuir cantidad" ${isOutOfStock ? 'disabled' : ''}>-</button>
+              <span class="card-qty-val" data-qty-id="${product.id}">1</span>
+              <button type="button" class="card-qty-btn inc" data-action="card-qty-inc" data-id="${product.id}" aria-label="Aumentar cantidad" ${isOutOfStock ? 'disabled' : ''}>+</button>
+            </div>
+            <button class="card-add-btn" data-action="add-cart" data-id="${product.id}" ${isOutOfStock ? 'disabled' : ''}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
+              <span class="card-add-text-desktop">${isOutOfStock ? 'Partida Agotada' : 'Agregar al Carrito'}</span>
+              <span class="card-add-text-mobile">${isOutOfStock ? 'Agotada' : 'Agregar'}</span>
+            </button>
+          </div>
         </div>
       </article>
     `;
 }).join('');
+
+  // Steppers de cantidad en cards
+  grid.querySelectorAll('[data-action="card-qty-inc"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      const valEl = grid.querySelector(`[data-qty-id="${id}"]`);
+      if (!valEl) return;
+      const prod = state.products.find(p => p.id === id);
+      const max = (prod && prod.stock > 0) ? prod.stock : 99;
+      let current = parseInt(valEl.textContent, 10) || 1;
+      if (current < max) {
+        valEl.textContent = current + 1;
+      }
+    });
+  });
+
+  grid.querySelectorAll('[data-action="card-qty-dec"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      const valEl = grid.querySelector(`[data-qty-id="${id}"]`);
+      if (!valEl) return;
+      let current = parseInt(valEl.textContent, 10) || 1;
+      if (current > 1) {
+        valEl.textContent = current - 1;
+      }
+    });
+  });
 
   // Attach card event listeners
   grid.querySelectorAll('[data-action="add-cart"]').forEach(btn => {
@@ -357,8 +434,11 @@ function renderProducts() {
       const id = btn.getAttribute('data-id');
       const prod = state.products.find(p => p.id === id);
       if (prod) {
-        cart.addItem(prod, 1);
-        showAddedToCartModal(prod, 1);
+        const valEl = btn.closest('.card-purchase-row')?.querySelector(`[data-qty-id="${id}"]`);
+        const qty = parseInt(valEl?.textContent, 10) || 1;
+        cart.addItem(prod, qty);
+        showAddedToCartModal(prod, qty);
+        if (valEl) valEl.textContent = '1';
       }
     });
   });
@@ -367,6 +447,16 @@ function renderProducts() {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const id = btn.getAttribute('data-id');
+      const prod = state.products.find(p => p.id === id);
+      if (prod) openProductModal(prod);
+    });
+  });
+
+  // Clic en la card completa para ver descripción más detallada
+  grid.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.card-purchase-row') || e.target.closest('.card-qty-stepper') || e.target.closest('[data-action="add-cart"]')) return;
+      const id = card.getAttribute('data-id');
       const prod = state.products.find(p => p.id === id);
       if (prod) openProductModal(prod);
     });
@@ -1397,14 +1487,22 @@ function renderPromosGrid() {
             </div>
           </div>
 
-          <button class="promo-buy-btn" data-action="add-promo" data-id="${promo.id}" type="button">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
-            Agregar al Carrito
-          </button>
+          <div class="promo-purchase-row">
+            <div class="card-qty-stepper ${isOutOfStock ? 'disabled' : ''}">
+              <button type="button" class="card-qty-btn dec" data-action="promo-qty-dec" data-id="${promo.id}" aria-label="Disminuir cantidad" ${isOutOfStock ? 'disabled' : ''}>-</button>
+              <span class="card-qty-val" data-promo-qty-id="${promo.id}">1</span>
+              <button type="button" class="card-qty-btn inc" data-action="promo-qty-inc" data-id="${promo.id}" aria-label="Aumentar cantidad" ${isOutOfStock ? 'disabled' : ''}>+</button>
+            </div>
+            <button class="promo-buy-btn" data-action="add-promo" data-id="${promo.id}" type="button" ${isOutOfStock ? 'disabled' : ''}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
+              <span class="card-add-text-desktop">${isOutOfStock ? 'Partida Agotada' : 'Agregar al Carrito'}</span>
+              <span class="card-add-text-mobile">${isOutOfStock ? 'Agotada' : 'Agregar'}</span>
+            </button>
+          </div>
         </div>
       </article>
     `;
@@ -1413,6 +1511,35 @@ function renderPromosGrid() {
   // Inicializar carruseles interactivos
   initPromoCarousels();
 
+  // Steppers de promos: Incrementar / Decrementar
+  container.querySelectorAll('[data-action="promo-qty-inc"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      const valEl = container.querySelector(`[data-promo-qty-id="${id}"]`);
+      if (!valEl) return;
+      const prod = state.products.find(p => p.id === id);
+      const max = (prod && prod.stock > 0) ? prod.stock : 99;
+      let current = parseInt(valEl.textContent, 10) || 1;
+      if (current < max) {
+        valEl.textContent = current + 1;
+      }
+    });
+  });
+
+  container.querySelectorAll('[data-action="promo-qty-dec"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.getAttribute('data-id');
+      const valEl = container.querySelector(`[data-promo-qty-id="${id}"]`);
+      if (!valEl) return;
+      let current = parseInt(valEl.textContent, 10) || 1;
+      if (current > 1) {
+        valEl.textContent = current - 1;
+      }
+    });
+  });
+
   // Evento agregar al carrito
   container.querySelectorAll('[data-action="add-promo"]').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -1420,8 +1547,11 @@ function renderPromosGrid() {
       const id = btn.getAttribute('data-id');
       const prod = state.products.find(p => p.id === id);
       if (prod) {
-        cart.addItem(prod, 1);
-        showAddedToCartModal(prod, 1);
+        const valEl = btn.closest('.promo-purchase-row')?.querySelector(`[data-promo-qty-id="${id}"]`);
+        const qty = parseInt(valEl?.textContent, 10) || 1;
+        cart.addItem(prod, qty);
+        showAddedToCartModal(prod, qty);
+        if (valEl) valEl.textContent = '1';
       }
     });
   });
@@ -1429,7 +1559,7 @@ function renderPromosGrid() {
   // Evento clic en la card para ver descripción detallada (modal)
   container.querySelectorAll('.promo-card-item').forEach(card => {
     card.addEventListener('click', (e) => {
-      if (e.target.closest('[data-action="add-promo"]')) return;
+      if (e.target.closest('.promo-purchase-row') || e.target.closest('.card-qty-stepper') || e.target.closest('[data-action="add-promo"]')) return;
       if (e.target.closest('.promo-carousel-arrow')) return;
       if (e.target.closest('.promo-carousel-dot')) return;
       const id = card.getAttribute('data-id');
