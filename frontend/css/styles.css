@@ -6675,5 +6675,48 @@ body[data-festivity="dia_del_amigo"] .main-header {
   }
 }
 
+/* ==========================================================================
+   AVISO DE USUARIO ACTIVO Y BOTÓN CAMBIAR EN EL CARRITO
+   ========================================================================== */
+.cart-user-status-notice {
+  margin-bottom: 0.85rem;
+}
+
+.cart-user-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.82rem;
+  color: var(--text-light, #eee);
+}
+
+.cart-user-badge strong {
+  color: var(--gold-champagne);
+}
+
+.cart-change-user-btn {
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--gold-light);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.cart-change-user-btn:hover {
+  background: rgba(212, 175, 55, 0.2);
+  color: #fff;
+  border-color: var(--gold-primary);
+}
+
 
 

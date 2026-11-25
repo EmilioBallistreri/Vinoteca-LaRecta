@@ -423,13 +423,6 @@ function getCustomerForOrder() {
       phone: formalUser.phone || ''
     };
   }
-  try {
-    const saved = localStorage.getItem('vlr_guest_customer');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      if (parsed && parsed.name) return parsed;
-    }
-  } catch (e) {}
   return null;
 }
 
@@ -457,7 +450,12 @@ function handleWhatsAppCheckout() {
     if (modal) {
       modal.classList.add('active');
       const nameInput = document.getElementById('wspCustomerName');
-      if (nameInput) setTimeout(() => nameInput.focus(), 150);
+      const phoneInput = document.getElementById('wspCustomerPhone');
+      if (nameInput) {
+        nameInput.value = '';
+        setTimeout(() => nameInput.focus(), 150);
+      }
+      if (phoneInput) phoneInput.value = '';
     }
   }
 }
@@ -486,11 +484,34 @@ function initWspExpressModal() {
         return;
       }
 
+      // Auto-registrar al cliente y guardar en la sesión activa
+      const cleanPhone = phone.replace(/\D/g, '');
+      const userEmail = `cliente_${cleanPhone || Date.now()}@vinotecalarecta.com.ar`;
+      const clientUser = {
+        id: 'cli_' + Date.now().toString(36),
+        name: name,
+        phone: phone,
+        email: userEmail,
+        role: 'cliente',
+        createdAt: new Date().toISOString()
+      };
+
+      auth.setUser(clientUser);
       try {
-        localStorage.setItem('vlr_guest_customer', JSON.stringify({ name, phone }));
+        localStorage.removeItem('vlr_guest_customer');
       } catch (err) {}
 
-      executeWhatsAppOrder({ name, phone });
+      // Intentar persistir en backend de forma asíncrona
+      try {
+        api.register({
+          name: name,
+          phone: phone,
+          email: userEmail,
+          password: 'vlr_' + (cleanPhone.slice(-4) || '1234')
+        }).catch(() => null);
+      } catch (err) {}
+
+      executeWhatsAppOrder(clientUser);
     });
   }
 }
@@ -636,6 +657,31 @@ function updateCartDrawerUI(cartData) {
 
   if (cuotasEl) {
     cuotasEl.textContent = 'Medios de pago: Efectivo al retirar o Transferencia con Alias';
+  }
+
+  const noticeContainer = document.getElementById('cartUserStatusNotice');
+  if (noticeContainer) {
+    const currentUser = auth.getUser();
+    if (currentUser && currentUser.name) {
+      noticeContainer.innerHTML = `
+        <div class="cart-user-badge">
+          <span>Comprando como: <strong>${currentUser.name}</strong></span>
+          <button type="button" id="cartChangeUserBtn" class="cart-change-user-btn" title="Cambiar usuario o comprar con otros datos">Cambiar</button>
+        </div>
+      `;
+      document.getElementById('cartChangeUserBtn')?.addEventListener('click', () => {
+        auth.setUser(null);
+        try { localStorage.removeItem('vlr_guest_customer'); } catch (e) {}
+        const nameInput = document.getElementById('wspCustomerName');
+        const phoneInput = document.getElementById('wspCustomerPhone');
+        if (nameInput) nameInput.value = '';
+        if (phoneInput) phoneInput.value = '';
+        showToast('Sesión desvinculada. Puedes ingresar tus nuevos datos.');
+        updateCartDrawerUI(cart.getCartData());
+      });
+    } else {
+      noticeContainer.innerHTML = '';
+    }
   }
 
   if (wspBtn) {
@@ -1134,8 +1180,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // Reanudar checkout tras login/registro
+  // Reanudar checkout tras login/registro y sincronizar carrito
   window.addEventListener('vlr:auth-changed', (e) => {
+    updateCartDrawerUI(cart.getCartData());
     if (e.detail?.user && sessionStorage.getItem('vlr_pending_checkout') === 'true') {
       sessionStorage.removeItem('vlr_pending_checkout');
       setTimeout(() => {

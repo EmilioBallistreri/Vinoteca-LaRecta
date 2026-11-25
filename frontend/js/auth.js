@@ -43,6 +43,9 @@ export const auth = {
 
   logout() {
     this.setUser(null);
+    try {
+      localStorage.removeItem('vlr_guest_customer');
+    } catch (e) {}
     window.location.reload();
   },
 
