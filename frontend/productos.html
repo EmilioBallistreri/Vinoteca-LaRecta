@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/css/styles.css?v=20261125_autoreg" />
+  <link rel="stylesheet" href="/css/styles.css?v=20261125_client_auth" />
   <style>
     /* Estilos específicos para la vista de Catálogo y Subcategorías */
     .catalog-hero-header {
@@ -499,7 +499,7 @@
       </div>
 
       <div class="footer-bottom">
-        <div>&copy; 2024 Vinoteca La Recta. Todos los derechos reservados.</div>
+        <div>&copy; 2024 Vinoteca La Recta. Todos los derechos reservados.<button id="secretAdminTrigger" class="secret-admin-trigger" title="Acceso de Gestión" aria-label="Acceso de Gestión">❖</button></div>
         <div>Av. Recta Martinolli 8255 • Argüello, Córdoba</div>
         <p class="footer-legal-notice">
           Beber con moderación. Prohibida su venta a menores de 18 años. Ley Nacional de Lucha contra el Alcoholismo N° 24.788.
@@ -670,6 +670,10 @@
           <input type="text" id="wspCustomerName" required class="form-input" placeholder="Ej: Juan Pérez" autofocus />
         </div>
         <div class="form-group">
+          <label class="form-label" for="wspCustomerDni">DNI *</label>
+          <input type="text" id="wspCustomerDni" required class="form-input" placeholder="Ej: 38123456" />
+        </div>
+        <div class="form-group">
           <label class="form-label" for="wspCustomerPhone">Teléfono / WhatsApp de Contacto *</label>
           <input type="tel" id="wspCustomerPhone" required class="form-input" placeholder="Ej: 351 234 5678" />
         </div>
@@ -714,41 +718,98 @@
         <button id="tabRegisterBtn" class="auth-tab-btn">Registrarme como Cliente</button>
       </div>
 
+      <!-- Login Form (Cliente) -->
       <form id="loginForm">
         <div class="form-group">
-          <label class="form-label" for="loginEmail">Correo Electrónico</label>
-          <input type="email" id="loginEmail" required class="form-input" placeholder="ejemplo@correo.com" />
+          <label class="form-label" for="loginName">Nombre y Apellido *</label>
+          <input type="text" id="loginName" required class="form-input" placeholder="Tu nombre completo" />
         </div>
         <div class="form-group">
-          <label class="form-label" for="loginPassword">Contraseña</label>
-          <input type="password" id="loginPassword" required class="form-input" placeholder="••••••••" />
+          <label class="form-label" for="loginDni">DNI *</label>
+          <input type="text" id="loginDni" required class="form-input" placeholder="Ej: 38123456" />
         </div>
-        <button type="submit" class="auth-submit-btn">Iniciar Sesión</button>
+        <div class="form-group">
+          <label class="form-label" for="loginPhone">Teléfono / WhatsApp de Contacto *</label>
+          <input type="tel" id="loginPhone" required class="form-input" placeholder="Ej: 351 234 5678" />
+        </div>
+        <button type="submit" class="auth-submit-btn">Ingresar a mi Cuenta</button>
       </form>
 
+      <!-- Register Form (Cliente) -->
       <form id="registerForm" style="display: none;">
         <div class="form-group">
-          <label class="form-label" for="regName">Nombre y Apellido</label>
-          <input type="text" id="regName" required class="form-input" placeholder="Nombre completo" />
+          <label class="form-label" for="regName">Nombre y Apellido *</label>
+          <input type="text" id="regName" required class="form-input" placeholder="Tu nombre completo" />
         </div>
         <div class="form-group">
-          <label class="form-label" for="regEmail">Correo Electrónico</label>
-          <input type="email" id="regEmail" required class="form-input" placeholder="correo@ejemplo.com" />
+          <label class="form-label" for="regDni">DNI *</label>
+          <input type="text" id="regDni" required class="form-input" placeholder="Ej: 38123456" />
         </div>
         <div class="form-group">
-          <label class="form-label" for="regPhone">Teléfono de Contacto / WhatsApp</label>
-          <input type="tel" id="regPhone" class="form-input" placeholder="+54 351 1234567" />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="regAddress">Barrio o Localidad en Córdoba (Opcional)</label>
-          <input type="text" id="regAddress" class="form-input" placeholder="Ej: Argüello, Villa Belgrano, Cerro de las Rosas" />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="regPassword">Contraseña Personal</label>
-          <input type="password" id="regPassword" required class="form-input" placeholder="••••••••" />
+          <label class="form-label" for="regPhone">Teléfono de Contacto / WhatsApp *</label>
+          <input type="tel" id="regPhone" required class="form-input" placeholder="Ej: 351 234 5678" />
         </div>
         <button type="submit" class="auth-submit-btn">Crear mi Cuenta de Cliente</button>
       </form>
+
+      <div id="authError" class="auth-error-msg"></div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: MIS PEDIDOS ================= -->
+  <div id="myOrdersModal" class="modal-overlay">
+    <div class="modal-card modal-large orders-modal-card">
+      <button class="modal-close-btn" title="Cerrar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="orders-modal-header">
+        <div class="orders-header-badge">📋</div>
+        <div>
+          <h3 class="orders-modal-title">Mis Pedidos Realizados</h3>
+          <p class="orders-modal-subtitle">Registro de actividad y estado de tus compras en Vinoteca La Recta</p>
+        </div>
+      </div>
+
+      <div id="myOrdersContent" class="orders-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL OCULTO: ACCESO ADMINISTRACIÓN / DUEÑOS ================= -->
+  <div id="adminSecretModal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 440px; border: 1px solid var(--gold-primary);">
+      <button class="modal-close-btn" title="Cerrar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: rgba(197, 160, 89, 0.15); border: 1px solid var(--gold-primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; font-size: 1.5rem;">🔐</div>
+        <h3 style="font-family: var(--font-serif); font-size: 1.65rem; color: #fff;">Acceso de Propietarios</h3>
+        <p style="font-size: 0.8rem; color: var(--gold-champagne);">Panel administrativo confidencial de Vinoteca La Recta</p>
+      </div>
+
+      <form id="adminSecretLoginForm">
+        <div class="form-group">
+          <label class="form-label" for="adminSecretEmail">Correo Electrónico de la Vinoteca</label>
+          <input type="email" id="adminSecretEmail" required class="form-input" placeholder="vinotecalarecta7@gmail.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="adminSecretPassword">Contraseña de Administración</label>
+          <input type="password" id="adminSecretPassword" required class="form-input" placeholder="••••••••" />
+        </div>
+        <button type="submit" class="auth-submit-btn" style="background: linear-gradient(135deg, var(--gold-primary), #8f7028); color: #000; font-weight: 700;">
+          Ingresar al Panel de Administración &rarr;
+        </button>
+        <div id="adminSecretError" class="auth-error-msg"></div>
+      </form>
+    </div>
+  </div>
 
       <div id="authError" class="auth-error-msg"></div>
     </div>
@@ -942,6 +1003,6 @@
   <div id="toastContainer" class="toast-container"></div>
 
   <!-- Script específico de la página de productos -->
-  <script type="module" src="/js/productos.js?v=20261125_autoreg"></script>
+  <script type="module" src="/js/productos.js?v=20261125_client_auth"></script>
 </body>
 </html>

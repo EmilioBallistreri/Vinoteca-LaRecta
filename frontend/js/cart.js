@@ -56,6 +56,7 @@ export const cart = {
     let message = `🍷 *PEDIDO - VINOTECA LA RECTA*\n\n`;
     if (user && user.name) {
       message += `*Cliente:* ${user.name}\n`;
+      if (user.dni) message += `*DNI:* ${user.dni}\n`;
       if (user.phone) message += `*Teléfono:* ${user.phone}\n`;
       message += `\n`;
     }

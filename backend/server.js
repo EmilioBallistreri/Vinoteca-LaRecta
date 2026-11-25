@@ -62,12 +62,12 @@ app.post('/api/auth/login', (req, res) => {
 
 app.post('/api/auth/register', (req, res) => {
   try {
-    const { name, email, password, phone, address } = req.body;
+    const { name, email, password, phone, address, dni } = req.body;
     if (!name || !email || !password) {
       return res.status(400).json({ error: 'Nombre, email y contraseña son obligatorios.' });
     }
 
-    const newUser = db.registerClient({ name, email, password, phone, address });
+    const newUser = db.registerClient({ name, email, password, phone, address, dni });
     res.status(201).json({
       success: true,
       user: newUser

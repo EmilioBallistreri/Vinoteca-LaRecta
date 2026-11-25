@@ -868,6 +868,28 @@ function getCustomerForOrder() {
 
 function executeWhatsAppOrder(customer) {
   const url = cart.getWhatsAppOrderUrl(customer);
+
+  // Registrar pedido para que quede en el historial de "Mis Pedidos" del cliente
+  try {
+    const orderData = {
+      customer: {
+        userId: customer.id || auth.getUser()?.id || '',
+        name: customer.name,
+        dni: customer.dni || auth.getUser()?.dni || '',
+        phone: customer.phone,
+        email: customer.email || auth.getUser()?.email || ''
+      },
+      items: [...cart.items],
+      subtotal: cart.getSubtotal(),
+      total: cart.getSubtotal(),
+      paymentMethod: 'WhatsApp (Efectivo o Transferencia al retirar)',
+      deliveryMethod: 'Retiro en el local (Av. Recta Martinolli 8255)',
+      channel: 'WhatsApp',
+      status: 'Pendiente'
+    };
+    api.createOrder(orderData).catch(() => null);
+  } catch (err) {}
+
   window.open(url, '_blank');
   cart.clear();
   closeCartDrawer();
@@ -889,11 +911,13 @@ function handleWhatsAppCheckout() {
     if (modal) {
       modal.classList.add('active');
       const nameInput = document.getElementById('wspCustomerName');
+      const dniInput = document.getElementById('wspCustomerDni');
       const phoneInput = document.getElementById('wspCustomerPhone');
       if (nameInput) {
         nameInput.value = '';
         setTimeout(() => nameInput.focus(), 150);
       }
+      if (dniInput) dniInput.value = '';
       if (phoneInput) phoneInput.value = '';
     }
   }
@@ -916,19 +940,22 @@ function initWspExpressModal() {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('wspCustomerName')?.value.trim();
+      const dni = document.getElementById('wspCustomerDni')?.value.trim();
       const phone = document.getElementById('wspCustomerPhone')?.value.trim();
 
-      if (!name || !phone) {
-        showToast('Por favor completa tu nombre y teléfono para continuar.');
+      if (!name || !dni || !phone) {
+        showToast('Por favor completa Nombre, DNI y Teléfono para continuar.');
         return;
       }
 
       // Auto-registrar al cliente y guardar en la sesión activa
       const cleanPhone = phone.replace(/\D/g, '');
-      const userEmail = `cliente_${cleanPhone || Date.now()}@vinotecalarecta.com.ar`;
+      const cleanDni = dni.replace(/\D/g, '');
+      const userEmail = `cliente_${cleanPhone || cleanDni || Date.now()}@vinotecalarecta.com.ar`;
       const clientUser = {
         id: 'cli_' + Date.now().toString(36),
         name: name,
+        dni: dni,
         phone: phone,
         email: userEmail,
         role: 'cliente',
@@ -944,6 +971,7 @@ function initWspExpressModal() {
       try {
         api.register({
           name: name,
+          dni: dni,
           phone: phone,
           email: userEmail,
           password: 'vlr_' + (cleanPhone.slice(-4) || '1234')
@@ -951,6 +979,166 @@ function initWspExpressModal() {
       } catch (err) {}
 
       executeWhatsAppOrder(clientUser);
+    });
+  }
+}
+
+// ================= MIS PEDIDOS (ACTIVIDAD DEL CLIENTE) =================
+
+async function openMyOrdersModal() {
+  const user = auth.getUser();
+  if (!user) {
+    showToast('Por favor ingresa a tu cuenta para consultar tus pedidos.');
+    auth.openModal('login');
+    return;
+  }
+
+  const modal = document.getElementById('myOrdersModal');
+  const content = document.getElementById('myOrdersContent');
+  if (!modal || !content) return;
+
+  modal.classList.add('active');
+  content.innerHTML = `
+    <div class="orders-loading-state">
+      <p>Consultando tu registro de pedidos...</p>
+    </div>
+  `;
+
+  try {
+    const allOrders = await api.getOrders();
+    const cleanPhone = (user.phone || '').replace(/\D/g, '');
+    const cleanDni = (user.dni || '').replace(/\D/g, '');
+    const userEmail = (user.email || '').toLowerCase().trim();
+    const userName = (user.name || '').toLowerCase().trim();
+
+    const myOrders = allOrders.filter(order => {
+      const cust = order.customer || {};
+      const orderPhone = (cust.phone || '').replace(/\D/g, '');
+      const orderDni = (cust.dni || '').replace(/\D/g, '');
+      const orderEmail = (cust.email || '').toLowerCase().trim();
+      const orderName = (cust.name || '').toLowerCase().trim();
+      const orderUserId = cust.userId;
+
+      if (user.id && orderUserId && orderUserId === user.id) return true;
+      if (cleanPhone && orderPhone && (orderPhone.endsWith(cleanPhone) || cleanPhone.endsWith(orderPhone))) return true;
+      if (cleanDni && orderDni && orderDni === cleanDni) return true;
+      if (userEmail && orderEmail && userEmail === orderEmail) return true;
+      if (userName && orderName && userName === orderName) return true;
+      return false;
+    });
+
+    if (myOrders.length === 0) {
+      content.innerHTML = `
+        <div class="orders-empty-state">
+          <div class="empty-icon">🍷</div>
+          <h4>No tienes pedidos registrados todavía</h4>
+          <p>Cuando realices un pedido por la Web o vía WhatsApp, quedará registrado aquí con el detalle de etiquetas y su estado de preparación.</p>
+          <button type="button" class="btn-primary" id="ordersEmptyCloseBtn" style="margin: 0 auto; padding: 0.6rem 1.4rem;">
+            Explorar Colecciones
+          </button>
+        </div>
+      `;
+      document.getElementById('ordersEmptyCloseBtn')?.addEventListener('click', () => {
+        modal.classList.remove('active');
+      });
+      return;
+    }
+
+    content.innerHTML = `
+      <div class="orders-client-list">
+        ${myOrders.map(order => {
+          const statusStr = order.status || 'Pendiente';
+          const statusSlug = statusStr.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
+          const dateFormatted = order.createdAt ? new Date(order.createdAt).toLocaleDateString('es-AR', {
+            day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+          }) : 'Reciente';
+
+          const itemsList = Array.isArray(order.items) ? order.items : [];
+          const orderTotal = order.total || order.subtotal || 0;
+
+          return `
+            <div class="order-client-card">
+              <div class="order-client-card-header">
+                <div class="order-client-meta-left">
+                  <span class="order-client-id">Pedido #${order.id}</span>
+                  <span class="order-client-date">Fecha: ${dateFormatted} hs</span>
+                </div>
+                <span class="order-status-badge status-${statusSlug}">${statusStr}</span>
+              </div>
+
+              <div class="order-client-items-box">
+                ${itemsList.map(item => `
+                  <div class="order-client-item-line">
+                    <span>${item.quantity}x ${item.name}</span>
+                    <strong>${formatCurrency(item.price * item.quantity)}</strong>
+                  </div>
+                `).join('')}
+              </div>
+
+              <div class="order-client-card-footer">
+                <div class="order-client-total-wrap">
+                  <span>Total Abonado / A abonar:</span>
+                  <strong>${formatCurrency(orderTotal)}</strong>
+                </div>
+                <a href="https://wa.me/5493512460017?text=${encodeURIComponent(`Hola Vinoteca La Recta! Quisiera consultar sobre el estado de mi Pedido #${order.id}.`)}" target="_blank" rel="noopener noreferrer" class="order-client-wsp-btn">
+                  Consultar por WhatsApp
+                </a>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  } catch (err) {
+    content.innerHTML = `
+      <div class="orders-loading-state" style="color: #e74c3c;">
+        <p>Ocurrió un error al cargar tus pedidos. Por favor intenta nuevamente.</p>
+      </div>
+    `;
+  }
+}
+
+// ================= ACCESO OCULTO PARA DUEÑOS / ADMINISTRACIÓN =================
+
+function initSecretAdminAccess() {
+  const trigger = document.getElementById('secretAdminTrigger');
+  const modal = document.getElementById('adminSecretModal');
+  const form = document.getElementById('adminSecretLoginForm');
+  const errEl = document.getElementById('adminSecretError');
+
+  if (trigger && modal) {
+    trigger.addEventListener('click', () => {
+      modal.classList.add('active');
+      if (errEl) errEl.textContent = '';
+      setTimeout(() => document.getElementById('adminSecretEmail')?.focus(), 150);
+    });
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+      modal?.classList.add('active');
+      if (errEl) errEl.textContent = '';
+      setTimeout(() => document.getElementById('adminSecretEmail')?.focus(), 150);
+    }
+  });
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('adminSecretEmail')?.value.trim();
+      const pass = document.getElementById('adminSecretPassword')?.value;
+
+      try {
+        if (errEl) errEl.textContent = 'Verificando credenciales de administración...';
+        const res = await api.login(email, pass);
+        if (!res.user.role.includes('admin')) {
+          throw new Error('Esta cuenta no posee privilegios administrativos.');
+        }
+        auth.setUser(res.user);
+        window.location.href = '/admin.html';
+      } catch (err) {
+        if (errEl) errEl.textContent = err.message || 'Credenciales incorrectas.';
+      }
     });
   }
 }
@@ -1235,53 +1423,107 @@ function setupEventListeners() {
   document.getElementById('tabLoginBtn')?.addEventListener('click', () => auth.switchTab('login'));
   document.getElementById('tabRegisterBtn')?.addEventListener('click', () => auth.switchTab('register'));
 
-  // Login form submit
+  // Acceso Administrativo Oculto & Mis Pedidos
+  initSecretAdminAccess();
+  window.addEventListener('vlr:view-orders', () => openMyOrdersModal());
+
+  // Login form submit (Cliente: Nombre, DNI y Teléfono)
   document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const pass = document.getElementById('loginPassword').value;
+    const name = document.getElementById('loginName')?.value.trim();
+    const dni = document.getElementById('loginDni')?.value.trim();
+    const phone = document.getElementById('loginPhone')?.value.trim();
     const errEl = document.getElementById('authError');
 
+    if (!name || !dni || !phone) {
+      if (errEl) errEl.textContent = 'Por favor completa Nombre, DNI y Teléfono.';
+      return;
+    }
+
     try {
-      if (errEl) errEl.textContent = 'Verificando credenciales...';
-      const res = await api.login(email, pass);
-      auth.setUser(res.user);
-      auth.closeModal();
-      const isAdmin = auth.isAdmin();
-      if (isAdmin) {
-        showToast(`¡Bienvenido Administrador ${res.user.name}! Rol asignado: Administrador.`);
+      if (errEl) errEl.textContent = 'Accediendo a tu cuenta...';
+      const allUsers = await api.getUsers().catch(() => []);
+      const cleanPhone = phone.replace(/\D/g, '');
+      const cleanDni = dni.replace(/\D/g, '');
+
+      const found = allUsers.find(u => {
+        const uPhone = (u.phone || '').replace(/\D/g, '');
+        const uDni = (u.dni || '').replace(/\D/g, '');
+        return (cleanDni && uDni === cleanDni) || (cleanPhone && uPhone === cleanPhone);
+      });
+
+      let userToSet;
+      if (found) {
+        userToSet = { ...found, name: name || found.name, dni: dni || found.dni, phone: phone || found.phone };
       } else {
-        showToast(`¡Bienvenido/a ${res.user.name}! Rol asignado: Cliente.`);
+        const userEmail = `cliente_${cleanPhone || cleanDni || Date.now()}@vinotecalarecta.com.ar`;
+        userToSet = {
+          id: 'cli_' + Date.now().toString(36),
+          name: name,
+          dni: dni,
+          phone: phone,
+          email: userEmail,
+          role: 'cliente',
+          createdAt: new Date().toISOString()
+        };
+        api.register({
+          name: name,
+          dni: dni,
+          phone: phone,
+          email: userEmail,
+          password: 'vlr_' + (cleanPhone.slice(-4) || '1234')
+        }).catch(() => null);
       }
+
+      auth.setUser(userToSet);
+      auth.closeModal();
+      showToast(`¡Bienvenido/a ${userToSet.name}! Sesión iniciada.`);
     } catch (err) {
-      if (errEl) errEl.textContent = err.message;
+      if (errEl) errEl.textContent = err.message || 'Error al iniciar sesión.';
     }
   });
 
-  // Register form submit
+  // Register form submit (Cliente: Nombre, DNI y Teléfono)
   document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const name = document.getElementById('regName').value;
-    const email = document.getElementById('regEmail').value;
-    const phone = document.getElementById('regPhone').value;
-    const address = document.getElementById('regAddress').value;
-    const pass = document.getElementById('regPassword').value;
+    const name = document.getElementById('regName')?.value.trim();
+    const dni = document.getElementById('regDni')?.value.trim();
+    const phone = document.getElementById('regPhone')?.value.trim();
     const errEl = document.getElementById('authError');
 
+    if (!name || !dni || !phone) {
+      if (errEl) errEl.textContent = 'Por favor completa Nombre, DNI y Teléfono.';
+      return;
+    }
+
     try {
-      if (errEl) errEl.textContent = 'Registrando cuenta...';
-      const res = await api.register({ name, email, phone, address, password: pass });
-      auth.setUser(res.user);
+      if (errEl) errEl.textContent = 'Creando cuenta de cliente...';
+      const cleanPhone = phone.replace(/\D/g, '');
+      const cleanDni = dni.replace(/\D/g, '');
+      const userEmail = `cliente_${cleanPhone || cleanDni || Date.now()}@vinotecalarecta.com.ar`;
+      const newUser = {
+        id: 'cli_' + Date.now().toString(36),
+        name: name,
+        dni: dni,
+        phone: phone,
+        email: userEmail,
+        role: 'cliente',
+        createdAt: new Date().toISOString()
+      };
+
+      auth.setUser(newUser);
+      api.register({
+        name: name,
+        dni: dni,
+        phone: phone,
+        email: userEmail,
+        password: 'vlr_' + (cleanPhone.slice(-4) || '1234')
+      }).catch(() => null);
+
       auth.closeModal();
-      
-      const isAdmin = auth.isAdmin();
-      if (isAdmin) {
-        showToast(`¡Cuenta de Administrador activada! Bienvenido/a ${res.user.name}. Puede abrir el Panel de Administración.`);
-      } else {
-        showToast(`Cuenta creada exitosamente. Bienvenido/a ${res.user.name}.`);
-      }
+      showToast(`¡Cuenta creada con éxito! Bienvenido/a ${newUser.name}.`);
     } catch (err) {
-      if (errEl) errEl.textContent = err.message;
+      if (errEl) errEl.textContent = err.message || 'Error al crear la cuenta.';
     }
   });
 

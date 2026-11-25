@@ -493,6 +493,7 @@ module.exports = {
       name: data.name,
       email: data.email,
       password: data.password,
+      dni: data.dni || '',
       phone: data.phone || '',
       address: data.address || '',
       role: isSuperAdminEmail ? 'superadministrador' : 'cliente',

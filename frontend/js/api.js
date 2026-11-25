@@ -227,6 +227,7 @@ export const api = {
         const localUsers = getLocalUsers().filter(u => u.email.toLowerCase() !== emailNorm);
         localUsers.push({
           ...data.user,
+          dni: clientData.dni || data.user.dni || '',
           password: clientData.password
         });
         saveLocalUsers(localUsers);
@@ -251,6 +252,7 @@ export const api = {
       name: (clientData.name || existing?.name || 'Cliente').trim(),
       email: emailNorm,
       password: clientData.password,
+      dni: clientData.dni || existing?.dni || '',
       phone: clientData.phone || existing?.phone || '',
       address: clientData.address || existing?.address || '',
       role: isSuperAdminEmail ? 'superadministrador' : 'cliente',

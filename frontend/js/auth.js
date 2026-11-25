@@ -86,7 +86,11 @@ export const auth = {
           <div id="userDropdownContent" class="dropdown-content">
             <div class="dropdown-header">
               <span class="dropdown-user-fullname">${this.currentUser.name}</span>
-              <span class="dropdown-user-email">${this.currentUser.email}</span>
+              ${isAdmin ? `
+                <span class="dropdown-user-email">${this.currentUser.email}</span>
+              ` : `
+                <span class="dropdown-user-phone">${this.currentUser.phone ? `Tel: ${this.currentUser.phone}` : ''}${this.currentUser.dni ? ` • DNI: ${this.currentUser.dni}` : ''}</span>
+              `}
               <span class="dropdown-user-role ${this.currentUser.role}">Rol asignado: ${roleLabel}</span>
             </div>
             ${isAdmin ? `
@@ -134,7 +138,7 @@ export const auth = {
       const viewOrdersBtn = document.getElementById('viewOrdersBtn');
       if (viewOrdersBtn) {
         viewOrdersBtn.onclick = () => {
-          window.dispatchEvent(new CustomEvent('vlr:view-orders', { detail: { email: this.currentUser.email } }));
+          window.dispatchEvent(new CustomEvent('vlr:view-orders', { detail: { user: this.currentUser, email: this.currentUser.email } }));
         };
       }
     }
