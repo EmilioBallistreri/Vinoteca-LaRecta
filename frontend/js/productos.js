@@ -413,6 +413,88 @@ function initAddedToCartModal() {
   });
 }
 
+// ================= WHATSAPP EXPRESS CHECKOUT (OPCIÓN 1) =================
+
+function getCustomerForOrder() {
+  const formalUser = auth.getUser();
+  if (formalUser && formalUser.name) {
+    return {
+      name: formalUser.name,
+      phone: formalUser.phone || ''
+    };
+  }
+  try {
+    const saved = localStorage.getItem('vlr_guest_customer');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed && parsed.name) return parsed;
+    }
+  } catch (e) {}
+  return null;
+}
+
+function executeWhatsAppOrder(customer) {
+  const url = cart.getWhatsAppOrderUrl(customer);
+  window.open(url, '_blank');
+  cart.clear();
+  closeCartDrawer();
+  document.getElementById('wspExpressModal')?.classList.remove('active');
+  showToast('¡Pedido derivado a WhatsApp! Tu selección ha sido procesada.');
+}
+
+function handleWhatsAppCheckout() {
+  const cartData = cart.getCartData();
+  if (!cartData.items || cartData.items.length === 0) {
+    showToast('Tu selección de cava se encuentra vacía.');
+    return;
+  }
+
+  const customer = getCustomerForOrder();
+  if (customer && customer.name) {
+    executeWhatsAppOrder(customer);
+  } else {
+    const modal = document.getElementById('wspExpressModal');
+    if (modal) {
+      modal.classList.add('active');
+      const nameInput = document.getElementById('wspCustomerName');
+      if (nameInput) setTimeout(() => nameInput.focus(), 150);
+    }
+  }
+}
+
+function initWspExpressModal() {
+  const modal = document.getElementById('wspExpressModal');
+  if (!modal) return;
+
+  document.getElementById('closeWspExpressBtn')?.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('active');
+  });
+
+  const form = document.getElementById('wspExpressForm');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('wspCustomerName')?.value.trim();
+      const phone = document.getElementById('wspCustomerPhone')?.value.trim();
+
+      if (!name || !phone) {
+        showToast('Por favor completa tu nombre y teléfono para continuar.');
+        return;
+      }
+
+      try {
+        localStorage.setItem('vlr_guest_customer', JSON.stringify({ name, phone }));
+      } catch (err) {}
+
+      executeWhatsAppOrder({ name, phone });
+    });
+  }
+}
+
 // ================= FILTRADO & ORDENAMIENTO =================
 function applyFilters() {
   let list = [...state.products];
@@ -756,6 +838,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initMobileMenu();
   auth.init();
   cart.init();
+  updateCartDrawerUI(cart.getCartData());
 
   // Leer parámetros de URL (?categoria=promos, ?subcategoria=Malbec)
   const urlParams = new URLSearchParams(window.location.search);
@@ -887,8 +970,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Checkout modal trigger
   document.getElementById('cartDrawerCheckoutBtn')?.addEventListener('click', openCheckoutModal);
   document.getElementById('cartDrawerWspBtn')?.addEventListener('click', (e) => {
-    e.currentTarget.href = cart.getWhatsAppOrderUrl(auth.getUser());
+    e.preventDefault();
+    handleWhatsAppCheckout();
   });
+
+  // Modal WhatsApp Express
+  initWspExpressModal();
 
   // Finalizar Compra Form
   document.getElementById('checkoutForm')?.addEventListener('submit', async (e) => {
@@ -942,6 +1029,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const order = await api.createOrder(orderData);
       cart.clear();
       document.getElementById('checkoutModal')?.classList.remove('active');
+      closeCartDrawer();
 
       // Mostrar modal éxito y mensaje de WhatsApp
       const successModal = document.getElementById('orderSuccessModal');

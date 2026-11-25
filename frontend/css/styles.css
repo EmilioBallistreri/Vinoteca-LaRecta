@@ -6585,4 +6585,95 @@ body[data-festivity="dia_del_amigo"] .main-header {
   }
 }
 
+/* ==========================================================================
+   MODAL EXPRESS DE IDENTIFICACIÓN PARA WHATSAPP (Opción 1)
+   ========================================================================== */
+.wsp-express-modal-overlay {
+  z-index: 1300 !important;
+}
+
+.wsp-express-card {
+  max-width: 440px !important;
+  padding: 2.2rem 1.85rem !important;
+  background: linear-gradient(155deg, #181512 0%, #0d0c0a 100%) !important;
+  border: 1.5px solid var(--gold-border-bright) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.9), 0 0 35px rgba(37, 211, 102, 0.12) !important;
+  text-align: center;
+  animation: postAddPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wsp-express-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.35rem;
+}
+
+.wsp-express-icon-wrap {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37, 211, 102, 0.2) 0%, rgba(37, 211, 102, 0.05) 100%);
+  border: 1.5px solid #25d366;
+  color: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.25);
+}
+
+.wsp-express-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.35rem 0;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+}
+
+.wsp-express-subtitle {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.wsp-express-form {
+  text-align: left;
+}
+
+.wsp-express-hint {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.wsp-express-submit-btn {
+  width: 100% !important;
+  justify-content: center !important;
+  font-size: 0.92rem !important;
+  padding: 0.85rem 1rem !important;
+  border-radius: 10px !important;
+  cursor: pointer;
+}
+
+@media (max-width: 540px) {
+  .wsp-express-card {
+    padding: 1.85rem 1.25rem 1.5rem !important;
+    max-width: 92% !important;
+    margin: auto;
+  }
+  .wsp-express-title {
+    font-size: 1.15rem;
+  }
+}
+
+
 

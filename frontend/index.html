@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/css/styles.css?v=20261124_cardqty" />
+  <link rel="stylesheet" href="/css/styles.css?v=20261125_wspexpress" />
 </head>
 <body>
 
@@ -598,6 +598,48 @@
     </div>
   </div>
 
+  <!-- ================= MODAL: IDENTIFICACIÓN EXPRESS PARA WHATSAPP ================= -->
+  <div id="wspExpressModal" class="modal-overlay wsp-express-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="wspExpressTitle">
+    <div class="modal-card wsp-express-card">
+      <button class="modal-close-btn wsp-express-close-btn" id="closeWspExpressBtn" aria-label="Cerrar modal" title="Cerrar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="wsp-express-header">
+        <div class="wsp-express-icon-wrap">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.09c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.32c0-4.51 3.67-8.18 8.18-8.18 2.18 0 4.24.85 5.78 2.39 1.55 1.55 2.4 3.6 2.4 5.79 0 4.51-3.67 8.17-8.18 8.17zm4.49-6.13c-.25-.12-1.46-.72-1.69-.8-.22-.09-.39-.12-.55.12-.17.25-.64.8-.78.97-.15.17-.29.19-.54.07-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.09-.17.04-.31-.02-.43-.07-.12-.55-1.33-.76-1.82-.2-.48-.41-.41-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.17.21-.58.21-1.07.15-1.17-.07-.1-.23-.17-.48-.29z"/>
+          </svg>
+        </div>
+        <h3 id="wspExpressTitle" class="wsp-express-title">¿A nombre de quién preparamos el pedido?</h3>
+        <p class="wsp-express-subtitle">Ingresa tus datos para que el mensaje a la vinoteca llegue con tu información.</p>
+      </div>
+
+      <form id="wspExpressForm" class="wsp-express-form">
+        <div class="form-group">
+          <label class="form-label" for="wspCustomerName">Nombre y Apellido *</label>
+          <input type="text" id="wspCustomerName" required class="form-input" placeholder="Ej: Juan Pérez" autofocus />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="wspCustomerPhone">Teléfono / WhatsApp de Contacto *</label>
+          <input type="tel" id="wspCustomerPhone" required class="form-input" placeholder="Ej: 351 234 5678" />
+        </div>
+        <div class="wsp-express-hint">
+          <span>🔒</span> Tus datos se recordarán en este dispositivo para futuras compras rápidas.
+        </div>
+        <button type="submit" id="wspExpressSubmitBtn" class="cart-wsp-checkout-btn wsp-express-submit-btn">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.09c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.32c0-4.51 3.67-8.18 8.18-8.18 2.18 0 4.24.85 5.78 2.39 1.55 1.55 2.4 3.6 2.4 5.79 0 4.51-3.67 8.17-8.18 8.17zm4.49-6.13c-.25-.12-1.46-.72-1.69-.8-.22-.09-.39-.12-.55.12-.17.25-.64.8-.78.97-.15.17-.29.19-.54.07-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.09-.17.04-.31-.02-.43-.07-.12-.55-1.33-.76-1.82-.2-.48-.41-.41-.56-.42h-.48c-.17 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.17.21-.58.21-1.07.15-1.17-.07-.1-.23-.17-.48-.29z"/>
+          </svg>
+          Continuar a WhatsApp y Enviar Pedido
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- ================= MODAL: FICHA TÉCNICA DE PRODUCTO ================= -->
   <div id="productDetailModal" class="modal-overlay">
     <div class="modal-card modal-large">
@@ -857,6 +899,6 @@
   <div id="toastContainer" class="toast-container"></div>
 
   <!-- Script Principal de la Tienda -->
-  <script type="module" src="/js/app.js?v=20261124_cardqty"></script>
+  <script type="module" src="/js/app.js?v=20261125_wspexpress"></script>
 </body>
 </html>
