@@ -887,7 +887,7 @@ function updateCartDrawerUI(cartData) {
     if (drawerFooter) drawerFooter.style.display = 'none';
     itemsContainer.innerHTML = `
       <div style="text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
-        <p style="font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem;">Su Cava de compras está vacía</p>
+        <p style="font-size: 1.1rem; color: #fff; margin-bottom: 0.5rem;">Su carrito está vacío</p>
         <p style="font-size: 0.85rem;">Explore nuestro catálogo de autor y seleccione sus etiquetas favoritas.</p>
       </div>
     `;
@@ -901,23 +901,19 @@ function updateCartDrawerUI(cartData) {
       <img src="${item.image}" alt="${item.name}" class="cart-item-img" />
       <div class="cart-item-info">
         <span class="cart-item-bodega">${item.bodega || ''}</span>
-        <h4 class="cart-item-title">${item.name}</h4>
-        <div class="cart-item-pricing-row">
-          <span class="cart-item-unit-price">${formatCurrency(item.price)} c/u × ${item.quantity}</span>
-          <span class="cart-item-price">${formatCurrency(item.price * item.quantity)}</span>
-        </div>
+        <h4 class="cart-item-title" title="${item.name}">${item.name}</h4>
         <div class="cart-item-controls">
           <div class="qty-stepper">
             <button class="qty-btn" data-action="dec-cart" data-id="${item.id}">-</button>
             <span class="qty-val">${item.quantity}</span>
             <button class="qty-btn" data-action="inc-cart" data-id="${item.id}">+</button>
           </div>
-          <button class="cart-item-remove-btn" data-action="rem-cart" data-id="${item.id}">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <span class="cart-item-price-badge">${formatCurrency(item.price * item.quantity)}</span>
+          <button class="cart-item-remove-btn" data-action="rem-cart" data-id="${item.id}" title="Quitar">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="3 6 5 6 21 6"></polyline>
               <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
             </svg>
-            Quitar
           </button>
         </div>
       </div>

@@ -544,7 +544,7 @@ function updateCartDrawerUI(detail) {
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <path d="M16 10a4 4 0 0 1-8 0"></path>
           </svg>
-          <h4 style="font-family: var(--font-serif); font-size: 1.4rem; color: #fff; margin-bottom: 0.5rem;">Su selección se encuentra vacía</h4>
+          <h4 style="font-family: var(--font-serif); font-size: 1.3rem; color: #fff; margin-bottom: 0.5rem;">Su carrito está vacío</h4>
           <p style="font-size: 0.95rem; line-height: 1.6;">Recorra nuestra cava y elija sus etiquetas preferidas para conformar su pedido.</p>
           <button id="cartExploreBtn" class="btn-secondary" style="margin-top: 1.5rem; font-size: 0.84rem; padding: 0.8rem 1.5rem;">Explorar Cava Principal</button>
         </div>
@@ -567,23 +567,19 @@ function updateCartDrawerUI(detail) {
         <img src="${item.image}" alt="${item.name}" class="cart-item-img" />
         <div class="cart-item-info">
           <span class="cart-item-bodega">${item.bodega || ''}</span>
-          <h4 class="cart-item-title">${item.name}</h4>
-          <div class="cart-item-pricing-row">
-            <span class="cart-item-unit-price">${formatCurrency(item.price)} c/u × ${item.quantity}</span>
-            <span class="cart-item-price">${formatCurrency(item.price * item.quantity)}</span>
-          </div>
+          <h4 class="cart-item-title" title="${item.name}">${item.name}</h4>
           <div class="cart-item-controls">
             <div class="qty-stepper">
               <button class="qty-btn" data-action="dec" data-id="${item.id}">-</button>
               <span class="qty-val">${item.quantity}</span>
               <button class="qty-btn" data-action="inc" data-id="${item.id}">+</button>
             </div>
-            <button class="cart-item-remove-btn" data-action="remove" data-id="${item.id}">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <span class="cart-item-price-badge">${formatCurrency(item.price * item.quantity)}</span>
+            <button class="cart-item-remove-btn" data-action="remove" data-id="${item.id}" title="Quitar">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="3 6 5 6 21 6"></polyline>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
               </svg>
-              Quitar
             </button>
           </div>
         </div>
