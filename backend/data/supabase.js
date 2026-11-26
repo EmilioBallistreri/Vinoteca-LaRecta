@@ -9,12 +9,27 @@ function cleanSupabaseUrl(url) {
   return url.trim().replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
 }
 
+let runtimeCredentials = { url: null, key: null };
+
+function setRuntimeCredentials(url, key) {
+  if (url && key) {
+    runtimeCredentials = {
+      url: cleanSupabaseUrl(url),
+      key: key.trim()
+    };
+  }
+}
+
 function getCredentials() {
   const envUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
   const envKey = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (envUrl && envKey) {
     return { url: cleanSupabaseUrl(envUrl), key: envKey.trim() };
+  }
+
+  if (runtimeCredentials.url && runtimeCredentials.key) {
+    return runtimeCredentials;
   }
 
   // Check store.json for credentials configured via Admin Panel
@@ -433,6 +448,7 @@ async function deleteCloudProduct(id) {
 
 module.exports = {
   getCredentials,
+  setRuntimeCredentials,
   isConfigured,
   getSupabase,
   testConnection,

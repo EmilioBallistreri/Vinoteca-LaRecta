@@ -174,6 +174,11 @@ export const api = {
     if (user) {
       headers['x-user'] = JSON.stringify(user);
     }
+    const cloudCreds = this.getLocalCloudConfig();
+    if (cloudCreds && cloudCreds.url && cloudCreds.key) {
+      headers['x-supabase-url'] = cloudCreds.url;
+      headers['x-supabase-key'] = cloudCreds.key;
+    }
     return headers;
   },
 
@@ -740,16 +745,54 @@ export const api = {
   },
 
   // CLOUD DATABASE (SUPABASE)
+  getLocalCloudConfig() {
+    try {
+      const stored = localStorage.getItem('vlr_cloud_db_creds');
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
+  },
+
+  setLocalCloudConfig(creds) {
+    try {
+      if (creds && creds.url && creds.key) {
+        localStorage.setItem('vlr_cloud_db_creds', JSON.stringify({
+          url: creds.url.trim().replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, ''),
+          key: creds.key.trim()
+        }));
+      } else {
+        localStorage.removeItem('vlr_cloud_db_creds');
+      }
+    } catch (_) {}
+  },
+
   async getCloudStatus() {
     try {
-      const res = await fetch('/api/cloud-status?_t=' + Date.now(), { cache: 'no-store' });
+      const res = await fetch('/api/cloud-status?_t=' + Date.now(), { 
+        headers: this.getHeaders(),
+        cache: 'no-store' 
+      });
       const data = await safeParseJson(res);
-      if (res.ok && data && !data.__nonJsonError) return data;
+      if (res.ok && data && !data.__nonJsonError) {
+        if (data.configured) return data;
+      }
     } catch (_) {}
+
+    // Si el backend es una nueva instancia serverless, rehidratar con credenciales locales
+    const local = this.getLocalCloudConfig();
+    if (local && local.url && local.key) {
+      try {
+        await this.saveCloudConfig(local);
+        return { configured: true, provider: 'supabase', url: local.url };
+      } catch (_) {}
+    }
+
     return { configured: false, provider: 'supabase' };
   },
 
   async saveCloudConfig(credentials) {
+    this.setLocalCloudConfig(credentials);
     const res = await fetch('/api/cloud-config', {
       method: 'POST',
       headers: this.getHeaders(),

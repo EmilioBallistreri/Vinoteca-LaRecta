@@ -13,8 +13,16 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-user']
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-user', 'x-supabase-url', 'x-supabase-key']
 }));
+app.use((req, res, next) => {
+  const headerUrl = req.headers['x-supabase-url'];
+  const headerKey = req.headers['x-supabase-key'];
+  if (headerUrl && headerKey && !process.env.SUPABASE_URL) {
+    supabase.setRuntimeCredentials(headerUrl, headerKey);
+  }
+  next();
+});
 app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 app.use(morgan('dev'));

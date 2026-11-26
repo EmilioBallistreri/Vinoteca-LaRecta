@@ -979,6 +979,15 @@ function renderCustomization(container) {
   const cloudForm = document.getElementById('cloudConfigForm');
   const cloudFeedback = document.getElementById('cloudFeedbackMsg');
 
+  // Pre-cargar credenciales locales si existen
+  const localCreds = api.getLocalCloudConfig();
+  if (localCreds) {
+    const urlInp = document.getElementById('supabaseUrlInput');
+    const keyInp = document.getElementById('supabaseKeyInput');
+    if (urlInp && !urlInp.value) urlInp.value = localCreds.url || '';
+    if (keyInp && !keyInp.value) keyInp.value = localCreds.key || '';
+  }
+
   // Check cloud status asynchronously
   (async () => {
     try {
