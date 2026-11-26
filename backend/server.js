@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const db = require('./data/db');
+const supabase = require('./data/supabase');
 
 const path = require('path');
 const app = express();
@@ -157,13 +158,26 @@ app.delete('/api/products/:id', (req, res) => {
 });
 
 // ================= ORDERS ROUTES =================
-app.get('/api/orders', (req, res) => {
+app.get('/api/orders', async (req, res) => {
   const { customerEmail, status } = req.query;
+  try {
+    const cloudOrders = await supabase.getCloudOrders();
+    if (cloudOrders && Array.isArray(cloudOrders)) {
+      let ords = cloudOrders;
+      if (customerEmail) {
+        ords = ords.filter(o => o.customer?.email?.toLowerCase() === customerEmail.toLowerCase());
+      }
+      if (status && status !== 'todos') {
+        ords = ords.filter(o => o.status?.toLowerCase() === status.toLowerCase());
+      }
+      return res.json(ords);
+    }
+  } catch (_) {}
   const orders = db.getOrders({ customerEmail, status });
   res.json(orders);
 });
 
-app.post('/api/orders', (req, res) => {
+app.post('/api/orders', async (req, res) => {
   const { customer, items, total, paymentMethod } = req.body;
   if (!customer || !customer.name || !customer.email || !items || !items.length) {
     return res.status(400).json({ error: 'Datos de cliente y productos requeridos.' });
@@ -171,6 +185,9 @@ app.post('/api/orders', (req, res) => {
 
   try {
     const newOrder = db.createOrder(req.body);
+    try {
+      await supabase.saveCloudOrder(newOrder);
+    } catch (_) {}
     res.status(201).json(newOrder);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -224,7 +241,13 @@ app.post('/api/contact', (req, res) => {
   }
 });
 
-app.get('/api/users', (req, res) => {
+app.get('/api/users', async (req, res) => {
+  try {
+    const cloudUsers = await supabase.getCloudUsers();
+    if (cloudUsers && Array.isArray(cloudUsers) && cloudUsers.length > 0) {
+      return res.json(cloudUsers);
+    }
+  } catch (_) {}
   res.json(db.getUsers());
 });
 
@@ -257,8 +280,14 @@ app.delete('/api/users/:id', (req, res) => {
 });
 
 // ================= ACTIVITY AUDIT LOGS =================
-app.get('/api/activity', (req, res) => {
+app.get('/api/activity', async (req, res) => {
   const limit = req.query.limit ? parseInt(req.query.limit) : 50;
+  try {
+    const cloudActivity = await supabase.getCloudActivity(limit);
+    if (cloudActivity && Array.isArray(cloudActivity) && cloudActivity.length > 0) {
+      return res.json(cloudActivity);
+    }
+  } catch (_) {}
   res.json(db.getActivityLogs(limit));
 });
 
@@ -268,17 +297,79 @@ app.get('/api/stats', (req, res) => {
 });
 
 // ================= SITE CONFIG & FESTIVITIES =================
-app.get('/api/site-config', (req, res) => {
+app.get('/api/site-config', async (req, res) => {
+  try {
+    const cloudConfig = await supabase.getCloudSiteConfig();
+    if (cloudConfig) {
+      const defaults = db.getDefaultSiteConfig ? db.getDefaultSiteConfig() : {};
+      return res.json({ ...defaults, ...cloudConfig });
+    }
+  } catch (_) {}
   res.json(db.getSiteConfig());
 });
 
-app.put('/api/site-config', (req, res) => {
+app.put('/api/site-config', async (req, res) => {
   try {
     const user = req.headers['x-user'] ? JSON.parse(req.headers['x-user']) : null;
     const updated = db.updateSiteConfig(req.body, user);
+    try {
+      await supabase.saveCloudSiteConfig(updated);
+    } catch (e) {
+      console.warn('Supabase cloud sync warning:', e.message);
+    }
     res.json(updated);
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+});
+
+// ================= CLOUD DATABASE STATUS & CONFIG =================
+app.get('/api/cloud-status', async (req, res) => {
+  try {
+    const creds = supabase.getCredentials();
+    const configured = Boolean(creds.url && creds.key);
+    let connection = null;
+    if (configured) {
+      connection = await supabase.testConnection();
+    }
+    res.json({
+      configured,
+      provider: 'supabase',
+      url: creds.url || null,
+      connection
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/cloud-config', async (req, res) => {
+  try {
+    const { url, key } = req.body;
+    if (!url || !key) {
+      return res.status(400).json({ error: 'URL y Key de Supabase son obligatorias.' });
+    }
+
+    const test = await supabase.testConnection(url, key);
+    if (!test.success) {
+      return res.status(400).json({ error: `Fallo al conectar con Supabase: ${test.error}` });
+    }
+
+    const store = db.readStore();
+    store.cloudDatabase = {
+      url: url.trim(),
+      key: key.trim(),
+      updatedAt: new Date().toISOString()
+    };
+    db.writeStore(store);
+
+    res.json({
+      success: true,
+      message: test.message || 'Supabase conectado exitosamente.',
+      needsSchema: Boolean(test.needsSchema)
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 

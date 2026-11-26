@@ -16,164 +16,24 @@ const STORE_PATH = isVercel
 const SEED_PATH = path.join(__dirname, 'store.json');
 
 
-// Default initial database seeds
+// Default initial database seeds (Clean Production State)
 const DEFAULT_STORE = {
   users: [
     {
       id: 'admin-1',
-      name: 'Vinoteca La Recta (Principal)',
+      name: 'Vinoteca La Recta',
       email: 'vinotecalarecta7@gmail.com',
-      password: 'AdminRecta2024!',
+      password: 'MiClaveSecreta123!',
       role: 'superadministrador',
       createdAt: '2024-01-15T10:00:00.000Z',
-      lastLogin: new Date().toISOString()
-    },
-    {
-      id: 'admin-2',
-      name: 'Flor Almada',
-      email: 'floralmada07@gmail.com',
-      password: 'AdminRecta2024!',
-      role: 'superadministrador',
-      createdAt: '2024-01-15T10:00:00.000Z',
-      lastLogin: new Date().toISOString()
-    },
-    {
-      id: 'admin-3',
-      name: 'Martín Ballistreri',
-      email: 'martinballistreri07@gmail.com',
-      password: 'AdminRecta2024!',
-      role: 'superadministrador',
-      createdAt: '2024-01-15T10:00:00.000Z',
-      lastLogin: new Date().toISOString()
-    },
-    {
-      id: 'cust-1',
-      name: 'Gonzalo Ramírez',
-      email: 'gonzalo.ramirez@gmail.com',
-      password: 'Cliente2024!',
-      phone: '+54 351 555-1234',
-      address: 'Av. Recta Martinolli 6840, Argüello, Córdoba',
-      role: 'cliente',
-      createdAt: '2024-02-10T14:30:00.000Z'
-    },
-    {
-      id: 'cust-2',
-      name: 'Luciana Morales',
-      email: 'luciana.morales@yahoo.com.ar',
-      password: 'Cliente2024!',
-      phone: '+54 351 444-9876',
-      address: 'Country Las Delicias, Córdoba',
-      role: 'cliente',
-      createdAt: '2024-02-18T18:15:00.000Z'
+      lastLogin: new Date().toISOString(),
+      phone: '3512460017',
+      address: 'Recta Martinolli 8255'
     }
   ],
   products: PRODUCTS_60,
-  orders: [
-    {
-      id: 'ORD-7001',
-      customer: {
-        name: 'Gonzalo Ramírez',
-        email: 'gonzalo.ramirez@gmail.com',
-        phone: '+54 351 555-1234',
-        address: 'Av. Recta Martinolli 6840, Argüello, Córdoba'
-      },
-      items: [
-        { id: 'prod-vino-1', name: 'Catena Zapata Malbec Argentino 2020', price: 112000, quantity: 1 },
-        { id: 'prod-promo-2', name: 'Dúo Espumantes Chandon + 2 Copas', price: 36200, quantity: 1 }
-      ],
-      paymentMethod: 'Transferencia Bancaria (10% OFF)',
-      subtotal: 148200,
-      discount: 14820,
-      shippingCost: 0,
-      total: 133380,
-      status: 'En preparación',
-      notes: 'Entregar por la tarde después de las 16hs.',
-      createdAt: '2024-03-01T15:30:00.000Z'
-    },
-    {
-      id: 'ORD-7002',
-      customer: {
-        name: 'Luciana Morales',
-        email: 'luciana.morales@yahoo.com.ar',
-        phone: '+54 351 444-9876',
-        address: 'Country Las Delicias, Lote 42, Córdoba'
-      },
-      items: [
-        { id: 'prod-promo-1', name: 'Combo Degustación Gran Malbec', price: 68500, quantity: 2 },
-        { id: 'prod-deli-1', name: 'Jamón Crudo Reserva 18 Meses', price: 16500, quantity: 2 }
-      ],
-      paymentMethod: '3 Cuotas Sin Interés',
-      subtotal: 170000,
-      discount: 0,
-      shippingCost: 0,
-      total: 170000,
-      status: 'Enviado',
-      notes: 'Dejar en guardia si no responde el timbre.',
-      createdAt: '2024-03-02T11:20:00.000Z'
-    },
-    {
-      id: 'ORD-7003',
-      customer: {
-        name: 'Carlos Benítez',
-        email: 'carlos.benitez@outlook.com',
-        phone: '+54 351 222-3344',
-        address: 'Villa Belgrano, Córdoba'
-      },
-      items: [
-        { id: 'prod-whisky-1', name: 'The Macallan Double Cask 12 Años', price: 135000, quantity: 1 }
-      ],
-      paymentMethod: 'Efectivo contra entrega',
-      subtotal: 135000,
-      discount: 0,
-      shippingCost: 0,
-      total: 135000,
-      status: 'Completado',
-      notes: 'Llamar antes de llegar.',
-      createdAt: '2024-02-28T09:15:00.000Z'
-    }
-  ],
-  activity: [
-    {
-      id: 'act-1',
-      timestamp: '2024-03-02T14:10:00.000Z',
-      user: 'floralmada07@gmail.com',
-      userName: 'Flor Almada',
-      role: 'superadministrador',
-      action: 'STOCK_UPDATE',
-      description: 'Actualizó stock de Catena Zapata Malbec Argentino (+6 unidades)',
-      badgeColor: 'gold'
-    },
-    {
-      id: 'act-2',
-      timestamp: '2024-03-02T11:22:00.000Z',
-      user: 'martinballistreri07@gmail.com',
-      userName: 'Martín Ballistreri',
-      role: 'superadministrador',
-      action: 'ORDER_STATUS',
-      description: 'Marcó pedido #ORD-7002 como ENVIADO con cadete privado',
-      badgeColor: 'blue'
-    },
-    {
-      id: 'act-3',
-      timestamp: '2024-03-01T15:32:00.000Z',
-      user: 'vinotecalarecta7@gmail.com',
-      userName: 'Vinoteca La Recta (Principal)',
-      role: 'superadministrador',
-      action: 'NEW_ORDER',
-      description: 'Ingresó nuevo pedido #ORD-7001 por $133.380 (Gonzalo Ramírez)',
-      badgeColor: 'green'
-    },
-    {
-      id: 'act-4',
-      timestamp: '2024-03-01T09:00:00.000Z',
-      user: 'vinotecalarecta7@gmail.com',
-      userName: 'Vinoteca La Recta (Principal)',
-      role: 'superadministrador',
-      action: 'ADMIN_LOGIN',
-      description: 'Inicio de sesión exitoso desde panel administrativo',
-      badgeColor: 'purple'
-    }
-  ]
+  orders: [],
+  activity: []
 };
 
 // Ensure data file exists
@@ -239,9 +99,7 @@ function writeStore(data) {
 
 
 const SUPERADMIN_EMAILS = [
-  'vinotecalarecta7@gmail.com',
-  'floralmada07@gmail.com',
-  'martinballistreri07@gmail.com'
+  'vinotecalarecta7@gmail.com'
 ];
 
 module.exports = {

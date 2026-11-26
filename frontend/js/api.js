@@ -8,10 +8,19 @@ const LOCAL_ORDERS_KEY = 'vlr_local_orders';
 const LOCAL_ACTIVITY_KEY = 'vlr_local_activity';
 
 const SUPERADMIN_EMAILS = [
-  'vinotecalarecta7@gmail.com',
-  'floralmada07@gmail.com',
-  'martinballistreri07@gmail.com'
+  'vinotecalarecta7@gmail.com'
 ];
+
+// Limpieza automática de datos locales de prueba previos para el pase a producción
+const DATA_PURGE_KEY = 'vlr_clean_state_v2026_11_26';
+try {
+  if (typeof localStorage !== 'undefined' && localStorage.getItem(DATA_PURGE_KEY) !== 'done') {
+    localStorage.removeItem(LOCAL_ORDERS_KEY);
+    localStorage.removeItem(LOCAL_USERS_KEY);
+    localStorage.removeItem(LOCAL_ACTIVITY_KEY);
+    localStorage.setItem(DATA_PURGE_KEY, 'done');
+  }
+} catch (_) {}
 
 // Safely parse JSON response; never throws "Unexpected token 'T', 'The page c'... is not valid JSON"
 async function safeParseJson(res) {
@@ -671,7 +680,7 @@ export const api = {
   // SITE CONFIG (CAROUSEL, FESTIVITIES & BANNERS)
   async getSiteConfig() {
     try {
-      const res = await fetch('/api/site-config');
+      const res = await fetch('/api/site-config?_t=' + Date.now(), { cache: 'no-store' });
       const serverCfg = await safeParseJson(res);
       if (res.ok && serverCfg && !serverCfg.__nonJsonError) {
         // Purgar cualquier caché local obsoleta que contenga imágenes de Unsplash
@@ -728,5 +737,28 @@ export const api = {
     } catch (_) {}
 
     return withTimestamp;
+  },
+
+  // CLOUD DATABASE (SUPABASE)
+  async getCloudStatus() {
+    try {
+      const res = await fetch('/api/cloud-status?_t=' + Date.now(), { cache: 'no-store' });
+      const data = await safeParseJson(res);
+      if (res.ok && data && !data.__nonJsonError) return data;
+    } catch (_) {}
+    return { configured: false, provider: 'supabase' };
+  },
+
+  async saveCloudConfig(credentials) {
+    const res = await fetch('/api/cloud-config', {
+      method: 'POST',
+      headers: this.getHeaders(),
+      body: JSON.stringify(credentials)
+    });
+    const data = await safeParseJson(res);
+    if (!res.ok) {
+      throw new Error(data?.error || 'Error al conectar con la base de datos Supabase.');
+    }
+    return data;
   }
 };

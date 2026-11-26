@@ -244,14 +244,20 @@ function renderDashboard(container) {
               </tr>
             </thead>
             <tbody>
-              ${stats.recentOrders.map(o => `
+              ${stats.recentOrders && stats.recentOrders.length > 0 ? stats.recentOrders.map(o => `
                 <tr>
                   <td><strong>#${o.id}</strong></td>
                   <td>${o.customer.name}</td>
                   <td><strong>${formatCurrency(o.total)}</strong></td>
                   <td><span class="badge-status ${o.status.toLowerCase().replace(' ', '-')}">${o.status}</span></td>
                 </tr>
-              `).join('')}
+              `).join('') : `
+                <tr>
+                  <td colspan="4" style="text-align: center; color: #888; padding: 2rem 1rem; font-size: 0.8rem;">
+                    Sin pedidos registrados aún en la tienda
+                  </td>
+                </tr>
+              `}
             </tbody>
           </table>
         </div>
@@ -264,7 +270,7 @@ function renderDashboard(container) {
           <button id="dashAllActivityLink" style="font-size: 0.75rem; color: var(--gold-light); font-weight: 600;">Ver registro &rarr;</button>
         </div>
         <div class="activity-feed-list">
-          ${activity.slice(0, 5).map(act => `
+          ${activity && activity.length > 0 ? activity.slice(0, 5).map(act => `
             <div class="activity-item" style="padding: 0.75rem;">
               <div class="activity-icon-badge ${act.badgeColor}">•</div>
               <div class="activity-body">
@@ -275,7 +281,11 @@ function renderDashboard(container) {
                 </div>
               </div>
             </div>
-          `).join('')}
+          `).join('') : `
+            <div style="text-align: center; color: #888; padding: 2.2rem 1rem; font-size: 0.8rem;">
+              Sin actividad reciente registrada
+            </div>
+          `}
         </div>
       </div>
     </div>
@@ -524,6 +534,57 @@ function renderCustomization(container) {
         <button id="saveSiteConfigBtn" class="btn-primary" style="padding: 0.65rem 1.5rem; font-size: 0.82rem;">
           💾 Guardar y Publicar en la Web
         </button>
+      </div>
+    </div>
+
+    <!-- CLOUD DATABASE (SUPABASE) REAL-TIME SYNC -->
+    <div class="admin-card" id="cloudDbCard" style="border: 1px solid rgba(197, 160, 89, 0.4); background: linear-gradient(135deg, rgba(26, 20, 32, 0.95), rgba(16, 12, 20, 0.95)); margin-bottom: 1.5rem;">
+      <div class="admin-card-header" style="flex-wrap: wrap; gap: 0.8rem; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-size: 1.5rem;">☁️</span>
+          <div>
+            <h3 class="admin-card-title" style="margin: 0; font-size: 0.98rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+              Base de Datos Cloud en Tiempo Real (Supabase)
+              <span id="cloudStatusBadge" class="badge-status pendiente" style="font-size: 0.68rem; padding: 0.2rem 0.6rem; border-radius: 4px;">Consultando estado...</span>
+            </h3>
+            <p style="font-size: 0.76rem; color: #aaa; margin: 0.2rem 0 0;">
+              Sincroniza festividades, diseño, pedidos y clientes en el 100% de dispositivos (celulares, tablets y PCs) en tiempo real sin requerir deploys.
+            </p>
+          </div>
+        </div>
+        <button type="button" id="toggleCloudConfigBtn" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.76rem;">
+          ⚙️ Configurar Conexión Cloud
+        </button>
+      </div>
+
+      <div id="cloudConfigCollapse" style="display: none; padding-top: 1rem; border-top: 1px solid var(--admin-border); margin-top: 0.85rem;">
+        <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; border: 1px dashed rgba(197, 160, 89, 0.25);">
+          <div style="font-size: 0.82rem; color: var(--gold-champagne); font-weight: 600; margin-bottom: 0.35rem;">
+            📌 Instrucciones rápidas para conectar Supabase (Gratis y en 2 minutos):
+          </div>
+          <ol style="font-size: 0.76rem; color: #ccc; margin: 0; padding-left: 1.2rem; line-height: 1.6;">
+            <li>Entrá a <a href="https://supabase.com" target="_blank" style="color: var(--gold-light); text-decoration: underline;">supabase.com</a> y creá un proyecto gratuito (ej: "Vinoteca La Recta").</li>
+            <li>En el menú de Supabase, abrí <strong>SQL Editor</strong>, pegá el contenido de <code>supabase_schema.sql</code> (incluido en la raíz de tu proyecto) y hacé clic en <strong>RUN</strong>.</li>
+            <li>En <strong>Project Settings &rarr; API</strong>, copiá la <strong>Project URL</strong> y la <strong>anon public key</strong>, pegalas en los campos de abajo y hacé clic en <strong>Probar y Conectar</strong>.</li>
+          </ol>
+        </div>
+
+        <form id="cloudConfigForm" style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.85rem; align-items: flex-end;">
+          <div>
+            <label class="form-label" for="supabaseUrlInput" style="font-size: 0.76rem; margin-bottom: 0.3rem;">Project URL de Supabase *</label>
+            <input type="url" id="supabaseUrlInput" class="form-input" placeholder="https://xyzcompany.supabase.co" style="font-size: 0.82rem; padding: 0.55rem 0.75rem;" required />
+          </div>
+          <div>
+            <label class="form-label" for="supabaseKeyInput" style="font-size: 0.76rem; margin-bottom: 0.3rem;">Anon / Public API Key *</label>
+            <input type="password" id="supabaseKeyInput" class="form-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." style="font-size: 0.82rem; padding: 0.55rem 0.75rem;" required />
+          </div>
+          <div>
+            <button type="submit" id="saveCloudBtn" class="btn-primary" style="padding: 0.6rem 1.3rem; font-size: 0.8rem; white-space: nowrap;">
+              Probar y Conectar
+            </button>
+          </div>
+        </form>
+        <div id="cloudFeedbackMsg" style="margin-top: 0.65rem; font-size: 0.78rem;"></div>
       </div>
     </div>
 
@@ -911,6 +972,84 @@ function renderCustomization(container) {
     });
   });
 
+  // Cloud Database (Supabase) status & interaction
+  const cloudBadge = document.getElementById('cloudStatusBadge');
+  const cloudCollapse = document.getElementById('cloudConfigCollapse');
+  const toggleCloudBtn = document.getElementById('toggleCloudConfigBtn');
+  const cloudForm = document.getElementById('cloudConfigForm');
+  const cloudFeedback = document.getElementById('cloudFeedbackMsg');
+
+  // Check cloud status asynchronously
+  (async () => {
+    try {
+      const status = await api.getCloudStatus();
+      if (cloudBadge) {
+        if (status.configured) {
+          cloudBadge.className = 'badge-status completado';
+          cloudBadge.textContent = '🟢 Conectado a Supabase';
+          if (cloudCollapse) cloudCollapse.style.display = 'none';
+        } else {
+          cloudBadge.className = 'badge-status cancelado';
+          cloudBadge.textContent = '⚪ Modo Local / Sin Conexión Cloud';
+        }
+      }
+    } catch (_) {
+      if (cloudBadge) {
+        cloudBadge.className = 'badge-status cancelado';
+        cloudBadge.textContent = '⚪ Modo Local';
+      }
+    }
+  })();
+
+  toggleCloudBtn?.addEventListener('click', () => {
+    if (!cloudCollapse) return;
+    const isHidden = cloudCollapse.style.display === 'none';
+    cloudCollapse.style.display = isHidden ? 'block' : 'none';
+    toggleCloudBtn.textContent = isHidden ? 'Ocultar Configuración' : '⚙️ Configurar Conexión Cloud';
+  });
+
+  cloudForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const url = document.getElementById('supabaseUrlInput')?.value?.trim();
+    const key = document.getElementById('supabaseKeyInput')?.value?.trim();
+    const submitBtn = document.getElementById('saveCloudBtn');
+
+    if (!url || !key) return;
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Conectando...';
+    }
+    if (cloudFeedback) {
+      cloudFeedback.style.color = '#ccc';
+      cloudFeedback.textContent = 'Verificando conexión con Supabase...';
+    }
+
+    try {
+      const res = await api.saveCloudConfig({ url, key });
+      if (cloudFeedback) {
+        cloudFeedback.style.color = '#4caf50';
+        cloudFeedback.textContent = `✓ ${res.message || 'Supabase conectado con éxito.'}`;
+      }
+      if (cloudBadge) {
+        cloudBadge.className = 'badge-status completado';
+        cloudBadge.textContent = '🟢 Conectado a Supabase';
+      }
+      alert('¡Base de datos Supabase conectada con éxito! A partir de ahora todos los cambios se sincronizan en tiempo real para el 100% de clientes.');
+    } catch (err) {
+      if (cloudFeedback) {
+        cloudFeedback.style.color = '#f44336';
+        cloudFeedback.textContent = `Error: ${err.message}`;
+      }
+      alert('Error al conectar con Supabase: ' + err.message);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Probar y Conectar';
+      }
+    }
+  });
+
   // Save Site Config to Backend
   document.getElementById('saveSiteConfigBtn')?.addEventListener('click', async (e) => {
     const btn = e.currentTarget;
@@ -970,7 +1109,7 @@ function renderOrders(container) {
             </tr>
           </thead>
           <tbody>
-            ${list.map(order => `
+            ${list.length > 0 ? list.map(order => `
               <tr data-order-id="${order.id}">
                 <td>
                   <strong style="color: var(--gold-light);">#${order.id}</strong>
@@ -1003,7 +1142,15 @@ function renderOrders(container) {
                   </button>
                 </td>
               </tr>
-            `).join('')}
+            `).join('') : `
+              <tr>
+                <td colspan="7" style="text-align: center; padding: 3rem 1rem; color: #888;">
+                  <div style="font-size: 2rem; margin-bottom: 0.5rem;">📦</div>
+                  <strong style="color: #bbb; font-size: 0.95rem;">No hay pedidos registrados en este momento.</strong>
+                  <p style="font-size: 0.78rem; margin-top: 0.3rem; color: #666;">Las nuevas compras de clientes se registrarán automáticamente aquí.</p>
+                </td>
+              </tr>
+            `}
           </tbody>
         </table>
       </div>
@@ -1182,7 +1329,7 @@ function renderUsers(container) {
             </tr>
           </thead>
           <tbody>
-            ${clients.map(cl => `
+            ${clients.length > 0 ? clients.map(cl => `
               <tr>
                 <td><strong style="color: #fff;">${cl.name}</strong></td>
                 <td>${cl.email}</td>
@@ -1190,7 +1337,15 @@ function renderUsers(container) {
                 <td><span style="font-size: 0.8rem; color: #bbb;">${cl.address || '-'}</span></td>
                 <td><span style="font-size: 0.75rem; color: #aaa;">${formatDate(cl.createdAt)}</span></td>
               </tr>
-            `).join('')}
+            `).join('') : `
+              <tr>
+                <td colspan="5" style="text-align: center; padding: 2.5rem 1rem; color: #888;">
+                  <div style="font-size: 1.8rem; margin-bottom: 0.4rem;">👥</div>
+                  <strong style="color: #bbb; font-size: 0.9rem;">No hay clientes registrados en este momento.</strong>
+                  <p style="font-size: 0.75rem; margin-top: 0.25rem; color: #666;">Los clientes que compren o creen cuenta aparecerán aquí automáticamente.</p>
+                </td>
+              </tr>
+            `}
           </tbody>
         </table>
       </div>
@@ -1218,7 +1373,7 @@ function renderActivity(container) {
       </div>
 
       <div class="activity-feed-list">
-        ${adminState.activity.map(act => `
+        ${adminState.activity && adminState.activity.length > 0 ? adminState.activity.map(act => `
           <div class="activity-item">
             <div class="activity-icon-badge ${act.badgeColor}">
               ${act.action === 'STOCK_UPDATE' ? '📦' :
@@ -1236,7 +1391,13 @@ function renderActivity(container) {
               </div>
             </div>
           </div>
-        `).join('')}
+        `).join('') : `
+          <div style="text-align: center; color: #888; padding: 3rem 1rem; font-size: 0.85rem;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📋</div>
+            <strong style="color: #bbb;">Sin registros de actividad por el momento.</strong>
+            <p style="font-size: 0.75rem; color: #666; margin-top: 0.3rem;">Cada acción administrativa o compra quedará registrada aquí en tiempo real.</p>
+          </div>
+        `}
       </div>
     </div>
   `;
