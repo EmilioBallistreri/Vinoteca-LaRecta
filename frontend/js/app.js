@@ -1895,13 +1895,15 @@ function renderPromosGrid() {
   }
 
   // Exactamente las 3 promociones exclusivas con carrusel multi-imagen
-  container.innerHTML = promos.map(promo => {
-    const images = (Array.isArray(promo.images) && promo.images.length > 0)
-      ? promo.images
-      : [promo.image];
-    const discountTag = promo.badge || 'PROMO EXCLUSIVA';
+  try {
+    container.innerHTML = promos.map(promo => {
+      const images = (Array.isArray(promo.images) && promo.images.length > 0)
+        ? promo.images
+        : [promo.image];
+      const discountTag = promo.badge || 'PROMO EXCLUSIVA';
+      const isOutOfStock = promo.stock !== undefined ? promo.stock <= 0 : false;
 
-    return `
+      return `
       <article class="promo-card-item" data-id="${promo.id}" style="cursor: pointer;" title="Hacer clic para ver detalles y ficha técnica de ${promo.name}">
         <span class="promo-badge-tag">${discountTag}</span>
         <span class="promo-photo-counter">
@@ -2039,6 +2041,9 @@ function renderPromosGrid() {
       }
     });
   });
+  } catch (err) {
+    console.error('Error renderizando promociones exclusivas:', err);
+  }
 }
 
 // ================= FORMULARIO DE CONSULTA FORMAL =================
@@ -2167,6 +2172,7 @@ async function init() {
   setupEventListeners();
   initHeroCarousel();
   setupContactInquiryForm();
+  renderPromosGrid();
 
   try {
     const [products, siteConfig] = await Promise.all([
