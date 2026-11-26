@@ -311,6 +311,120 @@ async function logCloudActivity(entry) {
   }
 }
 
+// ================= PRODUCTS =================
+
+async function getCloudProducts(filter = {}) {
+  const client = getSupabase();
+  if (!client) return null;
+
+  try {
+    let query = client.from('products').select('*');
+
+    if (filter.category && filter.category !== 'todos') {
+      query = query.ilike('category', filter.category);
+    }
+    if (filter.subcategory && filter.subcategory !== 'todos') {
+      query = query.ilike('subcategory', filter.subcategory);
+    }
+    if (filter.isFeatured) {
+      query = query.eq('is_featured', true);
+    }
+
+    const { data, error } = await query.order('created_at', { ascending: false });
+    if (error || !Array.isArray(data) || data.length === 0) return null;
+
+    let prods = data.map(row => ({
+      id: row.id,
+      name: row.name,
+      category: row.category,
+      subcategory: row.subcategory || '',
+      bodega: row.bodega || '',
+      price: Number(row.price),
+      originalPrice: row.original_price ? Number(row.original_price) : null,
+      discount: Number(row.discount || 0),
+      stock: Number(row.stock !== undefined ? row.stock : 99),
+      badge: row.badge,
+      image: row.image,
+      description: row.description,
+      isFeatured: Boolean(row.is_featured),
+      createdAt: row.created_at,
+      updatedAt: row.updated_at
+    }));
+
+    if (filter.search) {
+      const q = filter.search.toLowerCase().trim();
+      prods = prods.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        (p.bodega && p.bodega.toLowerCase().includes(q))
+      );
+    }
+
+    if (filter.promoOnly) {
+      prods = prods.filter(p => p.category === 'promos' || (p.discount && p.discount > 0));
+    }
+
+    return prods;
+  } catch (_) {
+    return null;
+  }
+}
+
+async function saveCloudProduct(prod) {
+  const client = getSupabase();
+  if (!client) return false;
+
+  try {
+    const payload = {
+      id: prod.id,
+      name: prod.name,
+      category: prod.category,
+      subcategory: prod.subcategory || '',
+      bodega: prod.bodega || '',
+      price: prod.price,
+      original_price: prod.originalPrice || null,
+      discount: prod.discount || 0,
+      stock: prod.stock !== undefined ? prod.stock : 99,
+      badge: prod.badge || null,
+      image: prod.image,
+      description: prod.description || '',
+      is_featured: Boolean(prod.isFeatured),
+      updated_at: new Date().toISOString()
+    };
+
+    const { error } = await client.from('products').upsert(payload, { onConflict: 'id' });
+    return !error;
+  } catch (_) {
+    return false;
+  }
+}
+
+async function updateCloudStock(id, newStock) {
+  const client = getSupabase();
+  if (!client) return false;
+
+  try {
+    const { error } = await client
+      .from('products')
+      .update({ stock: Number(newStock), updated_at: new Date().toISOString() })
+      .eq('id', id);
+    return !error;
+  } catch (_) {
+    return false;
+  }
+}
+
+async function deleteCloudProduct(id) {
+  const client = getSupabase();
+  if (!client) return false;
+
+  try {
+    const { error } = await client.from('products').delete().eq('id', id);
+    return !error;
+  } catch (_) {
+    return false;
+  }
+}
+
 module.exports = {
   getCredentials,
   isConfigured,
@@ -323,5 +437,9 @@ module.exports = {
   getCloudUsers,
   saveCloudUser,
   getCloudActivity,
-  logCloudActivity
+  logCloudActivity,
+  getCloudProducts,
+  saveCloudProduct,
+  updateCloudStock,
+  deleteCloudProduct
 };

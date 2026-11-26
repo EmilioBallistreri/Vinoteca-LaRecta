@@ -94,19 +94,36 @@ app.post('/api/auth/register', (req, res) => {
 });
 
 // ================= PRODUCTS ROUTES =================
-app.get('/api/products', (req, res) => {
+app.get('/api/products', async (req, res) => {
   const { category, subcategory, search, featured, promo } = req.query;
-  const products = db.getProducts({
+  const filter = {
     category,
     subcategory,
     search,
     isFeatured: featured === 'true',
     promoOnly: promo === 'true'
-  });
+  };
+
+  try {
+    const cloudProducts = await supabase.getCloudProducts(filter);
+    if (cloudProducts && Array.isArray(cloudProducts) && cloudProducts.length > 0) {
+      return res.json(cloudProducts);
+    }
+  } catch (_) {}
+
+  const products = db.getProducts(filter);
   res.json(products);
 });
 
-app.get('/api/products/:id', (req, res) => {
+app.get('/api/products/:id', async (req, res) => {
+  try {
+    const cloudProducts = await supabase.getCloudProducts();
+    if (cloudProducts) {
+      const found = cloudProducts.find(p => p.id === req.params.id);
+      if (found) return res.json(found);
+    }
+  } catch (_) {}
+
   const product = db.getProductById(req.params.id);
   if (!product) {
     return res.status(404).json({ error: 'Producto no encontrado.' });
@@ -114,7 +131,7 @@ app.get('/api/products/:id', (req, res) => {
   res.json(product);
 });
 
-app.post('/api/products', (req, res) => {
+app.post('/api/products', async (req, res) => {
   const { name, category, price } = req.body;
   if (!name || !category || price === undefined) {
     return res.status(400).json({ error: 'Nombre, categoría y precio son obligatorios.' });
@@ -122,19 +139,29 @@ app.post('/api/products', (req, res) => {
 
   const user = req.headers['x-user'] ? JSON.parse(req.headers['x-user']) : null;
   const newProduct = db.createProduct(req.body, user);
+  try {
+    await supabase.saveCloudProduct(newProduct);
+  } catch (e) {
+    console.warn('Supabase product save warning:', e.message);
+  }
   res.status(201).json(newProduct);
 });
 
-app.put('/api/products/:id', (req, res) => {
+app.put('/api/products/:id', async (req, res) => {
   const user = req.headers['x-user'] ? JSON.parse(req.headers['x-user']) : null;
   const updated = db.updateProduct(req.params.id, req.body, user);
   if (!updated) {
     return res.status(404).json({ error: 'Producto no encontrado.' });
   }
+  try {
+    await supabase.saveCloudProduct(updated);
+  } catch (e) {
+    console.warn('Supabase product update warning:', e.message);
+  }
   res.json(updated);
 });
 
-app.patch('/api/products/:id/stock', (req, res) => {
+app.patch('/api/products/:id/stock', async (req, res) => {
   const { stock } = req.body;
   if (stock === undefined || isNaN(stock)) {
     return res.status(400).json({ error: 'Cantidad de stock inválida.' });
@@ -145,14 +172,24 @@ app.patch('/api/products/:id/stock', (req, res) => {
   if (!updated) {
     return res.status(404).json({ error: 'Producto no encontrado.' });
   }
+  try {
+    await supabase.updateCloudStock(req.params.id, stock);
+  } catch (e) {
+    console.warn('Supabase stock update warning:', e.message);
+  }
   res.json(updated);
 });
 
-app.delete('/api/products/:id', (req, res) => {
+app.delete('/api/products/:id', async (req, res) => {
   const user = req.headers['x-user'] ? JSON.parse(req.headers['x-user']) : null;
   const success = db.deleteProduct(req.params.id, user);
   if (!success) {
     return res.status(404).json({ error: 'Producto no encontrado.' });
+  }
+  try {
+    await supabase.deleteCloudProduct(req.params.id);
+  } catch (e) {
+    console.warn('Supabase product delete warning:', e.message);
   }
   res.json({ success: true, message: 'Producto eliminado correctamente.' });
 });
