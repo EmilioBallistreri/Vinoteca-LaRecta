@@ -6,9 +6,14 @@
 -- 1. Creá un proyecto gratuito en https://supabase.com
 -- 2. En el menú lateral izquierdo, abrí "SQL Editor"
 -- 3. Copiá y pegá todo este script y presioná "RUN"
--- 4. Copiá la URL y la Anon Key desde Project Settings -> API
---    y colocalas en el panel de administración o en Vercel Environment Variables.
+-- 4. Copiá la URL y la Anon Key desde Project Settings -> API Keys
+--    y colocalas en el panel de administración.
 -- =========================================================================
+
+-- PERMISOS GLOBALES PARA ROLES DE SUPABASE (anon, authenticated, service_role)
+grant usage on schema public to anon, authenticated, service_role;
+alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
+alter default privileges in schema public grant all on sequences to anon, authenticated, service_role;
 
 -- 1. TABLA DE CONFIGURACIÓN DEL SITIO (Festividades, Cava, Temáticas)
 create table if not exists site_config (
@@ -20,13 +25,16 @@ create table if not exists site_config (
   updated_at timestamptz default now()
 );
 
+-- Conceder permisos sobre site_config
+grant all on table site_config to anon, authenticated, service_role;
+
 -- Políticas RLS para site_config (Lectura y Escritura permitidas con anon key)
 alter table site_config enable row level security;
 drop policy if exists "Lectura pública site_config" on site_config;
-create policy "Lectura pública site_config" on site_config for select using (true);
+create policy "Lectura pública site_config" on site_config for select to anon, authenticated, service_role using (true);
 
 drop policy if exists "Escritura pública site_config" on site_config;
-create policy "Escritura pública site_config" on site_config for all using (true) with check (true);
+create policy "Escritura pública site_config" on site_config for all to anon, authenticated, service_role using (true) with check (true);
 
 -- Registro por defecto
 insert into site_config (id, active_festivity)
@@ -50,12 +58,14 @@ create table if not exists orders (
   created_at timestamptz default now()
 );
 
+grant all on table orders to anon, authenticated, service_role;
+
 alter table orders enable row level security;
 drop policy if exists "Lectura pública orders" on orders;
-create policy "Lectura pública orders" on orders for select using (true);
+create policy "Lectura pública orders" on orders for select to anon, authenticated, service_role using (true);
 
 drop policy if exists "Escritura pública orders" on orders;
-create policy "Escritura pública orders" on orders for all using (true) with check (true);
+create policy "Escritura pública orders" on orders for all to anon, authenticated, service_role using (true) with check (true);
 
 
 -- 3. TABLA DE USUARIOS Y ACCESOS
@@ -71,12 +81,14 @@ create table if not exists users (
   last_login timestamptz default now()
 );
 
+grant all on table users to anon, authenticated, service_role;
+
 alter table users enable row level security;
 drop policy if exists "Lectura pública users" on users;
-create policy "Lectura pública users" on users for select using (true);
+create policy "Lectura pública users" on users for select to anon, authenticated, service_role using (true);
 
 drop policy if exists "Escritura pública users" on users;
-create policy "Escritura pública users" on users for all using (true) with check (true);
+create policy "Escritura pública users" on users for all to anon, authenticated, service_role using (true) with check (true);
 
 -- Superadministrador principal único
 insert into users (id, name, email, password, role)
@@ -96,12 +108,14 @@ create table if not exists activity (
   created_at timestamptz default now()
 );
 
+grant all on table activity to anon, authenticated, service_role;
+
 alter table activity enable row level security;
 drop policy if exists "Lectura pública activity" on activity;
-create policy "Lectura pública activity" on activity for select using (true);
+create policy "Lectura pública activity" on activity for select to anon, authenticated, service_role using (true);
 
 drop policy if exists "Escritura pública activity" on activity;
-create policy "Escritura pública activity" on activity for all using (true) with check (true);
+create policy "Escritura pública activity" on activity for all to anon, authenticated, service_role using (true) with check (true);
 
 
 -- 5. TABLA DE PRODUCTOS (CATÁLOGO EN LA NUBE)
@@ -123,12 +137,18 @@ create table if not exists products (
   updated_at timestamptz default now()
 );
 
+grant all on table products to anon, authenticated, service_role;
+
 alter table products enable row level security;
 drop policy if exists "Lectura pública products" on products;
-create policy "Lectura pública products" on products for select using (true);
+create policy "Lectura pública products" on products for select to anon, authenticated, service_role using (true);
 
 drop policy if exists "Escritura pública products" on products;
-create policy "Escritura pública products" on products for all using (true) with check (true);
+create policy "Escritura pública products" on products for all to anon, authenticated, service_role using (true) with check (true);
+
+-- Conceder todos los permisos finales sobre todas las tablas del esquema public
+grant all on all tables in schema public to anon, authenticated, service_role;
+grant all on all sequences in schema public to anon, authenticated, service_role;
 
 -- Productos iniciales del catálogo
 insert into products (id, name, category, subcategory, bodega, price, original_price, discount, stock, badge, image, description, is_featured)
