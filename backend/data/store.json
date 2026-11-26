@@ -2,7 +2,7 @@
   "users": [
     {
       "id": "admin-1",
-      "name": "Admin Principal",
+      "name": "Vinoteca La Recta",
       "email": "vinotecalarecta7@gmail.com",
       "password": "MiClaveSecreta123!",
       "role": "superadministrador",
@@ -10,44 +10,6 @@
       "lastLogin": "2026-10-27T17:50:59.759Z",
       "phone": "3512460017",
       "address": "Recta Martinolli 8255"
-    },
-    {
-      "id": "admin-2",
-      "name": "Flor Almada",
-      "email": "floralmada07@gmail.com",
-      "password": "AdminRecta2024!",
-      "role": "superadministrador",
-      "createdAt": "2024-01-15T10:00:00.000Z",
-      "lastLogin": "2026-10-30T14:32:03.754Z"
-    },
-    {
-      "id": "admin-3",
-      "name": "Martín Ballistreri",
-      "email": "martinballistreri07@gmail.com",
-      "password": "AdminRecta2024!",
-      "role": "superadministrador",
-      "createdAt": "2024-01-15T10:00:00.000Z",
-      "lastLogin": "2026-10-15T13:17:31.646Z"
-    },
-    {
-      "id": "cust-1",
-      "name": "Gonzalo Ramírez",
-      "email": "gonzalo.ramirez@gmail.com",
-      "password": "Cliente2024!",
-      "phone": "+54 351 555-1234",
-      "address": "Av. Recta Martinolli 6840, Argüello, Córdoba",
-      "role": "cliente",
-      "createdAt": "2024-02-10T14:30:00.000Z"
-    },
-    {
-      "id": "cust-2",
-      "name": "Luciana Morales",
-      "email": "luciana.morales@yahoo.com.ar",
-      "password": "Cliente2024!",
-      "phone": "+54 351 444-9876",
-      "address": "Country Las Delicias, Córdoba",
-      "role": "cliente",
-      "createdAt": "2024-02-18T18:15:00.000Z"
     }
   ],
   "products": [
@@ -60,7 +22,7 @@
       "price": 125000,
       "originalPrice": 152000,
       "discount": 18,
-      "stock": 12,
+      "stock": 99,
       "minStock": 3,
       "isFeatured": true,
       "badge": "PRE-VENTA",
@@ -77,7 +39,7 @@
       "price": 41500,
       "originalPrice": 49500,
       "discount": 16,
-      "stock": 14,
+      "stock": 99,
       "minStock": 3,
       "isFeatured": true,
       "badge": "PRE-VENTA",
@@ -94,7 +56,7 @@
       "price": 11900,
       "originalPrice": 14500,
       "discount": 18,
-      "stock": 20,
+      "stock": 99,
       "minStock": 4,
       "isFeatured": true,
       "badge": "PRE-VENTA",
@@ -111,7 +73,7 @@
       "price": 12500,
       "originalPrice": 14500,
       "discount": 14,
-      "stock": 18,
+      "stock": 99,
       "minStock": 4,
       "isFeatured": true,
       "badge": "PRE-VENTA",
@@ -128,7 +90,7 @@
       "price": 17500,
       "originalPrice": 22200,
       "discount": 21,
-      "stock": 24,
+      "stock": 99,
       "minStock": 4,
       "isFeatured": true,
       "badge": "PRE-VENTA",
@@ -145,7 +107,7 @@
       "price": 22500,
       "originalPrice": 27000,
       "discount": 17,
-      "stock": 16,
+      "stock": 99,
       "minStock": 3,
       "isFeatured": true,
       "badge": "PRE-VENTA",
@@ -162,7 +124,7 @@
       "price": 10500,
       "originalPrice": 12900,
       "discount": 19,
-      "stock": 25,
+      "stock": 99,
       "minStock": 5,
       "isFeatured": true,
       "badge": "PRE-VENTA",
@@ -179,7 +141,7 @@
       "price": 9750,
       "originalPrice": 11900,
       "discount": 18,
-      "stock": 22,
+      "stock": 99,
       "minStock": 4,
       "isFeatured": true,
       "badge": "PRE-VENTA",
@@ -196,7 +158,7 @@
       "price": 16500,
       "originalPrice": 17900,
       "discount": 8,
-      "stock": 35,
+      "stock": 99,
       "minStock": 6,
       "isFeatured": true,
       "badge": "PRE-VENTA",
@@ -213,7 +175,7 @@
       "price": 10500,
       "originalPrice": 11900,
       "discount": 12,
-      "stock": 28,
+      "stock": 99,
       "minStock": 5,
       "isFeatured": true,
       "badge": "PRE-VENTA",
@@ -230,7 +192,7 @@
       "price": 10500,
       "originalPrice": 11900,
       "discount": 12,
-      "stock": 28,
+      "stock": 99,
       "minStock": 5,
       "isFeatured": true,
       "badge": "PRE-VENTA",
@@ -247,7 +209,7 @@
       "price": 8300,
       "originalPrice": 9500,
       "discount": 13,
-      "stock": 30,
+      "stock": 99,
       "minStock": 6,
       "isFeatured": true,
       "badge": "PRE-VENTA",
@@ -262,7 +224,7 @@
       "subcategory": "",
       "bodega": "Bodegas Salentein",
       "price": 152000,
-      "stock": 10,
+      "stock": 99,
       "minStock": 2,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
@@ -283,7 +245,7 @@
       "subcategory": "Cajas x6",
       "bodega": "Viña Las Perdices",
       "price": 81250,
-      "stock": 8,
+      "stock": 99,
       "minStock": 2,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
@@ -305,7 +267,7 @@
       "subcategory": "Cajas x6",
       "bodega": "Nieto Senetiner",
       "price": 110000,
-      "stock": 12,
+      "stock": 99,
       "minStock": 3,
       "isFeatured": true,
       "badge": "PROMO EXCLUSIVA",
@@ -321,225 +283,6 @@
       "saleConditions": "Compra válida solo con pago en efectivo o transferencia. Retiro en el local. Consulta previa por chat con el local."
     }
   ],
-  "orders": [
-    {
-      "id": "ORD-7001",
-      "customer": {
-        "name": "Gonzalo Ramírez",
-        "email": "gonzalo.ramirez@gmail.com",
-        "phone": "+54 351 555-1234",
-        "address": "Av. Recta Martinolli 6840, Argüello, Córdoba"
-      },
-      "items": [
-        {
-          "id": "prod-vino-1",
-          "name": "Catena Zapata Malbec Argentino 2020",
-          "price": 112000,
-          "quantity": 1
-        },
-        {
-          "id": "prod-promo-2",
-          "name": "Dúo Espumantes Chandon + 2 Copas",
-          "price": 36200,
-          "quantity": 1
-        }
-      ],
-      "paymentMethod": "Transferencia Bancaria (Alias)",
-      "subtotal": 148200,
-      "discount": 14820,
-      "shippingCost": 0,
-      "total": 133380,
-      "status": "En preparación",
-      "notes": "Entregar por la tarde después de las 16hs.",
-      "createdAt": "2024-03-01T15:30:00.000Z"
-    },
-    {
-      "id": "ORD-7002",
-      "customer": {
-        "name": "Luciana Morales",
-        "email": "luciana.morales@yahoo.com.ar",
-        "phone": "+54 351 444-9876",
-        "address": "Country Las Delicias, Lote 42, Córdoba"
-      },
-      "items": [
-        {
-          "id": "prod-promo-1",
-          "name": "Combo Degustación Gran Malbec",
-          "price": 68500,
-          "quantity": 2
-        },
-        {
-          "id": "prod-deli-1",
-          "name": "Jamón Crudo Reserva 18 Meses",
-          "price": 16500,
-          "quantity": 2
-        }
-      ],
-      "paymentMethod": "3 Cuotas Sin Interés",
-      "subtotal": 170000,
-      "discount": 0,
-      "shippingCost": 0,
-      "total": 170000,
-      "status": "Enviado",
-      "notes": "Dejar en guardia si no responde el timbre.",
-      "createdAt": "2024-03-02T11:20:00.000Z"
-    },
-    {
-      "id": "ORD-7003",
-      "customer": {
-        "name": "Carlos Benítez",
-        "email": "carlos.benitez@outlook.com",
-        "phone": "+54 351 222-3344",
-        "address": "Villa Belgrano, Córdoba"
-      },
-      "items": [
-        {
-          "id": "prod-whisky-1",
-          "name": "The Macallan Double Cask 12 Años",
-          "price": 135000,
-          "quantity": 1
-        }
-      ],
-      "paymentMethod": "Efectivo contra entrega",
-      "subtotal": 135000,
-      "discount": 0,
-      "shippingCost": 0,
-      "total": 135000,
-      "status": "Completado",
-      "notes": "Llamar antes de llegar.",
-      "createdAt": "2024-02-28T09:15:00.000Z"
-    }
-  ],
-  "activity": [
-    {
-      "id": "act-1793370723754-391",
-      "timestamp": "2026-10-30T14:32:03.754Z",
-      "user": "floralmada07@gmail.com",
-      "userName": "Flor Almada",
-      "role": "superadministrador",
-      "action": "ADMIN_LOGIN",
-      "description": "Ingresó al sistema (superadministrador)",
-      "badgeColor": "purple"
-    },
-    {
-      "id": "act-1793123467130-540",
-      "timestamp": "2026-10-27T17:51:07.130Z",
-      "user": "vinotecalarecta7@gmail.com",
-      "userName": "Administrador",
-      "role": "superadministrador",
-      "action": "PRODUCT_CREATED",
-      "description": "Creó el producto \"Gran Enemigo Gualtallary Single Vineyard\" (Stock: 8)",
-      "badgeColor": "green"
-    },
-    {
-      "id": "act-1793123459759-443",
-      "timestamp": "2026-10-27T17:50:59.759Z",
-      "user": "vinotecalarecta7@gmail.com",
-      "userName": "Admin Principal",
-      "role": "superadministrador",
-      "action": "ADMIN_REGISTER_CLAIM",
-      "description": "Superadministrador activó sus credenciales de acceso: vinotecalarecta7@gmail.com",
-      "badgeColor": "gold"
-    },
-    {
-      "id": "act-1793123451824-39",
-      "timestamp": "2026-10-27T17:50:51.824Z",
-      "user": "test@example.com",
-      "userName": "Martín",
-      "role": "cliente",
-      "action": "CONTACT_INQUIRY",
-      "description": "Consulta recibida para vinotecalarecta7@gmail.com de Martín (test@example.com): \"Consulta Vinos\"",
-      "badgeColor": "gold"
-    },
-    {
-      "id": "act-1792100241401-640",
-      "timestamp": "2026-10-15T21:37:21.401Z",
-      "user": "vinotecalarecta7@gmail.com",
-      "userName": "Vinoteca La Recta (Principal)",
-      "role": "superadministrador",
-      "action": "ADMIN_LOGIN",
-      "description": "Ingresó al sistema (superadministrador)",
-      "badgeColor": "purple"
-    },
-    {
-      "id": "act-1792071841033-504",
-      "timestamp": "2026-10-15T13:44:01.033Z",
-      "user": "vinotecalarecta7@gmail.com",
-      "userName": "Vinoteca La Recta (Principal)",
-      "role": "superadministrador",
-      "action": "ADMIN_LOGIN",
-      "description": "Ingresó al sistema (superadministrador)",
-      "badgeColor": "purple"
-    },
-    {
-      "id": "act-1792070251646-908",
-      "timestamp": "2026-10-15T13:17:31.646Z",
-      "user": "martinballistreri07@gmail.com",
-      "userName": "Martín Ballistreri",
-      "role": "superadministrador",
-      "action": "ADMIN_LOGIN",
-      "description": "Ingresó al sistema (superadministrador)",
-      "badgeColor": "purple"
-    },
-    {
-      "id": "act-1792070251637-358",
-      "timestamp": "2026-10-15T13:17:31.637Z",
-      "user": "floralmada07@gmail.com",
-      "userName": "Flor Almada",
-      "role": "superadministrador",
-      "action": "ADMIN_LOGIN",
-      "description": "Ingresó al sistema (superadministrador)",
-      "badgeColor": "purple"
-    },
-    {
-      "id": "act-1792070205543-196",
-      "timestamp": "2026-10-15T13:16:45.543Z",
-      "user": "vinotecalarecta7@gmail.com",
-      "userName": "Vinoteca La Recta (Principal)",
-      "role": "superadministrador",
-      "action": "ADMIN_LOGIN",
-      "description": "Ingresó al sistema (superadministrador)",
-      "badgeColor": "purple"
-    },
-    {
-      "id": "act-1",
-      "timestamp": "2024-03-02T14:10:00.000Z",
-      "user": "floralmada07@gmail.com",
-      "userName": "Flor Almada",
-      "role": "superadministrador",
-      "action": "STOCK_UPDATE",
-      "description": "Actualizó stock de Catena Zapata Malbec Argentino (+6 unidades)",
-      "badgeColor": "gold"
-    },
-    {
-      "id": "act-2",
-      "timestamp": "2024-03-02T11:22:00.000Z",
-      "user": "martinballistreri07@gmail.com",
-      "userName": "Martín Ballistreri",
-      "role": "superadministrador",
-      "action": "ORDER_STATUS",
-      "description": "Marcó pedido #ORD-7002 como ENVIADO con cadete privado",
-      "badgeColor": "blue"
-    },
-    {
-      "id": "act-3",
-      "timestamp": "2024-03-01T15:32:00.000Z",
-      "user": "vinotecalarecta7@gmail.com",
-      "userName": "Vinoteca La Recta (Principal)",
-      "role": "superadministrador",
-      "action": "NEW_ORDER",
-      "description": "Ingresó nuevo pedido #ORD-7001 por $133.380 (Gonzalo Ramírez)",
-      "badgeColor": "green"
-    },
-    {
-      "id": "act-4",
-      "timestamp": "2024-03-01T09:00:00.000Z",
-      "user": "vinotecalarecta7@gmail.com",
-      "userName": "Vinoteca La Recta (Principal)",
-      "role": "superadministrador",
-      "action": "ADMIN_LOGIN",
-      "description": "Inicio de sesión exitoso desde panel administrativo",
-      "badgeColor": "purple"
-    }
-  ]
+  "orders": [],
+  "activity": []
 }

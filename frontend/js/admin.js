@@ -197,11 +197,11 @@ function renderDashboard(container) {
         </div>
       </div>
 
-      <div class="kpi-card" style="${stats.lowStockCount > 0 ? 'border-color: rgba(237, 108, 2, 0.4);' : ''}">
+      <div class="kpi-card" style="${(stats.outOfStockCount || 0) > 0 ? 'border-color: rgba(244, 67, 54, 0.4);' : ''}">
         <div class="kpi-info">
-          <h3>Alertas de Stock Bajo</h3>
-          <div class="kpi-value" style="color: ${stats.lowStockCount > 0 ? '#ff9800' : '#4caf50'};">${stats.lowStockCount}</div>
-          <div class="kpi-subtext">${stats.outOfStockCount} productos agotados</div>
+          <h3>Productos Agotados</h3>
+          <div class="kpi-value" style="color: ${(stats.outOfStockCount || 0) > 0 ? '#ff5252' : '#4caf50'};">${stats.outOfStockCount || 0}</div>
+          <div class="kpi-subtext">Sin disponibilidad en depósito</div>
         </div>
         <div class="kpi-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -290,17 +290,6 @@ function renderDashboard(container) {
 
 // ================= 2. CONTROL DE STOCK =================
 
-function formatBoxBreakdown(stockUnits, unitsPerBox = 6) {
-  const upb = Math.max(1, Number(unitsPerBox) || 6);
-  const total = Math.max(0, Number(stockUnits) || 0);
-  const fullBoxes = Math.floor(total / upb);
-  const loose = total % upb;
-  if (total === 0) return `0 cajas (${upb} un./caja)`;
-  if (loose === 0) return `📦 ${fullBoxes} ${fullBoxes === 1 ? 'caja' : 'cajas'} × ${upb} un.`;
-  if (fullBoxes === 0) return `${loose} un. sueltas (caja de ${upb})`;
-  return `📦 ${fullBoxes} ${fullBoxes === 1 ? 'caja' : 'cajas'} × ${upb} + ${loose} sueltas`;
-}
-
 function renderStock(container) {
   let filtered = [...adminState.products];
 
@@ -350,7 +339,6 @@ function renderStock(container) {
               <th>Producto</th>
               <th>Categoría / Bodega</th>
               <th>Precio</th>
-              <th>Stock Actual (Unidades &amp; Cajas)</th>
               <th>Estado Stock</th>
               <th>Acciones</th>
             </tr>
@@ -358,8 +346,6 @@ function renderStock(container) {
           <tbody>
             ${filtered.map(p => {
               const isOut = p.stock <= 0;
-              const isLow = p.stock > 0 && p.stock <= (p.minStock || 3);
-              const upb = p.unitsPerBox || 6;
               return `
                 <tr data-product-id="${p.id}">
                   <td>
@@ -380,26 +366,9 @@ function renderStock(container) {
                     ${p.discount > 0 ? `<div style="font-size: 0.72rem; color: #ff6b6b;">${p.discount}% OFF</div>` : ''}
                   </td>
                   <td>
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                      <div class="stock-stepper-inline">
-                        <button data-action="quick-dec-stock" data-id="${p.id}" title="Restar 1 unidad">-</button>
-                        <span>${p.stock} un.</span>
-                        <button data-action="quick-inc-stock" data-id="${p.id}" title="Sumar 1 unidad">+</button>
-                      </div>
-                      <button data-action="quick-inc-box" data-id="${p.id}" data-upb="${upb}" class="btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.68rem;" title="Sumar 1 caja (${upb} un.)">+1 Caja</button>
-                    </div>
-                    <div style="font-size: 0.71rem; color: var(--gold-light); margin-top: 0.28rem;">
-                      ${formatBoxBreakdown(p.stock, upb)}
-                    </div>
-                  </td>
-                  <td>
-                    ${isOut ? `
-                      <span class="badge-status cancelado">Agotado</span>
-                    ` : isLow ? `
-                      <span class="badge-status pendiente">Stock Bajo (${p.stock})</span>
-                    ` : `
-                      <span class="badge-status completado">Disponible</span>
-                    `}
+                    <button data-action="toggle-stock" data-id="${p.id}" class="badge-status ${isOut ? 'cancelado' : 'completado'}" style="cursor: pointer; border: 1px solid ${isOut ? 'rgba(244,67,54,0.4)' : 'rgba(76,175,80,0.4)'}; padding: 0.4rem 0.85rem; border-radius: 6px; font-weight: 600; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 0.35rem;" title="Hacé clic para cambiar disponibilidad en depósito">
+                      ${isOut ? '🔴 Agotado' : '🟢 Disponible'}
+                    </button>
                   </td>
                   <td>
                     <div style="display: flex; gap: 0.5rem;">
@@ -431,39 +400,21 @@ function renderStock(container) {
     openProductFormModal(null);
   });
 
-  // Attach quick stock adjusters
-  container.querySelectorAll('[data-action="quick-inc-stock"]').forEach(btn => {
+  // Toggle availability (Disponible <-> Agotado)
+  container.querySelectorAll('[data-action="toggle-stock"]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const id = btn.getAttribute('data-id');
       const prod = adminState.products.find(p => p.id === id);
-      if (prod) {
-        const updated = await api.updateStock(id, prod.stock + 1);
+      if (!prod) return;
+      const newStock = (prod.stock > 0) ? 0 : 99;
+      btn.disabled = true;
+      btn.textContent = 'Actualizando...';
+      try {
+        const updated = await api.updateStock(id, newStock);
         prod.stock = updated.stock;
         renderStock(container);
-      }
-    });
-  });
-
-  container.querySelectorAll('[data-action="quick-inc-box"]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const id = btn.getAttribute('data-id');
-      const upb = Number(btn.getAttribute('data-upb')) || 6;
-      const prod = adminState.products.find(p => p.id === id);
-      if (prod) {
-        const updated = await api.updateStock(id, prod.stock + upb);
-        prod.stock = updated.stock;
-        renderStock(container);
-      }
-    });
-  });
-
-  container.querySelectorAll('[data-action="quick-dec-stock"]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const id = btn.getAttribute('data-id');
-      const prod = adminState.products.find(p => p.id === id);
-      if (prod && prod.stock > 0) {
-        const updated = await api.updateStock(id, prod.stock - 1);
-        prod.stock = updated.stock;
+      } catch (err) {
+        alert('Error al actualizar disponibilidad: ' + err.message);
         renderStock(container);
       }
     });
@@ -890,11 +841,7 @@ function renderCustomization(container) {
       price: 45000,
       originalPrice: 54000,
       discount: 17,
-      stock: 12,
-      minStock: 3,
-      stockMode: 'caja',
-      unitsPerBox: 6,
-      boxesCount: 2,
+      stock: 99,
       badge: `${activeFest.emoji} PROMO ${activeFest.name.toUpperCase()}`,
       image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&h=1000&q=85&fm=webp',
       description: `Selección especial armada para celebrar ${activeFest.name} con etiquetas de nuestra cava.`,
@@ -1367,56 +1314,6 @@ function updateSubcatDatalist(cat) {
   dl.innerHTML = list.map(s => '<option value="' + s + '"></option>').join('');
 }
 
-// Actualiza el resumen bidireccional de Stock (Unidades <-> Cajas)
-function updateStockConversionSummary(sourceField = 'units') {
-  const modeInput = document.getElementById('pFormStockMode');
-  const upbInput = document.getElementById('pFormUnitsPerBox');
-  const boxesInput = document.getElementById('pFormBoxesCount');
-  const stockInput = document.getElementById('pFormStock');
-  const summaryEl = document.getElementById('pStockConversionSummary');
-  if (!upbInput || !boxesInput || !stockInput || !summaryEl) return;
-
-  const upb = Math.max(1, Number(upbInput.value) || 6);
-
-  if (sourceField === 'boxes') {
-    const boxesVal = Math.max(0, Number(boxesInput.value) || 0);
-    const calculatedUnits = Math.round(boxesVal * upb);
-    stockInput.value = calculatedUnits;
-  } else if (sourceField === 'units') {
-    const unitsVal = Math.max(0, Number(stockInput.value) || 0);
-    const calculatedBoxes = Number((unitsVal / upb).toFixed(2));
-    boxesInput.value = calculatedBoxes;
-  } else if (sourceField === 'upb') {
-    const currentMode = modeInput?.value || 'unidad';
-    if (currentMode === 'caja') {
-      const boxesVal = Math.max(0, Number(boxesInput.value) || 0);
-      stockInput.value = Math.round(boxesVal * upb);
-    } else {
-      const unitsVal = Math.max(0, Number(stockInput.value) || 0);
-      boxesInput.value = Number((unitsVal / upb).toFixed(2));
-    }
-  }
-
-  const totalUnits = Math.max(0, Number(stockInput.value) || 0);
-  const fullBoxes = Math.floor(totalUnits / upb);
-  const looseUnits = totalUnits % upb;
-
-  if (looseUnits === 0) {
-    summaryEl.innerHTML = `📦 Equivalencia automática: <strong>${fullBoxes} ${fullBoxes === 1 ? 'caja' : 'cajas'}</strong> × <strong>${upb} un./caja</strong> = <strong>${totalUnits} unidades totales</strong> en stock`;
-  } else {
-    summaryEl.innerHTML = `📦 Equivalencia automática: <strong>${totalUnits} unidades</strong> = <strong>${fullBoxes} ${fullBoxes === 1 ? 'caja completa' : 'cajas completas'}</strong> (de ${upb} un.) + <strong>${looseUnits} ${looseUnits === 1 ? 'unidad suelta' : 'unidades sueltas'}</strong>`;
-  }
-}
-
-function setStockEntryMode(mode) {
-  const modeInput = document.getElementById('pFormStockMode');
-  const unitBtn = document.getElementById('stockModeUnitBtn');
-  const boxBtn = document.getElementById('stockModeBoxBtn');
-  if (modeInput) modeInput.value = mode;
-  if (unitBtn) unitBtn.classList.toggle('active', mode === 'unidad');
-  if (boxBtn) boxBtn.classList.toggle('active', mode === 'caja');
-}
-
 function openProductFormModal(product = null) {
   const isNewPreset = Boolean(product && product._isNewPreset);
   adminState.editingProduct = isNewPreset ? null : product;
@@ -1444,17 +1341,13 @@ function openProductFormModal(product = null) {
   document.getElementById('pFormOriginalPrice').value = product?.originalPrice || '';
   document.getElementById('pFormDiscount').value = product?.discount || 0;
 
-  // Stock Bidireccional
-  const initialUpb = product?.unitsPerBox || 6;
-  const initialStock = product ? product.stock : 12;
-  const initialMode = product?.stockMode || 'unidad';
-  document.getElementById('pFormUnitsPerBox').value = initialUpb;
-  document.getElementById('pFormStock').value = initialStock;
-  document.getElementById('pFormBoxesCount').value = Number((initialStock / initialUpb).toFixed(2));
-  setStockEntryMode(initialMode);
-  updateStockConversionSummary('units');
+  // Estado de Stock simplificado (Disponible / Agotado)
+  const isAvailable = product ? (Number(product.stock) > 0) : true;
+  const stockSelect = document.getElementById('pFormStockStatus');
+  if (stockSelect) {
+    stockSelect.value = isAvailable ? 'disponible' : 'agotado';
+  }
 
-  document.getElementById('pFormMinStock').value = product ? (product.minStock || 3) : 3;
   document.getElementById('pFormBadge').value = product?.badge || '';
 
   const defaultImg = product?.image || DEFAULT_FALLBACK_IMAGE;
@@ -1533,31 +1426,6 @@ function setupAdminListeners() {
     }
   });
 
-  // Stock Bidirectional Calculators
-  document.getElementById('stockModeUnitBtn')?.addEventListener('click', () => {
-    setStockEntryMode('unidad');
-    document.getElementById('pFormStock')?.focus();
-  });
-
-  document.getElementById('stockModeBoxBtn')?.addEventListener('click', () => {
-    setStockEntryMode('caja');
-    document.getElementById('pFormBoxesCount')?.focus();
-  });
-
-  document.getElementById('pFormUnitsPerBox')?.addEventListener('input', () => {
-    updateStockConversionSummary('upb');
-  });
-
-  document.getElementById('pFormBoxesCount')?.addEventListener('input', () => {
-    setStockEntryMode('caja');
-    updateStockConversionSummary('boxes');
-  });
-
-  document.getElementById('pFormStock')?.addEventListener('input', () => {
-    setStockEntryMode('unidad');
-    updateStockConversionSummary('units');
-  });
-
   // Product Image Dropzone (Click or Drag & Drop from device only)
   const dropzone = document.getElementById('pImageDropzone');
   const imgFileInput = document.getElementById('pFormImageFile');
@@ -1612,6 +1480,7 @@ function setupAdminListeners() {
   document.getElementById('adminProductForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const isEdit = Boolean(adminState.editingProduct);
+    const isAvailable = document.getElementById('pFormStockStatus')?.value === 'disponible';
 
     const productData = {
       name: document.getElementById('pFormName').value,
@@ -1621,11 +1490,7 @@ function setupAdminListeners() {
       price: Number(document.getElementById('pFormPrice').value),
       originalPrice: document.getElementById('pFormOriginalPrice').value ? Number(document.getElementById('pFormOriginalPrice').value) : null,
       discount: Number(document.getElementById('pFormDiscount').value) || 0,
-      stock: Number(document.getElementById('pFormStock').value),
-      minStock: Number(document.getElementById('pFormMinStock').value),
-      stockMode: document.getElementById('pFormStockMode')?.value || 'unidad',
-      unitsPerBox: Number(document.getElementById('pFormUnitsPerBox')?.value) || 6,
-      boxesCount: Number(document.getElementById('pFormBoxesCount')?.value) || 0,
+      stock: isAvailable ? 99 : 0,
       badge: document.getElementById('pFormBadge').value || null,
       image: document.getElementById('pFormImage').value || DEFAULT_FALLBACK_IMAGE,
       description: document.getElementById('pFormDesc').value,
