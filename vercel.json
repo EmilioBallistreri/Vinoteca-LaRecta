@@ -15,18 +15,7 @@
           "value": "(?<subdomain>.*)\\.vercel\\.app"
         }
       ],
-      "destination": "https://vinotecalarecta.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www\\.vinotecalarecta\\.com"
-        }
-      ],
-      "destination": "https://vinotecalarecta.com/:path*",
+      "destination": "https://www.vinotecalarecta.com/:path*",
       "permanent": true
     }
   ],
