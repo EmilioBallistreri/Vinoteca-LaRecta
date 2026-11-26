@@ -80,15 +80,6 @@ function generateSitemapXML() {
     });
   });
 
-  // 3. Canal Mayorista / Institucional
-  urls.push({
-    loc: `${DOMAIN}/mayorista.html`,
-    lastmod: today,
-    changefreq: 'weekly',
-    priority: '0.7',
-    comment: 'Portal Venta Mayorista y Corporativa'
-  });
-
   // Construcción del documento XML estándar sitemaps.org
   const xmlEntries = urls.map(entry => {
     const commentStr = entry.comment ? `  <!-- ${entry.comment} -->\n` : '';

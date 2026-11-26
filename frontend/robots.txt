@@ -8,7 +8,6 @@ User-agent: *
 # Permitir rastreo e indexación de páginas públicas y recursos visuales
 Allow: /
 Allow: /productos.html
-Allow: /mayorista.html
 Allow: /public/
 Allow: /css/
 Allow: /js/
@@ -17,6 +16,8 @@ Allow: /js/
 Disallow: /admin
 Disallow: /admin.html
 Disallow: /api/
+Disallow: /mayorista
+Disallow: /mayorista.html
 
 # Ubicación del Sitemap oficial para Google Search Console
 Sitemap: https://vinotecalarecta.com/sitemap.xml
