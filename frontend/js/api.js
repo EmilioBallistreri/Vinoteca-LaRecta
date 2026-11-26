@@ -832,10 +832,12 @@ export const api = {
   getLocalCloudConfig() {
     try {
       const stored = localStorage.getItem('vlr_cloud_db_creds');
-      return stored ? JSON.parse(stored) : null;
-    } catch {
-      return null;
-    }
+      if (stored) return JSON.parse(stored);
+    } catch (_) {}
+    return {
+      url: 'https://smpdtsnphcspresynwut.supabase.co',
+      key: 'sb_publishable_Fdok-qRsjAH_QfI3tWKsMA_X8NL7nmL'
+    };
   },
 
   setLocalCloudConfig(creds) {

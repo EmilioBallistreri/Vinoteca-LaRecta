@@ -4,6 +4,14 @@ const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs');
 const path = require('path');
 
+// Soporte para entornos Node.js 20 sin WebSocket nativo
+if (typeof WebSocket === 'undefined') {
+  global.WebSocket = class {};
+}
+
+const DEFAULT_SUPABASE_URL = 'https://smpdtsnphcspresynwut.supabase.co';
+const DEFAULT_SUPABASE_KEY = 'sb_publishable_Fdok-qRsjAH_QfI3tWKsMA_X8NL7nmL';
+
 function cleanSupabaseUrl(url) {
   if (!url) return '';
   return url.trim().replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
@@ -46,7 +54,11 @@ function getCredentials() {
     }
   } catch (_) {}
 
-  return { url: null, key: null };
+  // Configuración oficial por defecto para Vinoteca La Recta
+  return { 
+    url: DEFAULT_SUPABASE_URL, 
+    key: DEFAULT_SUPABASE_KEY 
+  };
 }
 
 let cachedClient = null;

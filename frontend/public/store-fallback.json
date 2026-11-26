@@ -318,5 +318,9 @@
       }
     ],
     "updatedAt": "2026-11-26T17:20:43.638Z"
+  },
+  "cloudDatabase": {
+    "url": "https://smpdtsnphcspresynwut.supabase.co",
+    "key": "sb_publishable_Fdok-qRsjAH_QfI3tWKsMA_X8NL7nmL"
   }
 }
