@@ -6,6 +6,11 @@
   <link rel="icon" type="image/jpeg" href="/public/logo-vinoteca.jpg" />
   <title>Panel de Administración | Vinoteca La Recta</title>
   <meta name="robots" content="noindex, nofollow" />
+  <script>
+    if (window.location.hostname.endsWith('.vercel.app') || window.location.hostname.startsWith('www.')) {
+      window.location.replace('https://vinotecalarecta.com' + window.location.pathname + window.location.search + window.location.hash);
+    }
+  </script>
 
   <!-- Google Fonts: Cormorant Garamond, Montserrat, Cinzel -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

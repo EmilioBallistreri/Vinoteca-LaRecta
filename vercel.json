@@ -6,6 +6,30 @@
       "includeFiles": "backend/**"
     }
   },
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "(?<subdomain>.*)\\.vercel\\.app"
+        }
+      ],
+      "destination": "https://vinotecalarecta.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www\\.vinotecalarecta\\.com"
+        }
+      ],
+      "destination": "https://vinotecalarecta.com/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
