@@ -2174,6 +2174,19 @@ async function init() {
   setupContactInquiryForm();
   renderPromosGrid();
 
+  const defaultFestiveConfig = {
+    activeFestivity: 'navidad',
+    banner: {
+      enabled: true,
+      badge: '🎄 EDICIÓN ESPECIAL NAVIDAD',
+      title: 'Regalá Grandes Momentos en esta Nochebuena',
+      subtitle: 'Armamos estuches empresariales, cajas navideñas seleccionadas y combos de espumantes y vinos de guarda listos para el arbolito.',
+      ctaText: 'Ver Combos Navideños',
+      ctaLink: '#promos'
+    }
+  };
+  applySiteCustomization(defaultFestiveConfig);
+
   try {
     const [products, siteConfig] = await Promise.all([
       api.getProducts(),

@@ -766,7 +766,10 @@ export const api = {
   // SITE CONFIG (CAROUSEL, FESTIVITIES & BANNERS)
   async getSiteConfig() {
     try {
-      const res = await fetch('/api/site-config?_t=' + Date.now(), { cache: 'no-store' });
+      const res = await fetch('/api/site-config?_t=' + Date.now(), { 
+        headers: this.getHeaders(),
+        cache: 'no-store' 
+      });
       const serverCfg = await safeParseJson(res);
       if (res.ok && serverCfg && !serverCfg.__nonJsonError) {
         // Purgar cualquier caché local obsoleta que contenga imágenes de Unsplash

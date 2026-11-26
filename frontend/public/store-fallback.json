@@ -284,5 +284,39 @@
     }
   ],
   "orders": [],
-  "activity": []
+  "activity": [],
+  "siteConfig": {
+    "activeFestivity": "navidad",
+    "heroTag": "",
+    "heroTitle": "Vinoteca La Recta",
+    "heroHighlight": "El mejor lugar para elegir tu bebida",
+    "heroDescription": "Encontrá en nuestro local, la mayor variedad de vinos, whiskys, aperitivos y todo lo que necesitas para que cada momento compartido, sea único.",
+    "banner": {
+      "enabled": true,
+      "badge": "🎄 EDICIÓN ESPECIAL NAVIDAD",
+      "title": "Regalá Grandes Momentos en esta Nochebuena",
+      "subtitle": "Armamos estuches empresariales, cajas navideñas seleccionadas y combos de espumantes y vinos de guarda listos para el arbolito.",
+      "ctaText": "Ver Combos Navideños",
+      "ctaLink": "#promos",
+      "image": ""
+    },
+    "heroSlides": [
+      {
+        "id": "slide-1",
+        "image": "/public/hero/hero-1.jpg",
+        "label": "Fachada & Marquesina"
+      },
+      {
+        "id": "slide-2",
+        "image": "/public/hero/hero-2.jpg",
+        "label": "Cava & Barricas"
+      },
+      {
+        "id": "slide-3",
+        "image": "/public/hero/hero-3.jpg",
+        "label": "Colección de Vinos"
+      }
+    ],
+    "updatedAt": "2026-11-26T17:20:43.638Z"
+  }
 }

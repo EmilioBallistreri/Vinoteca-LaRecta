@@ -626,13 +626,13 @@ module.exports = {
       heroTitle: 'Vinoteca La Recta',
       heroHighlight: 'El mejor lugar para elegir tu bebida',
       heroDescription: 'Encontrá en nuestro local, la mayor variedad de vinos, whiskys, aperitivos y todo lo que necesitas para que cada momento compartido, sea único.',
-      activeFestivity: 'clasico',
+      activeFestivity: 'navidad',
       banner: {
-        enabled: false,
-        badge: 'ESPECIAL DE TEMPORADA',
-        title: 'Celebrá con Etiquetas Seleccionadas',
-        subtitle: 'Descubrí nuestros combos exclusivos, estuches de regalo y descuentos especiales para esta celebración.',
-        ctaText: 'Ver Promociones Especiales',
+        enabled: true,
+        badge: '🎄 EDICIÓN ESPECIAL NAVIDAD',
+        title: 'Regalá Grandes Momentos en esta Nochebuena',
+        subtitle: 'Armamos estuches empresariales, cajas navideñas seleccionadas y combos de espumantes y vinos de guarda listos para el arbolito.',
+        ctaText: 'Ver Combos Navideños',
         ctaLink: '#promos',
         image: ''
       }
