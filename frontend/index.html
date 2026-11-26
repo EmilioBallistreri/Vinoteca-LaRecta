@@ -21,56 +21,82 @@
   <meta name="twitter:description" content="Vinoteca La Recta en Córdoba: descubrí nuestra exclusiva selección de vinos de autor, espumantes, aperitivos y promociones especiales." />
   <meta name="twitter:image" content="https://vinotecalarecta.com/public/logo-vinoteca.jpg" />
 
-  <!-- Datos Estructurados Schema.org (JSON-LD) -->
+  <!-- Datos Estructurados Schema.org (JSON-LD) para Negocio, Sitio Web y Navegación -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LiquorStore",
-    "@id": "https://vinotecalarecta.com/#store",
-    "name": "Vinoteca La Recta",
-    "alternateName": "Vinoteca Recta Martinolli",
-    "url": "https://vinotecalarecta.com/",
-    "logo": "https://vinotecalarecta.com/public/logo-vinoteca.jpg",
-    "image": "https://vinotecalarecta.com/public/logo-vinoteca.jpg",
-    "description": "Vinoteca y cava de guarda en Argüello, Córdoba. Vinos de autor, espumantes, destilados y promociones exclusivas con retiro en local.",
-    "telephone": "+54 9 351 246-0017",
-    "email": "vinotecalarecta7@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Av. Recta Martinolli 8255",
-      "addressLocality": "Córdoba",
-      "addressRegion": "Córdoba",
-      "addressCountry": "AR"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": -31.3471426,
-      "longitude": -64.2772111
-    },
-    "hasMap": "https://www.google.com/maps/place/Vinoteca+La+Recta/@-31.347138,-64.279786,17z/data=!3m2!4b1!5s0x94329c27f7fd4923:0x27291cb4f1bd05a5!4m6!3m5!1s0x94329c27f70b2869:0x9d2a7b9c8ee6c518!8m2!3d-31.3471426!4d-64.2772111!16s%2Fg%2F1wk4f42p",
-    "sameAs": [
-      "https://instagram.com/vinoteca.larecta",
-      "https://wa.me/5493512460017"
-    ],
-    "priceRange": "$$",
-    "currenciesAccepted": "ARS",
-    "paymentAccepted": "Efectivo, Transferencia Bancaria",
-    "founder": {
-      "@type": "Person",
-      "name": "Cuchi Almada"
-    }
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
+    "@graph": [
       {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Inicio",
-        "item": "https://vinotecalarecta.com/"
+        "@type": "LiquorStore",
+        "@id": "https://vinotecalarecta.com/#store",
+        "name": "Vinoteca La Recta",
+        "alternateName": "Vinoteca Recta Martinolli",
+        "url": "https://vinotecalarecta.com/",
+        "logo": "https://vinotecalarecta.com/public/logo-vinoteca.jpg",
+        "image": "https://vinotecalarecta.com/public/logo-vinoteca.jpg",
+        "description": "Vinoteca y cava de guarda en Argüello, Córdoba. Vinos de autor, espumantes, destilados y promociones exclusivas con retiro en local.",
+        "telephone": "+54 9 351 246-0017",
+        "email": "vinotecalarecta7@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Av. Recta Martinolli 8255",
+          "addressLocality": "Córdoba",
+          "addressRegion": "Córdoba",
+          "addressCountry": "AR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -31.3471426,
+          "longitude": -64.2772111
+        },
+        "hasMap": "https://www.google.com/maps/place/Vinoteca+La+Recta/@-31.347138,-64.279786,17z/data=!3m2!4b1!5s0x94329c27f7fd4923:0x27291cb4f1bd05a5!4m6!3m5!1s0x94329c27f70b2869:0x9d2a7b9c8ee6c518!8m2!3d-31.3471426!4d-64.2772111!16s%2Fg%2F1wk4f42p",
+        "sameAs": [
+          "https://instagram.com/vinoteca.larecta",
+          "https://wa.me/5493512460017"
+        ],
+        "priceRange": "$$",
+        "currenciesAccepted": "ARS",
+        "paymentAccepted": "Efectivo, Transferencia Bancaria",
+        "founder": {
+          "@type": "Person",
+          "name": "Cuchi Almada"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://vinotecalarecta.com/#website",
+        "url": "https://vinotecalarecta.com/",
+        "name": "Vinoteca La Recta",
+        "description": "Sitio web oficial de Vinoteca La Recta en Córdoba. Vinos de autor, espumantes, aperitivos y promociones especiales con retiro en Argüello.",
+        "publisher": {
+          "@id": "https://vinotecalarecta.com/#store"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://vinotecalarecta.com/#webpage",
+        "url": "https://vinotecalarecta.com/",
+        "name": "Vinoteca La Recta | Vinos, Destilados y Cava de Autor en Córdoba",
+        "description": "Vinoteca La Recta en Córdoba: descubrí nuestra exclusiva selección de vinos de autor, espumantes, aperitivos y promociones especiales con retiro en nuestro local de Argüello.",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://vinotecalarecta.com/#website"
+        },
+        "about": {
+          "@id": "https://vinotecalarecta.com/#store"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://vinotecalarecta.com/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://vinotecalarecta.com/"
+          }
+        ]
       }
     ]
   }
