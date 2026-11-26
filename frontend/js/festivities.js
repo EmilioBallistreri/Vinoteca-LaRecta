@@ -338,8 +338,8 @@ export function applySiteCustomization(siteConfig) {
                     <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
                 </a>
-                <a href="/productos.html?categoria=promos" class="btn-secondary">
-                  Explorar Combos en Catálogo
+                <a href="#preventa" class="btn-secondary">
+                  Ver Productos
                 </a>
               </div>
             </div>

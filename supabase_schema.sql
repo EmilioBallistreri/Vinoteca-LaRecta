@@ -131,11 +131,14 @@ create table if not exists products (
   stock numeric default 99,
   badge text,
   image text,
+  images jsonb default '[]'::jsonb,
   description text default '',
   is_featured boolean default false,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
+
+alter table products add column if not exists images jsonb default '[]'::jsonb;
 
 grant all on table products to anon, authenticated, service_role;
 

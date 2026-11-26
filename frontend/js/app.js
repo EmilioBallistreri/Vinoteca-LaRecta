@@ -1207,6 +1207,32 @@ function updateCheckoutSummary() {
 
 function setupEventListeners() {
   // Navigation Links
+  // Delegación global para navegación interna fluida (soporta elementos estáticos y dinámicos)
+  document.addEventListener('click', (e) => {
+    const preventaAnchor = e.target.closest('a[href="#preventa"], a[href$="/#preventa"]');
+    if (preventaAnchor) {
+      e.preventDefault();
+      document.getElementById('mobileMenuDrawer')?.classList.remove('active');
+      const cat = preventaAnchor.getAttribute('data-category');
+      if (cat) {
+        selectPreventaCategory(cat, true);
+      } else {
+        const wrapper = document.getElementById('preventaProductsWrapper') || document.getElementById('preventa');
+        if (wrapper) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      return;
+    }
+
+    const promosAnchor = e.target.closest('a[href="#promos"], a[href$="/#promos"]');
+    if (promosAnchor) {
+      e.preventDefault();
+      document.getElementById('mobileMenuDrawer')?.classList.remove('active');
+      const promosEl = document.getElementById('promos');
+      if (promosEl) promosEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+  });
+
   document.querySelectorAll('a[href^="#"], a[href*="/#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const rawHref = this.getAttribute('href');
@@ -1788,19 +1814,84 @@ function initPromoCarousels() {
   });
 }
 
+const FALLBACK_EXCLUSIVE_PROMOS = [
+  {
+    id: "promo-salentein-combo",
+    name: "Combo Exclusivo de Bodegas Salentein",
+    category: "promos",
+    subcategory: "",
+    bodega: "Bodegas Salentein",
+    price: 152000,
+    stock: 99,
+    minStock: 2,
+    isFeatured: true,
+    badge: "PROMO EXCLUSIVA",
+    image: "/public/promotions/salentein-1-cover.png",
+    images: [
+      "/public/promotions/salentein-1-cover.png",
+      "/public/promotions/salentein-2.png",
+      "/public/promotions/salentein-3.png",
+      "/public/promotions/salentein-4.png"
+    ],
+    description: "1 caja Salentein Malbec + 1 caja Salentein Extra Brut $ 152.000 y llevate de regalo 1 frapera de aluminio, con manijas de cuero y logo de la bodega ideal para vestir tu mesa"
+  },
+  {
+    id: "promo-las-perdices-exploracion",
+    name: "Combo Exclusivo Bodega Las Perdices",
+    category: "promos",
+    subcategory: "Cajas x6",
+    bodega: "Viña Las Perdices",
+    price: 81250,
+    originalPrice: 97000,
+    stock: 99,
+    minStock: 2,
+    isFeatured: true,
+    badge: "PROMO EXCLUSIVA",
+    image: "/public/promotions/lasperdices-1-cover.png",
+    images: [
+      "/public/promotions/lasperdices-1-cover.png",
+      "/public/promotions/lasperdices-2.png",
+      "/public/promotions/lasperdices-3.png",
+      "/public/promotions/lasperdices-4.png"
+    ],
+    description: "Comprando 5 botellas de Exploración Malbec la sexta botella va sin cargo.! Valor del combo $ 81.250"
+  },
+  {
+    id: "promo-don-nicanor-combo",
+    name: "Combo Exclusivo Don Nicanor",
+    category: "promos",
+    subcategory: "Cajas x6",
+    bodega: "Nieto Senetiner",
+    price: 110000,
+    stock: 99,
+    minStock: 3,
+    isFeatured: true,
+    badge: "PROMO EXCLUSIVA",
+    image: "/public/promotions/donnicanor-1-cover.png",
+    images: [
+      "/public/promotions/donnicanor-1-cover.png",
+      "/public/promotions/donnicanor-2.png",
+      "/public/promotions/donnicanor-3.png",
+      "/public/promotions/donnicanor-4.png",
+      "/public/promotions/donnicanor-5.png"
+    ],
+    description: "Comprando 1 caja de Don Nicanor Barrel Select x 6 unid a $ 110.000, llevate de obsequio 1 sacacorchos premium con logo de la bodega."
+  }
+];
+
 function renderPromosGrid() {
   const container = document.getElementById('promosGrid');
   if (!container) return;
 
-  const promos = state.products.filter(p => p.category === 'promos');
+  let promos = state.products.filter(p => p.category === 'promos');
 
   if (!promos.length) {
-    container.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 2.5rem; color: var(--text-muted);">
-        No hay promociones activas en este momento.
-      </div>
-    `;
-    return;
+    promos = FALLBACK_EXCLUSIVE_PROMOS;
+    FALLBACK_EXCLUSIVE_PROMOS.forEach(fp => {
+      if (!state.products.some(p => p.id === fp.id)) {
+        state.products.push(fp);
+      }
+    });
   }
 
   // Exactamente las 3 promociones exclusivas con carrusel multi-imagen

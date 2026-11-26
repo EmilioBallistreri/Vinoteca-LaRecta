@@ -366,6 +366,7 @@ async function getCloudProducts(filter = {}) {
       stock: Number(row.stock !== undefined ? row.stock : 99),
       badge: row.badge,
       image: row.image,
+      images: Array.isArray(row.images) && row.images.length > 0 ? row.images : (row.image ? [row.image] : []),
       description: row.description,
       isFeatured: Boolean(row.is_featured),
       createdAt: row.created_at,
@@ -407,6 +408,7 @@ async function saveCloudProduct(prod) {
       stock: prod.stock !== undefined ? prod.stock : 99,
       badge: prod.badge || null,
       image: prod.image,
+      images: prod.images || (prod.image ? [prod.image] : []),
       description: prod.description || '',
       is_featured: Boolean(prod.isFeatured),
       updated_at: new Date().toISOString()

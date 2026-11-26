@@ -115,6 +115,18 @@ app.get('/api/products', async (req, res) => {
   try {
     const cloudProducts = await supabase.getCloudProducts(filter);
     if (cloudProducts && Array.isArray(cloudProducts) && cloudProducts.length > 0) {
+      const baseProducts = db.getProducts(filter);
+      const cloudMap = new Map(cloudProducts.map(p => [p.id, p]));
+      baseProducts.forEach(bp => {
+        if (!cloudMap.has(bp.id)) {
+          cloudProducts.push(bp);
+        } else {
+          const cp = cloudMap.get(bp.id);
+          if ((!cp.images || cp.images.length === 0) && bp.images && bp.images.length > 0) {
+            cp.images = bp.images;
+          }
+        }
+      });
       return res.json(cloudProducts);
     }
   } catch (_) {}

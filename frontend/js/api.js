@@ -12,12 +12,13 @@ const SUPERADMIN_EMAILS = [
 ];
 
 // Limpieza automática de datos locales de prueba previos para el pase a producción
-const DATA_PURGE_KEY = 'vlr_clean_state_v2026_11_26';
+const DATA_PURGE_KEY = 'vlr_clean_state_v2026_11_26_p3';
 try {
   if (typeof localStorage !== 'undefined' && localStorage.getItem(DATA_PURGE_KEY) !== 'done') {
     localStorage.removeItem(LOCAL_ORDERS_KEY);
     localStorage.removeItem(LOCAL_USERS_KEY);
     localStorage.removeItem(LOCAL_ACTIVITY_KEY);
+    localStorage.removeItem(LOCAL_DELETED_KEY);
     localStorage.setItem(DATA_PURGE_KEY, 'done');
   }
 } catch (_) {}
@@ -84,15 +85,16 @@ function mergeProductsWithLocal(serverProducts = []) {
   const deleted = new Set(getLocalDeletedIds());
   const overrides = getLocalOverrides();
   const result = [];
+  const protectedPromoIds = new Set(['promo-salentein-combo', 'promo-las-perdices-exploracion', 'promo-don-nicanor-combo']);
 
   Object.values(overrides).forEach(prod => {
-    if (!deleted.has(prod.id) && !serverProducts.some(sp => sp.id === prod.id)) {
+    if ((!deleted.has(prod.id) || protectedPromoIds.has(prod.id)) && !serverProducts.some(sp => sp.id === prod.id)) {
       result.push(prod);
     }
   });
 
   serverProducts.forEach(sp => {
-    if (deleted.has(sp.id)) return;
+    if (deleted.has(sp.id) && !protectedPromoIds.has(sp.id)) return;
     if (overrides[sp.id]) {
       result.push({ ...sp, ...overrides[sp.id] });
     } else {
@@ -315,6 +317,85 @@ export const api = {
     }
 
     let merged = mergeProductsWithLocal(list);
+
+    // Garantizar que las 3 promociones exclusivas fijas de Vinoteca La Recta siempre estén presentes en el catálogo
+    const basePromosList = [
+      {
+        id: 'promo-salentein-combo',
+        name: 'Combo Exclusivo de Bodegas Salentein',
+        category: 'promos',
+        subcategory: '',
+        bodega: 'Bodegas Salentein',
+        price: 152000,
+        stock: 99,
+        minStock: 2,
+        isFeatured: true,
+        badge: 'PROMO EXCLUSIVA',
+        image: '/public/promotions/salentein-1-cover.png',
+        images: [
+          '/public/promotions/salentein-1-cover.png',
+          '/public/promotions/salentein-2.png',
+          '/public/promotions/salentein-3.png',
+          '/public/promotions/salentein-4.png'
+        ],
+        description: '1 caja Salentein Malbec + 1 caja Salentein Extra Brut $ 152.000 y llevate de regalo 1 frapera de aluminio, con manijas de cuero y logo de la bodega ideal para vestir tu mesa'
+      },
+      {
+        id: 'promo-las-perdices-exploracion',
+        name: 'Combo Exclusivo Bodega Las Perdices',
+        category: 'promos',
+        subcategory: 'Cajas x6',
+        bodega: 'Viña Las Perdices',
+        price: 81250,
+        originalPrice: 97000,
+        stock: 99,
+        minStock: 2,
+        isFeatured: true,
+        badge: 'PROMO EXCLUSIVA',
+        image: '/public/promotions/lasperdices-1-cover.png',
+        images: [
+          '/public/promotions/lasperdices-1-cover.png',
+          '/public/promotions/lasperdices-2.png',
+          '/public/promotions/lasperdices-3.png',
+          '/public/promotions/lasperdices-4.png'
+        ],
+        description: 'Comprando 5 botellas de Exploración Malbec la sexta botella va sin cargo.! Valor del combo $ 81.250'
+      },
+      {
+        id: 'promo-don-nicanor-combo',
+        name: 'Combo Exclusivo Don Nicanor',
+        category: 'promos',
+        subcategory: 'Cajas x6',
+        bodega: 'Nieto Senetiner',
+        price: 110000,
+        stock: 99,
+        minStock: 3,
+        isFeatured: true,
+        badge: 'PROMO EXCLUSIVA',
+        image: '/public/promotions/donnicanor-1-cover.png',
+        images: [
+          '/public/promotions/donnicanor-1-cover.png',
+          '/public/promotions/donnicanor-2.png',
+          '/public/promotions/donnicanor-3.png',
+          '/public/promotions/donnicanor-4.png',
+          '/public/promotions/donnicanor-5.png'
+        ],
+        description: 'Comprando 1 caja de Don Nicanor Barrel Select x 6 unid a $ 110.000, llevate de obsequio 1 sacacorchos premium con logo de la bodega.'
+      }
+    ];
+
+    basePromosList.forEach(bp => {
+      const existing = merged.find(p => p.id === bp.id);
+      if (!existing) {
+        if (!params.category || params.category === 'promos' || params.category === 'todos') {
+          merged.push(bp);
+        }
+      } else {
+        if (!existing.images || existing.images.length === 0) {
+          existing.images = bp.images;
+        }
+      }
+    });
 
     if (params.category && params.category !== 'todos') {
       merged = merged.filter(p => p.category?.toLowerCase() === params.category.toLowerCase());
