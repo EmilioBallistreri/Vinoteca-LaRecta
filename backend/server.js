@@ -23,13 +23,28 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/public', express.static(path.join(__dirname, '../frontend/public')));
 app.use('/static', express.static(path.join(__dirname, 'uploads')));
 
-// Dedicated Admin route alias
+// Dedicated Admin and Public clean routes
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/admin.html'));
 });
 
+app.get('/productos', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/productos.html'));
+});
+
 app.get('/mayorista', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/mayorista.html'));
+});
+
+// Explicit SEO endpoints for Google Search Console
+app.get('/sitemap.xml', (req, res) => {
+  res.header('Content-Type', 'application/xml');
+  res.sendFile(path.join(__dirname, '../frontend/sitemap.xml'));
+});
+
+app.get('/robots.txt', (req, res) => {
+  res.header('Content-Type', 'text/plain');
+  res.sendFile(path.join(__dirname, '../frontend/robots.txt'));
 });
 
 // Health check

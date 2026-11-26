@@ -1,0 +1,22 @@
+# =========================================================
+# robots.txt para Vinoteca La Recta
+# Dominio Oficial: https://vinotecalarecta.com
+# =========================================================
+
+User-agent: *
+
+# Permitir rastreo e indexación de páginas públicas y recursos visuales
+Allow: /
+Allow: /productos.html
+Allow: /mayorista.html
+Allow: /public/
+Allow: /css/
+Allow: /js/
+
+# Bloquear acceso a rutas administrativas, privadas y endpoints de API
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /api/
+
+# Ubicación del Sitemap oficial para Google Search Console
+Sitemap: https://vinotecalarecta.com/sitemap.xml

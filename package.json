@@ -5,7 +5,8 @@
   "main": "backend/server.js",
   "scripts": {
     "start": "node backend/server.js",
-    "dev": "node --watch backend/server.js"
+    "dev": "node --watch backend/server.js",
+    "sitemap": "node backend/utils/generate-sitemap.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
