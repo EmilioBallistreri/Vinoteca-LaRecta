@@ -787,6 +787,16 @@ function setCategory(catId) {
   url.searchParams.delete('subcategoria');
   window.history.replaceState({}, '', url);
 
+  // Sincronizar etiqueta canónica con la categoría activa para SEO limpio
+  const canonicalTag = document.querySelector('link[rel="canonical"]');
+  if (canonicalTag) {
+    if (catId !== 'todos' && ['promos', 'vinos', 'espumantes', 'aperitivos'].includes(catId.toLowerCase())) {
+      canonicalTag.setAttribute('href', `https://vinotecalarecta.com/productos.html?categoria=${catId.toLowerCase()}`);
+    } else {
+      canonicalTag.setAttribute('href', 'https://vinotecalarecta.com/productos.html');
+    }
+  }
+
   renderSubcategories();
   applyFilters();
 }
@@ -1077,6 +1087,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (catParam && ['promos', 'vinos', 'espumantes', 'aperitivos'].includes(catParam.toLowerCase())) {
     state.activeCategory = catParam.toLowerCase();
+    const initCanonical = document.querySelector('link[rel="canonical"]');
+    if (initCanonical) {
+      initCanonical.setAttribute('href', `https://vinotecalarecta.com/productos.html?categoria=${catParam.toLowerCase()}`);
+    }
   }
 
   if (subParam) {
