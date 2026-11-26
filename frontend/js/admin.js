@@ -1010,7 +1010,10 @@ function renderCustomization(container) {
 
   cloudForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const url = document.getElementById('supabaseUrlInput')?.value?.trim();
+    let url = document.getElementById('supabaseUrlInput')?.value?.trim();
+    if (url) {
+      url = url.replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
+    }
     const key = document.getElementById('supabaseKeyInput')?.value?.trim();
     const submitBtn = document.getElementById('saveCloudBtn');
 

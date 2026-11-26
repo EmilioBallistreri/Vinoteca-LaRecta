@@ -4,12 +4,17 @@ const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs');
 const path = require('path');
 
+function cleanSupabaseUrl(url) {
+  if (!url) return '';
+  return url.trim().replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
+}
+
 function getCredentials() {
   const envUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
   const envKey = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (envUrl && envKey) {
-    return { url: envUrl.trim(), key: envKey.trim() };
+    return { url: cleanSupabaseUrl(envUrl), key: envKey.trim() };
   }
 
   // Check store.json for credentials configured via Admin Panel
@@ -19,7 +24,7 @@ function getCredentials() {
       const store = JSON.parse(fs.readFileSync(storePath, 'utf8'));
       if (store.cloudDatabase && store.cloudDatabase.url && store.cloudDatabase.key) {
         return {
-          url: store.cloudDatabase.url.trim(),
+          url: cleanSupabaseUrl(store.cloudDatabase.url),
           key: store.cloudDatabase.key.trim()
         };
       }
@@ -60,8 +65,9 @@ function isConfigured() {
 
 async function testConnection(url, key) {
   try {
-    const testClient = (url && key) 
-      ? createClient(url.trim(), key.trim(), { auth: { persistSession: false } })
+    const cleanUrl = cleanSupabaseUrl(url);
+    const testClient = (cleanUrl && key) 
+      ? createClient(cleanUrl, key.trim(), { auth: { persistSession: false } })
       : getSupabase();
 
     if (!testClient) return { success: false, error: 'Credenciales incompletas' };

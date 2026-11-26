@@ -387,15 +387,18 @@ app.post('/api/cloud-config', async (req, res) => {
       return res.status(400).json({ error: 'URL y Key de Supabase son obligatorias.' });
     }
 
-    const test = await supabase.testConnection(url, key);
+    const cleanUrl = url.trim().replace(/\/rest\/v1\/?$/, '').replace(/\/+$/, '');
+    const cleanKey = key.trim();
+
+    const test = await supabase.testConnection(cleanUrl, cleanKey);
     if (!test.success) {
       return res.status(400).json({ error: `Fallo al conectar con Supabase: ${test.error}` });
     }
 
     const store = db.readStore();
     store.cloudDatabase = {
-      url: url.trim(),
-      key: key.trim(),
+      url: cleanUrl,
+      key: cleanKey,
       updatedAt: new Date().toISOString()
     };
     db.writeStore(store);
